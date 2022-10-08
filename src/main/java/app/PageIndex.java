@@ -39,20 +39,23 @@ public class PageIndex implements Handler {
         // This uses a Java v15+ Text Block
         html = html + """
             <div class='topnav'>
-                <a href='/'>Home</a>
-                <a href='mission.html'>Mission Statement</a>
-                <div class ='dropdown'>
-                    <button class='dropbtn'>Data Analyses
-                        <i class='fa fa-caret-down'></i>
-                    </button>
-                    <div class='dropdown-content'>
-                        <a href='page3.html'>Sub Task 2.1</a>
-                        <a href='page4.html'>Sub Task 2.2</a>
-                        <a href='page5.html'>Sub Task 3.1</a>
-                        <a href='page6.html'>Sub Task 3.2</a>
-                    </div>
-                </div>
-                <a href='page7.html'>Resources</a>
+                    <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
+                    <ul>
+                        <a href='/'>Home</a>
+                        <a href='mission.html'>Mission Statement</a>
+                        <div class ='dropdown'>
+                            <button class='dropbtn'>Data Analyses
+                                <i class='fa fa-caret-down'></i>
+                            </button>
+                            <div class='dropdown-content'>
+                                <a href='page3.html'>Sub Task 2.1</a>
+                                <a href='page4.html'>Sub Task 2.2</a>
+                                <a href='page5.html'>Sub Task 3.1</a>
+                                <a href='page6.html'>Sub Task 3.2</a>
+                            </div>
+                        </div>
+                        <a href='page7.html'>Resources</a>
+                    </ul>
             </div>
         """;
 

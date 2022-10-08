@@ -83,8 +83,18 @@ public class PageMission implements Handler {
 
         // Footer
         html = html + """
-            <div class='footer'>
-                <p>COSC2803 - Studio Project Starter Code (Sep22)</p>
+            <div class = 'footer'>
+                <h3>
+                    Acknowledgement of Country
+                </h3>
+                <p id = 'acknowledgementText'>
+                    Group 11 acknowledge and pay respect to Elders, both past and present, and all 
+                    generations of Aboriginal and Torres Strait <br> Islander People now and into the 
+                    future as the Traditional Owners of this land.
+                </p>
+                <p id = 'teamMemberCredit'>
+                    COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez (s3922406).
+                </p>
             </div>
         """;
 

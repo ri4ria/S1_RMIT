@@ -44,6 +44,7 @@ public class App {
         app.get(PageST22.URL, new PageST22());
         app.get(PageST31.URL, new PageST31());
         app.get(PageST32.URL, new PageST32());
+        app.get(PageResources.URL, new PageResources());
 
         // Add / uncomment POST commands for any pages that need web form POSTS
         // app.post(PageIndex.URL, new PageIndex());
@@ -52,6 +53,7 @@ public class App {
         // app.post(PageST22.URL, new PageST22());
         // app.post(PageST31.URL, new PageST31());
         // app.post(PageST32.URL, new PageST32());
+        // app.post(PageResources.URL, new PageResources());
     }
 
 }

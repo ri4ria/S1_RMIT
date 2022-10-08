@@ -13,15 +13,31 @@ body {
 /* Header (div) formatting */
 .header {
    padding: 10px;
-   text-align: center;
    background-color: #cccccc;
-   color: #000000;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: content;
 }
 
 .header h1 {
    font-size: 50px;
+   text-align: center;
+   color: #000000;
 }
 
+/*https://coder-coder.com/background-image-opacity/*/
+.header::before {
+   content: "";
+   background: url('https://images.unsplash.com/photo-1602825166974-eb65bb2060b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80');
+   background-size: cover;
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   bottom: 0px;
+   left: 0px;
+   opacity: 0.12;
+}
 
 /* Make the logo have a rounded edge */
 img.top-image {

@@ -41,10 +41,17 @@ public class PageIndex implements Handler {
             <div class='topnav'>
                 <a href='/'>Home</a>
                 <a href='mission.html'>Mission Statement</a>
-                <a href='page3.html'>Sub Task 2.1</a>
-                <a href='page4.html'>Sub Task 2.2</a>
-                <a href='page5.html'>Sub Task 3.1</a>
-                <a href='page6.html'>Sub Task 3.2</a>
+                <div class ='dropdown'>
+                    <button class='dropbtn'>Data Analyses
+                        <i class='fa fa-caret-down'></i>
+                    </button>
+                    <div class='dropdown-content'>
+                        <a href='page3.html'>Sub Task 2.1</a>
+                        <a href='page4.html'>Sub Task 2.2</a>
+                        <a href='page5.html'>Sub Task 3.1</a>
+                        <a href='page6.html'>Sub Task 3.2</a>
+                    </div>
+                </div>
                 <a href='page7.html'>Resources</a>
             </div>
         """;

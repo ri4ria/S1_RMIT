@@ -89,6 +89,7 @@ public class PageIndex implements Handler {
                         <li><a href='page6.html'>Compare LGAs with Similar Characteristics:</a> Compare similar Local Government Areas' performance on addressing all the three target outcomes</li>
                     </ul>
                 </li>
+                <li><a href='page7.html'>Resources:</a> View links to different websites</li> 
             </ul>
             """;
 

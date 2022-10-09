@@ -59,6 +59,7 @@ img.top-image {
    overflow: hidden;
    background-color: #49231F;
    vertical-align: center;
+   border-radius: 20px 20px 0px 0px;
 }
  
 .topnav ul {
@@ -85,7 +86,7 @@ img.top-image {
 }
 
 .topnav .topnav-logo {
-   margin-left: 14px;
+   margin-left: 20px;
    margin-right: 14px;
    margin-top: 0px;
 }
@@ -149,9 +150,11 @@ img.top-image {
    float: right;
    padding: 6px;
    border: none;
-   margin-top: 11px;
+   margin-top: 13px;
    margin-right: 16px;
-   font-size: 17px;
+   font-family: Karla;
+   font-size: 14px;
+   border-radius: 10px;
 }
  
 /* Style the content */
@@ -165,6 +168,7 @@ img.top-image {
    background-color: #BBA89F;
    padding: 10px;
    text-align: center;
+   border-radius: 0px 0px 20px 20px;
 }
 
 #acknowledgementText {

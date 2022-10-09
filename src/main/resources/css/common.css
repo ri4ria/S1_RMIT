@@ -20,7 +20,8 @@ body {
    position: relative;
    display: flex;
    align-items: center;
-   justify-content: content;
+   justify-content: center;
+   text-align: center;
 }
 
 .header h1 {
@@ -40,6 +41,7 @@ body {
    bottom: 0px;
    left: 0px;
    opacity: 0.12;
+   text-align: center;
 }
 
 /* Make the logo have a rounded edge */

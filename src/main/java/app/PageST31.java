@@ -39,20 +39,24 @@ public class PageST31 implements Handler {
         // This uses a Java v15+ Text Block
         html = html + """
             <div class='topnav'>
-                <a href='/'>Home</a>
-                <a href='mission.html'>Mission Statement</a>
-                <div class ='dropdown'>
-                    <button class='dropbtn'>Data Analyses
-                        <i class='fa fa-caret-down'></i>
-                    </button>
-                    <div class='dropdown-content'>
-                        <a href='page3.html'>2021 Census Results</a>
-                        <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
-                        <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
-                        <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
-                    </div>
-                </div>
-                <a href='page7.html'>Resources</a>
+                    <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
+                    <ul>
+                        <a href='/'>Home</a>
+                        <a href='mission.html'>Mission Statement</a>
+                        <div class ='dropdown'>
+                            <button class='dropbtn'>Data Analyses
+                                <i class='fa fa-caret-down'></i>
+                            </button>
+                            <div class='dropdown-content'>
+                                <a href='page3.html'>2021 Census Results</a>
+                                <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                                <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                                <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
+                            </div>
+                        </div>
+                        <a href='page7.html'>Resources</a>
+                    </ul>
+                    <input type='text' placeholder='Search...'>
             </div>
         """;
 

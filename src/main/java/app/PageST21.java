@@ -63,13 +63,17 @@ public class PageST21 implements Handler {
         // Add header content block
         html = html + """
             <div class='header'>
-                <h1>Subtask 2.1</h1>
+                <h1>2021 Census Results</h1>
             </div>
         """;
 
         // Add Div for page Content
         html = html + "<div class='content'>";
 
+        // Add instructions on how to use the filters
+        html = html + """
+                <h2>Click an outcome to compare Local Government Area performance</h2>
+        """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();

@@ -70,6 +70,36 @@ public class PageIndex implements Handler {
             </div>
         """;
 
+        
+        // Add Div for page Content ADDRESSING THE SOCIAL CHALLENGE
+        html = html + "<div class='content'>";
+
+        // HTML for our focus
+        html = html + """
+            <h3>Addressing the Social Challenge</h3>
+                <p>Entrenched inequalities are impacting the lives of Aboriginal and Torres Strait Islander people and communities.</p>
+                <p>In accordance with the National Agreement on Closing the Gap, local Governing bodies, organizations, businesses, 
+                    and others in the community are working towards achieving 17 different outcomes.</p>
+                <p>This website provides data for the following three outcomes:</p>
+            """;
+
+        // Close Content div
+        html = html + "</div>";
+
+        // Add Div for page Content OUR FOCUS
+        html = html + "<div class='content'>";
+
+        // HTML for our focus
+        html = html + """
+            <h3>Our Focus</h3>
+                <p><b>Outcome 1: </b>Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
+                <p><b>Ouctome 5: </b>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
+                <p><b>Outcome 8: </b>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
+            """;
+
+        // Close Content div
+        html = html + "</div>";
+
         // Add Div for page Content
         html = html + "<div class='content'>";
 
@@ -77,7 +107,7 @@ public class PageIndex implements Handler {
         html = html + """
             <h3>Page information</h3>
             <ul>
-                <li><a href='/'>Homepage:</a> Scroll below to view all the current target outcomes</li>
+                <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>
                 <li><a href='mission.html'>Our Mission:</a> View information about our website personas and our mission</li>
                 <li>Data Analysis: Hover over to view the following websites:
                     <ul>

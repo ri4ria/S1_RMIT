@@ -46,10 +46,10 @@ public class PageResources implements Handler {
                         <i class='fa fa-caret-down'></i>
                     </button>
                     <div class='dropdown-content'>
-                        <a href='page3.html'>Sub Task 2.1</a>
-                        <a href='page4.html'>Sub Task 2.2</a>
-                        <a href='page5.html'>Sub Task 3.1</a>
-                        <a href='page6.html'>Sub Task 3.2</a>
+                        <a href='page3.html'>2021 Census Results</a>
+                        <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                        <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                        <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
                     </div>
                 </div>
                 <a href='page7.html'>Resources</a>

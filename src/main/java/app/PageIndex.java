@@ -64,48 +64,27 @@ public class PageIndex implements Handler {
         html = html + """
             <div class='header'>
                 <h1>
-                    <img src='logo.png' class='top-image' alt='RMIT logo' height='75'>
-                    Homepage
+                    Welcome
                 </h1>
             </div>
         """;
-
         
-        // Add Div for page Content ADDRESSING THE SOCIAL CHALLENGE
+        // Add Div for page Content 
         html = html + "<div class='content'>";
 
-        // HTML for our focus
         html = html + """
-            <h3>Addressing the Social Challenge</h3>
+            <h1>Addressing the Social Challenge</h1>
                 <p>Entrenched inequalities are impacting the lives of Aboriginal and Torres Strait Islander people and communities.</p>
                 <p>In accordance with the National Agreement on Closing the Gap, local Governing bodies, organizations, businesses, 
                     and others in the community are working towards achieving 17 different outcomes.</p>
                 <p>This website provides data for the following three outcomes:</p>
-            """;
 
-        // Close Content div
-        html = html + "</div>";
-
-        // Add Div for page Content OUR FOCUS
-        html = html + "<div class='content'>";
-
-        // HTML for our focus
-        html = html + """
-            <h3>Our Focus</h3>
+            <h1>Our Focus</h1>
                 <p><b>Outcome 1: </b>Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
                 <p><b>Ouctome 5: </b>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
                 <p><b>Outcome 8: </b>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
-            """;
 
-        // Close Content div
-        html = html + "</div>";
-
-        // Add Div for page Content
-        html = html + "<div class='content'>";
-
-        // Add HTML for the list of pages (as well as topnav)
-        html = html + """
-            <h3>Page information</h3>
+            <h1>Page information</h1>
             <ul>
                 <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>
                 <li><a href='mission.html'>Our Mission:</a> View information about our website personas and our mission</li>
@@ -121,6 +100,17 @@ public class PageIndex implements Handler {
                 </li>
                 <li><a href='page7.html'>Resources:</a> View links to different websites</li> 
             </ul>
+            """;
+
+        // Close Content div
+        html = html + "</div>";
+
+        // Add Div for 17 targets section 
+        html = html + "<div class='content'>";
+
+        html = html + """
+            <h1>17 Outcomes of the National Agreement on Closing the Gap</h1>
+            <p>Insert an arraylist to access the database</p>
             """;
 
         // Close Content div

@@ -56,6 +56,7 @@ public class PageIndex implements Handler {
                         </div>
                         <a href='page7.html'>Resources</a>
                     </ul>
+                    <input type='text' placeholder='Search...'>
             </div>
         """;
 

@@ -134,6 +134,16 @@ img.top-image {
 .dropdown:hover .dropdown-content {
    display: block;
 }
+
+/* https://www.w3schools.com/howto/howto_css_searchbar.asp#gsc.tab=0 */
+.topnav input[type=text] {
+   float: right;
+   padding: 6px;
+   border: none;
+   margin-top: 11px;
+   margin-right: 16px;
+   font-size: 17px;
+}
  
 /* Style the content */
 .content {

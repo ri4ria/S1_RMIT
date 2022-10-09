@@ -75,7 +75,21 @@ public class PageIndex implements Handler {
 
         // Add HTML for the list of pages (as well as topnav)
         html = html + """
-            <p>Homepage information</p>
+            <h3>Page information</h3>
+            <ul>
+                <li><a href='/'>Homepage: </a>Scroll below to view all the current target outcomes</li>
+                <li><a href='mission.html'>Our Mission: </a>View information about our website personas and our mission</li>
+                <li>Data Analysis: Hover over to view the following websites:
+                    <ul>
+                        <li><a href='page3.html'>2021 Census Results: </a>Observe the lastest information available from the 2021 census 
+                            on 'The Gap' between Indigenous and Non-Indigenous peoples</li>
+                        <li><a href='page4.html'>Changes between 2016 and 2021 Censuses: </a>Compare changes to 'the Gap' between 2016 
+                            and 2021 censuses for a single Local Government Area or State</li>
+                        <li><a href='page5.html'>Gap Score between Indigenous and Non-Indigenous: </a> Compare all three target outcomes and performance between 2016 and 2021 censuses</li>
+                        <li><a href='page6.html'>Compare LGAs with Similar Characteristics: </a> Compare similar Local Government Areas' performance on addressing all the three target outcomes</li>
+                    </ul>
+                </li>
+            </ul>
             """;
 
         // Close Content div

@@ -10,7 +10,7 @@
 body {
    font-family: Karla;
    padding: 10px;
-   background: #f1f1f1;
+   background: #fff;
 }
 
 /* Header (div) formatting */
@@ -57,7 +57,7 @@ img.top-image {
 /* Style the top navigation bar */
 .topnav {
    overflow: hidden;
-   background-color: #333;
+   background-color: #49231F;
    vertical-align: center;
 }
  
@@ -72,7 +72,7 @@ img.top-image {
 .topnav a {
    float: left;
    display: block;
-   color: #f2f2f2;
+   color: #fff;
    text-align: center;
    padding: 14px 16px;
    text-decoration: none;
@@ -80,7 +80,7 @@ img.top-image {
  
 /* Change color on hover */
 .topnav a:hover {
-   background-color: #ddd;
+   background-color: #F6F1E7;
    color: black;
 }
 
@@ -100,7 +100,7 @@ img.top-image {
 .dropdown .dropbtn {
    border: none;
    outline: none;
-   color: #f2f2f2;
+   color: #fff;
    padding: 14px 16px;
    background-color: inherit;
    font-family: inherit;
@@ -110,7 +110,7 @@ img.top-image {
 
 /*https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp*/
 .topnav a:hover, .dropdown:hover .dropbtn {
-   background-color: #ddd;
+   background-color: #F6F1E7;
    color: black;
 }
 
@@ -127,7 +127,7 @@ img.top-image {
 /*https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp*/
 .dropdown-content a {
    float: none;
-   color: #f2f2f2;
+   color: #F6F1E7;
    padding: 12px 16px;
    text-decoration: none;
    display: block;
@@ -136,7 +136,7 @@ img.top-image {
 
 /*https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp*/
 .dropdown-content a:hover {
-   background-color: #ddd;
+   background-color: #F6F1E7;
 }
 
 /*https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp*/
@@ -156,20 +156,20 @@ img.top-image {
  
 /* Style the content */
 .content {
-   background-color: #ddd;
+   background-color: #F6F1E7;
    padding: 10px;
 }
  
 /* Style the footer */
 .footer {
-   background-color: #cccccc;
+   background-color: #BBA89F;
    padding: 10px;
    text-align: center;
 }
 
 #acknowledgementText {
    font-style: italic;
-   font-weight: lighter;
+   font-weight: 300;
 }
 
 #teamMemberCredit {

@@ -72,23 +72,71 @@ public class PageMission implements Handler {
 
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
-        JDBCConnection jdbc = new JDBCConnection();
+        // JDBCConnection jdbc = new JDBCConnection();
 
         // Next we will ask this *class* for the LGAs
-        ArrayList<LGA> lgas = jdbc.getLGAs();
+        // ArrayList<LGA> lgas = jdbc.getLGAs();
 
-        // Add HTML for the LGA list
-        html = html + "<h1>All LGAs</h1>" + "<ul>";
+        // Addressing "Closing the Gap"
+        html = html + "<h1>Addressing 'Closing the Gap'</h1>";
+        // Addressing "Closing the Gap" content
+        html = html + """
+            <p>
+                Our approach to addressing this social challenge includes raising awareness 
+                of all 17 target outcomes, however we will be particularly focusing on three:
+            </p>
+            <ul>
+                <li>
+                    <b>Outcome 1: </b>Aboriginal and Torres Strait Islander people enjoy long 
+                    and healthly lives
+                </li>
+                <li>
+                    <b>Outcome 5: </b>Aboriginal and Torres Strait Islander students achieve 
+                    their full learning potential
+                </li>
+                <li>
+                    <b>Outcome 8: </b> Strong economic participation and development of Indigenous 
+                    people and communities
+                </li>
+            </ul>
+            <p>
+                This website provides data on these three target outcomes, which you can use to 
+                compare between two years - 2016 and 2021.
+            </p>
+            <p>
+                We're also going to provide additional resources, but also insights on how progress 
+                is tracking on the targets of the 'Closing the Gap' campaign.
+            </p>
+        """;
 
-        // Finally we can print out all of the LGAs
-        for (LGA lga : lgas) {
-            html = html + "<li>" + lga.getCode16()
-                        + " - " + lga.getName16() + "</li>";
-        }
+        // How to Use Our Website
+        html = html + """
+            <h1>
+                How to Use Our Website
+            </h1>
+            <p>
+                A majority of site activity will be present in the 'Data Analyses' tab. The results 
+                that appear depend on what target outcome and type of data you are interested in.
+            </p>
+            <p>
+                Generally, you must choose your filter options in the sidebar.
+            </p>
+            <p>
+                More detailed instructions appear on each 'Data Analyses' page.
+            </p>
+        """;
 
-        // Finish the List HTML
-        html = html + "</ul>";
-
+        // Personas
+        html = html + """
+            <div class='personas'>
+                <h1>
+                    Personas
+                </h1>
+                <p>
+                    
+                </p>
+            </div>
+        """;
 
         // Close Content div
         html = html + "</div>";

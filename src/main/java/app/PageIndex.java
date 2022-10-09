@@ -72,20 +72,27 @@ public class PageIndex implements Handler {
         // Add Div for page Content 
         html = html + "<div class='content'>";
 
+        // Addressing the Social Challenge Info
         html = html + """
             <h1>Addressing the Social Challenge</h1>
                 <p>Entrenched inequalities are impacting the lives of Aboriginal and Torres Strait Islander people and communities.</p>
                 <p>In accordance with the National Agreement on Closing the Gap, local Governing bodies, organizations, businesses, 
                     and others in the community are working towards achieving 17 different outcomes.</p>
                 <p>This website provides data for the following three outcomes:</p>
-
+                """;
+        
+        // Our focus        
+        html = html + """
             <h1>Our Focus</h1>
                 <p><b>Outcome 1: </b>Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
                 <p><b>Ouctome 5: </b>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
                 <p><b>Outcome 8: </b>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
+                """;
 
+        // Links to all the HTML pages and page informtion/ overview - MIGHT NOT NEED THIS BIT       
+        html = html + """
             <h1>Page information</h1>
-            <ul>
+            <ul class= 'bulletspacing'>
                 <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>
                 <li><a href='mission.html'>Our Mission:</a> View information about our website personas and our mission</li>
                 <li>Data Analysis: Hover over to view the following websites:
@@ -101,13 +108,8 @@ public class PageIndex implements Handler {
                 <li><a href='page7.html'>Resources:</a> View links to different websites</li> 
             </ul>
             """;
-
-        // Close Content div
-        html = html + "</div>";
-
+        
         // Add Div for 17 targets section 
-        html = html + "<div class='content'>";
-
         html = html + """
             <h1>17 Outcomes of the National Agreement on Closing the Gap</h1>
             <p>Insert an arraylist to access the database</p>
@@ -115,6 +117,7 @@ public class PageIndex implements Handler {
 
         // Close Content div
         html = html + "</div>";
+
 
         // Footer
         html = html + """

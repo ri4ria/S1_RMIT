@@ -171,3 +171,5 @@ img.top-image {
 #teamMemberCredit {
    font-size: 13px;
 }
+
+.content ul.bulletspacing li {margin-top: 10px;}

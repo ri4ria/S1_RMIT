@@ -22,18 +22,21 @@ body {
    align-items: center;
    justify-content: center;
    text-align: center;
+   background-image: url('https://as2.ftcdn.net/v2/jpg/00/57/82/37/1000_F_57823751_4tIbjZhzCQDlw69XmatOIEHdFpUsOHTI.jpg');
 }
 
 .header h1 {
    font-size: 50px;
    text-align: center;
-   color: #000000;
+   color: #fff;
+   text-shadow: 5px 5px 10px #000;
 }
 
+
 /*https://coder-coder.com/background-image-opacity/*/
+/* 
 .header::before {
    content: "";
-   background: url('https://images.unsplash.com/photo-1602825166974-eb65bb2060b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80');
    background-size: cover;
    position: absolute;
    top: 0px;
@@ -43,6 +46,7 @@ body {
    opacity: 0.12;
    text-align: center;
 }
+*/
 
 /* Make the logo have a rounded edge */
 img.top-image {

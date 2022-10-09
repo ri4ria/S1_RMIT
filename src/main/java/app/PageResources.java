@@ -70,24 +70,14 @@ public class PageResources implements Handler {
         // Add Div for page Content
         html = html + "<div class='content'>";
 
-        // Look up some information from JDBC
-        // First we need to use your JDBCConnection class
-        JDBCConnection jdbc = new JDBCConnection();
-
-        // Next we will ask this *class* for the LGAs
-        ArrayList<LGA> lgas = jdbc.getLGAs();
-
-        // Add HTML for the LGA list
-        html = html + "<h1>All LGAs</h1>" + "<ul>";
-
-        // Finally we can print out all of the LGAs
-        for (LGA lga : lgas) {
-            html = html + "<li>" + lga.getCode16()
-                        + " - " + lga.getName16() + "</li>";
-        }
-
-        // Finish the List HTML
-        html = html + "</ul>";
+        // Links to all the HTML pages and page informtion/ overview - MIGHT NOT NEED THIS BIT       
+        html = html + """
+            <h1>Websites we used for inspiration</h1>
+            <p><a href='https://healthinfonet.ecu.edu.au/'>HealthInfo</a> provides access to research in the health of Aboriginals and Torres Strait Islanders, 
+            as well as information on existing programs, policies, organisations, publications, and other resources on varying health topics.</p>
+            <p><a href='https://antar.org.au/'>ANTaR</a> is an advocacy organisation. The purpose of this website is to engage, educate and mobilise a broad community 
+            movement to advocate for justice, rights and respect for the First People of Australia.</p>
+            """;
 
         // Close Content div
         html = html + "</div>";

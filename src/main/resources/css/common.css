@@ -182,4 +182,24 @@ img.top-image {
    font-size: 13px;
 }
 
+/* To add spacing between each bullet point */
 .content ul.bulletspacing li {margin-top: 10px;}
+
+/* To make each outcome align next to the other */
+.division {
+   float:left;
+   width: 33%;
+   text-align: center;
+}
+
+/* Round the edges of the image https://www.w3schools.com/howto/howto_css_rounded_images.asp */
+img {
+   border-radius: 50%;
+   transform: rotate(45deg);
+}
+
+/* https://www.w3schools.com/cssref/css3_pr_word-wrap.asp */
+.wrapIntro {
+   word-wrap: break-word;
+   width: 60%;
+}

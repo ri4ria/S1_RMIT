@@ -75,20 +75,40 @@ public class PageIndex implements Handler {
         // Addressing the Social Challenge Info
         html = html + """
             <h1>Addressing the Social Challenge</h1>
-                <p>Entrenched inequalities are impacting the lives of Aboriginal and Torres Strait Islander people and communities.</p>
-                <p>In accordance with the National Agreement on Closing the Gap, local Governing bodies, organizations, businesses, 
+                <div class='wrapIntro'>
+                    <p>Entrenched inequalities are impacting the lives of Aboriginal and Torres Strait Islander people and communities.</p>
+                    <p>In accordance with the National Agreement on Closing the Gap, local Governing bodies, organizations, businesses, 
                     and others in the community are working towards achieving 17 different outcomes.</p>
-                <p>This website provides data for the following three outcomes:</p>
+                    <p>This website provides data for the following three outcomes:</p>
+                </div>
                 """;
         
         // Our focus        
         html = html + """
             <h1>Our Focus</h1>
-                <p><b>Outcome 1: </b>Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
-                <p><b>Ouctome 5: </b>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
-                <p><b>Outcome 8: </b>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
+                <div class='division'>
+                    <img src="outcomeA.png" style=width:110px> 
+                        <h3><b>Outcome 1:</b></h3>
+                            <p> Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
+                </div>
+                <div class='division'>
+                    <img src="outcomeB.png" style=width:110px> 
+                        <h3><b>Ouctome 5:</b></h3>
+                            <p>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
+                </div>
+                <div class='division'>
+                    <img src="outcomeC.png" style=width:110px> 
+                        <h3><b>Outcome 8:</b></h3>
+                            <p>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
+                </div>
                 """;
-
+        
+        // Add Div for 17 targets section 
+        html = html + """
+            <h1>Target Outcomes</h1>
+            <p>Insert an arraylist to access the database</p>
+            """;
+        
         // Links to all the HTML pages and page informtion/ overview - MIGHT NOT NEED THIS BIT       
         html = html + """
             <h1>Page information</h1>
@@ -107,12 +127,6 @@ public class PageIndex implements Handler {
                 </li>
                 <li><a href='page7.html'>Resources:</a> View links to different websites</li> 
             </ul>
-            """;
-        
-        // Add Div for 17 targets section 
-        html = html + """
-            <h1>17 Outcomes of the National Agreement on Closing the Gap</h1>
-            <p>Insert an arraylist to access the database</p>
             """;
 
         // Close Content div

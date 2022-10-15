@@ -144,7 +144,8 @@ public class PageMission implements Handler {
         // Finally we can print out all of the Personas
         for (Persona persona : personas) {
             html = html + "<h2>" + persona.getName() + "</h2> <ul>" 
-                        + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '50'>"
+                    // TODO: remove inline CSS and create alternative in CSS stylesheet
+                        + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '100' style = 'transform:rotate(0deg)'>"
                         + "<li>" + persona.getAge() + "</li>"
                         + "<li>" + persona.getEthnicity() + "</li>"
                         + "<li>" + persona.getQuote() + "</li> </ul>";

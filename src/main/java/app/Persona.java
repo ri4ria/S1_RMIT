@@ -2,27 +2,27 @@ package app;
 
 public class Persona {
 
-   private int code;
-   private int year;
    private String name;
+   private String quote;
+   private String image_file_path;
    
    // Constructor
-   public Persona(int code, int year, String name) {
-      this.code = code;
-      this.year = year;
+   public Persona(String name, String quote, String image_file_path) {
       this.name = name;
+      this.quote = quote;
+      this.image_file_path = image_file_path;
    }
 
    // Getter methods
-   public int getCode() {
-      return code;
-   }
-
-   public int getYear() {
-      return year;
-   }
-
    public String getName() {
       return name;
+   }
+
+   public String getQuote() {
+      return quote;
+   }
+
+   public String getImageFilePath() {
+      return image_file_path;
    }
 }

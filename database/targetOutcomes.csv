@@ -1,21 +1,18 @@
-﻿OutcomeID {PK},Title,Descrip,,
-Outcome 1,Everyone enjoys long and healthy lives,Aboriginal and Torres Strait Islander people enjoy long and healthy lives.,,
-Outcome 2,Children are born healthy and strong,Aboriginal and Torres Strait Islander children are born healthy and strong.,,
-Outcome 3,"Children are engaged in high quality, culturally appropriate early childhood education in their early years","Aboriginal and Torres Strait Islander children are engaged in high quality, culturally appropriate early childhood education in their early years.",,
-Outcome 4,Children thrive in their early years,Aboriginal and Torres Strait Islander children thrive in their early years.,,
-Outcome 5,Students achieve their full learning potential,Aboriginal and Torres Strait Islander students achieve their full learning potential.,,
-Outcome 6,Students reach their full potential through further education pathways,Aboriginal and Torres Strait Islander students reach their full potential through further education pathways.,,
-Outcome 7,Youth are engaged in employment or education,Aboriginal and Torres Strait Islander youth are engaged in employment or education.,,
-Outcome 8,Strong economic participation and development of people and their communities,Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities.,,
-Outcome 9,"People can secure appropriate, affordable housing that is aligned with their priorities and need","Aboriginal and Torres Strait Islander people secure appropriate, affordable housing that is aligned with their priorities and need.",,
-Outcome 10,Adults are not overrepresented in the criminal justice system,Aboriginal and Torres Strait Islander people are not overrepresented in the criminal justice system.,,
-Outcome 11,Young people are not overrepresented in the criminal justice system,Aboriginal and Torres Strait Islander young people are not overrepresented in the criminal justice system.,,
-Outcome 12,Children are not overrepresented in the child protection system,Aboriginal and Torres Strait Islander children are not overrepresented in the child protection system.,,
-Outcome 13,Families and households are safe,Aboriginal and Torres Strait Islander families and households are safe.,,
-Outcome 14,People enjoy high levels of social and emotional wellbeing,Aboriginal and Torres Strait Islander people enjoy high levels of social and emotional wellbeing.,,
-Outcome 15,"People maintain a distinctive cultural, spiritual, physical and economic relationship with their land and waters","Aboriginal and Torres Strait Islander people maintain a distinctive cultural, spiritual, physical and economic relationship with their land and waters.",,
-Outcome 16,"Cultures and languages are strong, supported and flourishing","Aboriginal and Torres Strait Islander cultures and languages are strong, supported and flourishing.",,
-Outcome 17,People have access to information and services enabling participation in informed decision-making regarding their own lives,Aboriginal and Torres Strait Islander people have access to information and services enabling participation in informed decision-making regarding their own lives.,,
-,,,,
-,,,,
-,,,,
+﻿outcome_ID {PK},title,descrip
+1,Everyone enjoys long and healthy lives,Aboriginal and Torres Strait Islander people enjoy long and healthy lives.
+2,Children are born healthy and strong,Aboriginal and Torres Strait Islander children are born healthy and strong.
+3,"Children are engaged in high quality, culturally appropriate early childhood education in their early years","Aboriginal and Torres Strait Islander children are engaged in high quality, culturally appropriate early childhood education in their early years."
+4,Children thrive in their early years,Aboriginal and Torres Strait Islander children thrive in their early years.
+5,Students achieve their full learning potential,Aboriginal and Torres Strait Islander students achieve their full learning potential.
+6,Students reach their full potential through further education pathways,Aboriginal and Torres Strait Islander students reach their full potential through further education pathways.
+7,Youth are engaged in employment or education,Aboriginal and Torres Strait Islander youth are engaged in employment or education.
+8,Strong economic participation and development of people and their communities,Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities.
+9,"People can secure appropriate, affordable housing that is aligned with their priorities and need","Aboriginal and Torres Strait Islander people secure appropriate, affordable housing that is aligned with their priorities and need."
+10,Adults are not overrepresented in the criminal justice system,Aboriginal and Torres Strait Islander people are not overrepresented in the criminal justice system.
+11,Young people are not overrepresented in the criminal justice system,Aboriginal and Torres Strait Islander young people are not overrepresented in the criminal justice system.
+12,Children are not overrepresented in the child protection system,Aboriginal and Torres Strait Islander children are not overrepresented in the child protection system.
+13,Families and households are safe,Aboriginal and Torres Strait Islander families and households are safe.
+14,People enjoy high levels of social and emotional wellbeing,Aboriginal and Torres Strait Islander people enjoy high levels of social and emotional wellbeing.
+15,"People maintain a distinctive cultural, spiritual, physical and economic relationship with their land and waters","Aboriginal and Torres Strait Islander people maintain a distinctive cultural, spiritual, physical and economic relationship with their land and waters."
+16,"Cultures and languages are strong, supported and flourishing","Aboriginal and Torres Strait Islander cultures and languages are strong, supported and flourishing."
+17,People have access to information and services enabling participation in informed decision-making regarding their own lives,Aboriginal and Torres Strait Islander people have access to information and services enabling participation in informed decision-making regarding their own lives.

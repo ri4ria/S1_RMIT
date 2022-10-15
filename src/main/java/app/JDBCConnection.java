@@ -115,11 +115,13 @@ public class JDBCConnection {
             while (results.next()) {
                 // Lookup the columns we need
                 String name     = results.getString("persona_name");
+                int age = results.getInt("age");
+                String ethnicity = results.getString("ethnicity");
                 String quote     = results.getString("quote");
                 String image_file_path  = results.getString("image_file_path");
 
                 // Create a LGA Object
-                Persona persona = new Persona(name, quote, image_file_path);
+                Persona persona = new Persona(name, age, ethnicity, quote, image_file_path);
 
                 // Add the lga object to the array
                 requested_persona.add(persona);

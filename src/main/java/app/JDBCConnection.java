@@ -148,6 +148,63 @@ public class JDBCConnection {
         return requested_persona;
     }
 
+    public ArrayList<PersonaAttribute> getPersonaAttribute(String inputName, String inputAttributeType) {
+        // Create the ArrayList of LGA objects to return
+        ArrayList<PersonaAttribute> requested_persona_attributes = new ArrayList<PersonaAttribute>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT * FROM PersonaAttribute WHERE persona_name = '" + inputName +"' AND attributeType = '" + inputAttributeType + "'";
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Lookup the columns we need
+                String name     = results.getString("persona_name");
+                int id = results.getInt("id");
+                String attributeType = results.getString("attribute_type");
+                String description     = results.getString("descrip");
+
+                // Create a LGA Object
+                PersonaAttribute personaAttribute = new PersonaAttribute(name, id, attributeType, description);
+
+                // Add the lga object to the array
+                requested_persona_attributes.add(personaAttribute);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the lga
+        return requested_persona_attributes;
+    }    
+
      /**
      * Get all of the Outcomes in the database.
      * @return

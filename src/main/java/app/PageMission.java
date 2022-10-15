@@ -148,7 +148,7 @@ public class PageMission implements Handler {
                         + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '100' style = 'transform:rotate(0deg)'>"
                         + "<li>" + persona.getAge() + "</li>"
                         + "<li>" + persona.getEthnicity() + "</li>"
-                        + "<li>" + persona.getQuote() + "</li> </ul>";
+                        + "<li>\"" + persona.getQuote() + "\"</li> </ul>";
         }
          
         // Closing Personas div

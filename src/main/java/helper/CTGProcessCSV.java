@@ -885,62 +885,61 @@ public class CTGProcessCSV {
          e.printStackTrace();
       }
 
-// OUTCOMES 
+   // OUTCOMES 
 
-// Like JDBCConnection, we need some error handling.
-try {
-   // Open A CSV File to process, one line at a time
-   // CHANGE THIS to process a different file
-   Scanner lineScanner = new Scanner(new File(CSV_FILE_targetOutcomes));
+   // Like JDBCConnection, we need some error handling.
+   try {
+      // Open A CSV File to process, one line at a time
+      // CHANGE THIS to process a different file
+      Scanner lineScanner = new Scanner(new File(CSV_FILE_targetOutcomes));
 
-   // Read the first line of "headings"
-   String header = lineScanner.nextLine();
-   System.out.println("Heading row" + header + "\n");
+      // Read the first line of "headings"
+      String header = lineScanner.nextLine();
+      System.out.println("Heading row" + header + "\n");
 
-   // Setup JDBC
-   // Connect to JDBC data base
-   connection = DriverManager.getConnection(DATABASE);
+      // Setup JDBC
+      // Connect to JDBC data base
+      connection = DriverManager.getConnection(DATABASE);
 
-   // Read each line of the CSV
-   int row = 1;
-   while (lineScanner.hasNext()) {
-      // Always get scan by line
-      String line = lineScanner.nextLine();
-      
-      // Create a new scanner for this line to delimit by commas (,)
-      Scanner rowScanner = new Scanner(line);
-      rowScanner.useDelimiter(",");
+      // Read each line of the CSV
+      int row = 1;
+      while (lineScanner.hasNext()) {
+         // Always get scan by line
+         String line = lineScanner.nextLine();
+         
+         // Create a new scanner for this line to delimit by commas (,)
+         Scanner rowScanner = new Scanner(line);
+         rowScanner.useDelimiter(",");
 
-      
-      // Go through the data for the row
-      // If we run out of categories, stop for safety (so the code doesn't crash)
-      while (rowScanner.hasNext()) {
+         // Go through the data for the row
+         // If we run out of categories, stop for safety (so the code doesn't crash)
+         while (rowScanner.hasNext()) {
 
-         // no need for foreign keys
-         String OutcomeID = rowScanner.next();
-         String Title = rowScanner.next();
-         String Descrip = rowScanner.next();
+            // no need for foreign keys
+            String OutcomeID = rowScanner.next();
+            String Title = rowScanner.next();
+            String Descrip = rowScanner.next();
 
-         // Prepare a new SQL Query & Set a timeout
-         Statement statement = connection.createStatement();
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
 
-         // Create Insert Statement
-         String query = "INSERT into Outcomes VALUES ("
-                        + OutcomeID + ","
-                        + "'" + Title + "',"
-                        + Descrip + ")";
+            // Create Insert Statement
+            String query = "INSERT into Outcomes VALUES ("
+                           + OutcomeID + ","
+                           + "'" + Title + "',"
+                           + "'" + Descrip + "')";
 
-         // Execute the INSERT
-         System.out.println("Executing: " + query);
-         statement.execute(query);
+            // Execute the INSERT
+            System.out.println("Executing: " + query);
+            statement.execute(query);
 
-         row++;
+            row++;
+         }
       }
-   }
 
-} catch (Exception e) {
-   e.printStackTrace();
-}
+   } catch (Exception e) {
+      e.printStackTrace();
+   }
 
    } //keep second to last
 } //keep last

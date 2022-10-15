@@ -90,7 +90,7 @@ public class JDBCConnection {
 
     // TODO: Add your required methods here
 
-    public ArrayList<Persona> getPersonas() {
+    public ArrayList<Persona> getPersonas(String inputName) {
         // Create the ArrayList of LGA objects to return
         ArrayList<Persona> requested_persona = new ArrayList<Persona>();
 
@@ -106,7 +106,7 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT * FROM Persona";
+            String query = "SELECT * FROM Persona WHERE persona_name = '" + inputName + "'";
             
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -174,7 +174,7 @@ public class JDBCConnection {
                 // Lookup the columns we need
                 String name     = results.getString("persona_name");
                 int id = results.getInt("id");
-                String attributeType = results.getString("attribute_type");
+                String attributeType = results.getString("attributeType");
                 String description     = results.getString("descrip");
 
                 // Create a LGA Object

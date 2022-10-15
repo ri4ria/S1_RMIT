@@ -132,11 +132,26 @@ public class PageMission implements Handler {
                 <h1>
                     Personas
                 </h1>
-                <p>
-                    
-                </p>
-            </div>
         """;
+        
+        // Look up some information from JDBC
+        // First we need to use your JDBCConnection class
+        JDBCConnection jdbc = new JDBCConnection();
+
+        // Next we will ask this *class* for the Personas
+        ArrayList<Persona> personas = jdbc.getPersonas();
+
+        // Finally we can print out all of the Personas
+        for (Persona persona : personas) {
+            html = html + "<h2>" + persona.getName() + "</h2> <ul>" 
+                        + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '50'>"
+                        + "<li>" + persona.getAge() + "</li>"
+                        + "<li>" + persona.getEthnicity() + "</li>"
+                        + "<li>" + persona.getQuote() + "</li> </ul>";
+        }
+         
+        // Closing Personas div
+        html = html + "</div>";
 
         // Close Content div
         html = html + "</div>";

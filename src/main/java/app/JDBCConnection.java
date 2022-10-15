@@ -90,7 +90,7 @@ public class JDBCConnection {
 
     // TODO: Add your required methods here
 
-    public ArrayList<Persona> getPersona(String input_name) {
+    public ArrayList<Persona> getPersonas() {
         // Create the ArrayList of LGA objects to return
         ArrayList<Persona> requested_persona = new ArrayList<Persona>();
 
@@ -106,7 +106,7 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT * FROM Persona WHERE persona_name = '" + input_name +"'";
+            String query = "SELECT * FROM Persona";
             
             // Get Result
             ResultSet results = statement.executeQuery(query);

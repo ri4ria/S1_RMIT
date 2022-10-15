@@ -81,7 +81,7 @@ CREATE TABLE LTHCStatistics (
 
 CREATE TABLE Outcomes (
     outcome_ID          INTEGER NOT NULL,
-    title               TEXT NOT NULL,
-    descrip             TEXT NOT NULL,
+    title               VARCHAR(500) NOT NULL,
+    descrip             VARCHAR(500) NOT NULL,
     PRIMARY KEY (outcome_ID)
 );

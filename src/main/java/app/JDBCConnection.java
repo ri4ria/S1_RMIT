@@ -56,11 +56,12 @@ public class JDBCConnection {
             // Process all of the results
             while (results.next()) {
                 // Lookup the columns we need
-                int code16     = results.getInt("lga_code16");
-                String name16  = results.getString("lga_name16");
+                int code     = results.getInt("lga_code");
+                int year     = results.getInt("lga_year");
+                String name  = results.getString("lga_name");
 
                 // Create a LGA Object
-                LGA lga = new LGA(code16, name16);
+                LGA lga = new LGA(code, year, name);
 
                 // Add the lga object to the array
                 lgas.add(lga);

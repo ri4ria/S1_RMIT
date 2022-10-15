@@ -82,8 +82,9 @@ public class PageST31 implements Handler {
 
         // Finally we can print out all of the LGAs
         for (LGA lga : lgas) {
-            html = html + "<li>" + lga.getCode16()
-                        + " - " + lga.getName16() + "</li>";
+            html = html + "<li>" + lga.getCode() 
+                        + " - " + lga.getYear()
+                        + " - " + lga.getName() + "</li>";
         }
 
         // Finish the List HTML

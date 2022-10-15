@@ -103,12 +103,6 @@ public class PageIndex implements Handler {
                 </div>
                 """;
         
-        // Add Div for 17 targets section 
-        html = html + """
-            <h1>Target Outcomes</h1>
-            <p>Insert an arraylist to access the database</p>
-            """;
-        
         // Links to all the HTML pages and page informtion/ overview - MIGHT NOT NEED THIS BIT       
         html = html + """
             <h1>Page information</h1>
@@ -132,6 +126,24 @@ public class PageIndex implements Handler {
         // Close Content div
         html = html + "</div>";
 
+
+         // Add Div for Outcome
+         html = html + "<div class='outcome'>";
+
+         // Look up some information from JDBC
+            // First we need to use your JDBCConnection class
+            JDBCConnection jdbc = new JDBCConnection(); 
+
+         // 17 targets using getOutcomes 
+         html = html + "<h1>Target Outcomes</h1>" + "<ul>" ;     
+            ArrayList<Outcome> outcome = jdbc.getOutcomes();
+            for (Outcome target : outcome) {
+                html = html + "<li>" + target.Descrip + "</li>";
+            }
+            html = html + "</ul>";
+
+        // Close Content div
+        html = html + "</div>";
 
         // Footer
         html = html + """

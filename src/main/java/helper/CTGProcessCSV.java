@@ -177,7 +177,7 @@ public class CTGProcessCSV {
       // Implementing lgas_2016 CSV files
 
       // Like JDBCConnection, we need some error handling.
-      /* try {
+      try {
          // Open A CSV File to process, one line at a time
          // CHANGE THIS to process a different file
          Scanner lineScanner = new Scanner(new File(CSV_FILE_lgas_2016));
@@ -1061,7 +1061,7 @@ public class CTGProcessCSV {
 
    } catch (Exception e) {
       e.printStackTrace();
-   } */
+   }
 
    } //keep second to last
 } //keep last

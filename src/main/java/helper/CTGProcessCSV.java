@@ -46,16 +46,138 @@ public class CTGProcessCSV {
    private static final String CSV_FILE_lgas_2016 = "database/lgas_2016.csv";
    private static final String CSV_FILE_lgas_2021 = "database/lgas_2021.csv";
    private static final String CSV_FILE_targetOutcomes = "database/targetOutcomes.csv";
+   private static final String CSV_FILE_persona = "database/persona.csv";
+   private static final String CSV_FILE_personaAttribute = "database/personaAttribute.csv";
 
    public static void main (String[] args) {
 
       // JDBC Database Object
       Connection connection = null;
 
-      // Implementing lgas_2016 CSV files
+      // Implementing persona CSV file
 
       // Like JDBCConnection, we need some error handling.
       try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_persona));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext()) {
+
+               // Save the lga_code as we need it for the foreign key
+               String name = rowScanner.next();
+               int age = rowScanner.nextInt();
+               String ethnicity = rowScanner.next();
+               String quote = rowScanner.next();
+               String image_file_path = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into Persona VALUES ("
+                              + "'" + name + "',"
+                              + "'" + age + "',"
+                              + "'" + ethnicity + "',"
+                              + "'" + quote + "',"
+                              + "'" + image_file_path + "')";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      // Implementing personaAttributes CSV file
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_personaAttribute));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext()) {
+
+               // Save the lga_code as we need it for the foreign key
+               String name = rowScanner.next();
+               int id = rowScanner.nextInt();
+               String attributeType = rowScanner.next();
+               String description = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into PersonaAttribute VALUES ("
+                              + "'" + name + "',"
+                              + id + ","
+                              + "'" + attributeType + "',"
+                              + "'" + description + "')";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+               
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      // Implementing lgas_2016 CSV files
+
+      // Like JDBCConnection, we need some error handling.
+      /* try {
          // Open A CSV File to process, one line at a time
          // CHANGE THIS to process a different file
          Scanner lineScanner = new Scanner(new File(CSV_FILE_lgas_2016));
@@ -939,7 +1061,7 @@ public class CTGProcessCSV {
 
    } catch (Exception e) {
       e.printStackTrace();
-   }
+   } */
 
    } //keep second to last
 } //keep last

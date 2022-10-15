@@ -28,7 +28,7 @@ public class PersonaAttribute {
       return attributeType;
    }
 
-   public String description() {
+   public String getDescription() {
       return description;
    }
 }

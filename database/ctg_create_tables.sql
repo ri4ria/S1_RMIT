@@ -88,6 +88,8 @@ CREATE TABLE Outcomes (
 
 CREATE TABLE Persona (
     persona_name    TEXT NOT NULL,
+    age             INTEGER NOT NULL,
+    ethnicity       VARCHAR(100) NOT NULL,
     quote           VARCHAR(100) NOT NULL,
     image_file_path VARCHAR(100) NOT NULL,
     PRIMARY KEY (persona_name)

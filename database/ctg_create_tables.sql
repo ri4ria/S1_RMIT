@@ -85,3 +85,19 @@ CREATE TABLE Outcomes (
     descrip             VARCHAR(500) NOT NULL,
     PRIMARY KEY (outcome_ID)
 );
+
+CREATE TABLE Persona (
+    persona_name    TEXT NOT NULL,
+    quote           VARCHAR(100) NOT NULL,
+    image_file_path VARCHAR(100) NOT NULL,
+    PRIMARY KEY (persona_name)
+);
+
+CREATE TABLE PersonaAttribute (
+    persona_name    TEXT NOT NULL,
+    id              INTEGER NOT NULL,
+    attributeType   VARCHAR(500) NOT NULL,
+    descrip         VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id)
+    FOREIGN KEY (persona_name) REFERENCES Persona(persona_name)
+);

@@ -77,3 +77,10 @@ CREATE TABLE LTHCStatistics (
     FOREIGN KEY (lga_code) REFERENCES LGA(lga_code)
     FOREIGN KEY (lga_year) REFERENCES LGA(lga_year)
 );
+
+CREATE TABLE Outcomes (
+    OutcomeID           INTEGER NOT NULL,
+    Title               INTEGER NOT NULL,
+    Descrip             TEXT NOT NULL,
+    PRIMARY KEY (OutcomeID)
+);

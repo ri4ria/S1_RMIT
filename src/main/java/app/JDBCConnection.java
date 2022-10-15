@@ -90,9 +90,9 @@ public class JDBCConnection {
 
     // TODO: Add your required methods here
 
-    public ArrayList<Persona> getPersonas() {
+    public ArrayList<Persona> getPersona(String input_name) {
         // Create the ArrayList of LGA objects to return
-        ArrayList<Persona> personas = new ArrayList<Persona>();
+        ArrayList<Persona> requested_persona = new ArrayList<Persona>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -106,7 +106,7 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT * FROM Persona";
+            String query = "SELECT * FROM Persona WHERE persona_name = '" + input_name +"'";
             
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -122,7 +122,7 @@ public class JDBCConnection {
                 Persona persona = new Persona(name, quote, image_file_path);
 
                 // Add the lga object to the array
-                personas.add(persona);
+                requested_persona.add(persona);
             }
 
             // Close the statement because we are done with it
@@ -143,7 +143,7 @@ public class JDBCConnection {
         }
 
         // Finally we return all of the lga
-        return personas;
+        return requested_persona;
     }
 
      /**
@@ -175,9 +175,9 @@ public class JDBCConnection {
             // Process all of the results
             while (results.next()) {
                 // Lookup the columns we need
-                String OutcomeID     = results.getString("OutcomeID");
-                String Title     = results.getString("Title");
-                String Descrip  = results.getString("Descrip");
+                String OutcomeID     = results.getString("outcome_ID");
+                String Title     = results.getString("title");
+                String Descrip  = results.getString("descrip");
 
                 // Create a LGA Object
                 Outcome target = new Outcome(OutcomeID, Title, Descrip);
@@ -206,6 +206,4 @@ public class JDBCConnection {
         // Finally we return all of the lga
         return outcomes;
     }
-
-
 }

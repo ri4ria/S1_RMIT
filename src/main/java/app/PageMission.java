@@ -127,6 +127,7 @@ public class PageMission implements Handler {
         """;
 
         // Personas
+
         html = html + """
             <div class='personas'>
                 <h1>
@@ -138,11 +139,11 @@ public class PageMission implements Handler {
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
-        // Next we will ask this *class* for the Personas
-        ArrayList<Persona> personas = jdbc.getPersonas();
+        // Next we will ask this *class* for the Joanna Tilden persona
+        ArrayList<Persona> persona1 = jdbc.getPersonas("Joanna Tilden the GP");
 
-        // Finally we can print out all of the Personas
-        for (Persona persona : personas) {
+        // Print the Joanna Tilden persona
+        for (Persona persona : persona1) {
             html = html + "<h2>" + persona.getName() + "</h2> <ul>" 
                     // TODO: remove inline CSS and create alternative in CSS stylesheet
                         + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '100' style = 'transform:rotate(0deg)'>"
@@ -150,6 +151,91 @@ public class PageMission implements Handler {
                         + "<li>" + persona.getEthnicity() + "</li>"
                         + "<li>\"" + persona.getQuote() + "\"</li> </ul>";
         }
+
+        html = html + "<h4>Background</h4> <ul>";
+        ArrayList<PersonaAttribute> persona1background = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Background");
+        for (PersonaAttribute background : persona1background) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + background.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Needs</h4> <ul>";
+        ArrayList<PersonaAttribute> persona1needs = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Needs");
+        for (PersonaAttribute needs : persona1needs) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + needs.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Goals</h4> <ul>";
+        ArrayList<PersonaAttribute> persona1goals = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Goals");
+        for (PersonaAttribute goals : persona1goals) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + goals.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Skills</h4> <ul>";
+        ArrayList<PersonaAttribute> persona1skills = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Skills");
+        for (PersonaAttribute skills : persona1skills) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + skills.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        // Next we will ask this *class* for the Lara King persona
+        ArrayList<Persona> persona2 = jdbc.getPersonas("Lara King the Lawyer");
+
+        // Print the Lara King persona
+        for (Persona persona : persona2) {
+            html = html + "<h2>" + persona.getName() + "</h2> <ul>" 
+                    // TODO: remove inline CSS and create alternative in CSS stylesheet
+                        + "<img src = '" + persona.getImageFilePath() + "' alt = 'Persona Image' height = '100' style = 'transform:rotate(0deg)'>"
+                        + "<li>" + persona.getAge() + "</li>"
+                        + "<li>" + persona.getEthnicity() + "</li>"
+                        + "<li>\"" + persona.getQuote() + "\"</li> </ul>";
+        }
+
+        html = html + "<h4>Background</h4> <ul>";
+        ArrayList<PersonaAttribute> persona2background = jdbc.getPersonaAttribute("Lara King the Lawyer", "Background");
+        for (PersonaAttribute background : persona2background) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + background.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Needs</h4> <ul>";
+        ArrayList<PersonaAttribute> persona2needs = jdbc.getPersonaAttribute("Lara King the Lawyer", "Needs");
+        for (PersonaAttribute needs : persona2needs) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + needs.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Goals</h4> <ul>";
+        ArrayList<PersonaAttribute> persona2goals = jdbc.getPersonaAttribute("Lara King the Lawyer", "Goals");
+        for (PersonaAttribute goals : persona2goals) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + goals.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
+
+        html = html + "<h4>Skills</h4> <ul>";
+        ArrayList<PersonaAttribute> persona2skills = jdbc.getPersonaAttribute("Lara King the Lawyer", "Skills");
+        for (PersonaAttribute skills : persona2skills) {
+            // TODO: remove inline CSS and create alternative in CSS stylesheet
+            html = html + "<li>" + skills.getDescription() + "</li>";         
+        }
+
+        html = html + "</ul>";
          
         // Closing Personas div
         html = html + "</div>";

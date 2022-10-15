@@ -4,7 +4,7 @@ drop table if exists LGA;
 drop table if exists PopulationStatistics;
 drop table if exists HouseholdStatistics;
 drop table if exists EducationStatistics;
-drop table if exists Outcomes
+drop table if exists Outcomes;
 PRAGMA foreign_keys = ON;
 
 -- CREATE TABLE LGA (
@@ -80,8 +80,8 @@ CREATE TABLE LTHCStatistics (
 );
 
 CREATE TABLE Outcomes (
-    outcome_ID           INTEGER NOT NULL,
-    title               INTEGER NOT NULL,
+    outcome_ID          INTEGER NOT NULL,
+    title               TEXT NOT NULL,
     descrip             TEXT NOT NULL,
     PRIMARY KEY (outcome_ID)
 );

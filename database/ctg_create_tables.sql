@@ -2,6 +2,7 @@
 PRAGMA foreign_keys = OFF;
 drop table if exists LGA;
 drop table if exists PopulationStatistics;
+drop table if exists HouseholdStatistics;
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE LGA (
@@ -24,3 +25,11 @@ CREATE TABLE PopulationStatistics (
     FOREIGN KEY (lga_code16) REFERENCES LGA(lga_code16)
 );
 
+CREATE TABLE HouseholdStatistics (
+    lga_code16        INTEGER NOT NULL,
+    indigenous_status TEXT NOT NULL,
+    income_bracket    TEXT NOT NULL,
+    count             INTEGER NOT NULL,
+    PRIMARY KEY (lga_code16, indigenous_status, income_bracket)
+    FOREIGN KEY (lga_code16) REFERENCES LGA(lga_code16)
+);

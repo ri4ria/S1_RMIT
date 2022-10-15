@@ -123,10 +123,6 @@ public class PageIndex implements Handler {
             </ul>
             """;
 
-        // Close Content div
-        html = html + "</div>";
-
-
          // Add Div for Outcome
          html = html + "<div class='outcome'>";
 
@@ -135,10 +131,10 @@ public class PageIndex implements Handler {
             JDBCConnection jdbc = new JDBCConnection(); 
 
          // 17 targets using getOutcomes 
-         html = html + "<h1>Target Outcomes</h1>" + "<ul>" ;     
+         html = html + "<h1>Target Outcomes</h1>" + "<ul class = bulletspacing>" ;     
             ArrayList<Outcome> outcome = jdbc.getOutcomes();
             for (Outcome target : outcome) {
-                html = html + "<li>" + target.Descrip + "</li>";
+                html = html + "<li>" + "<b> Outcome " + target.OutcomeID + "</b> " + target.Descrip + "</li>";
             }
             html = html + "</ul>";
 

@@ -70,6 +70,12 @@ public class PageST22 implements Handler {
         // Add Div for page Content
         html = html + "<div class='content'>";
 
+        // Section 1
+        html = html + "<h1>Changes between 2016 and 2021 Censuses</h1>";
+
+        html = html + "<p>On this page, you can find the difference between 2016 and 2021 data on local government areas (LGAs) or states.</p>";
+
+        html = html + "<p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>";
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();

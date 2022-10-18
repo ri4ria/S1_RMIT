@@ -88,17 +88,17 @@ public class PageIndex implements Handler {
             <h1>Our Focus</h1>
                 <div class='division'>
                     <img src="outcomeA.png" style=width:110px> 
-                        <h3><b>Outcome 1:</b></h3>
+                        <h3><b>Outcome 1</b></h3>
                             <p> Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
                 </div>
                 <div class='division'>
                     <img src="outcomeB.png" style=width:110px> 
-                        <h3><b>Ouctome 5:</b></h3>
+                        <h3><b>Ouctome 5</b></h3>
                             <p>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
                 </div>
                 <div class='division'>
                     <img src="outcomeC.png" style=width:110px> 
-                        <h3><b>Outcome 8:</b></h3>
+                        <h3><b>Outcome 8</b></h3>
                             <p>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
                 </div>
                 """;
@@ -109,7 +109,7 @@ public class PageIndex implements Handler {
             <ul class= 'bulletspacing'>
                 <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>
                 <li><a href='mission.html'>Our Mission:</a> View information about our website personas and our mission</li>
-                <li>Data Analysis: Hover over to view the following websites:
+                <li>Data Analysis: Hover over to view the following webpages:
                     <ul>
                         <li><a href='page3.html'>2021 Census Results:</a> Observe the lastest information available from the 2021 census 
                             on 'The Gap' between Indigenous and Non-Indigenous peoples</li>
@@ -119,7 +119,7 @@ public class PageIndex implements Handler {
                         <li><a href='page6.html'>Compare LGAs with Similar Characteristics:</a> Compare similar Local Government Areas' performance on addressing all the three target outcomes</li>
                     </ul>
                 </li>
-                <li><a href='page7.html'>Resources:</a> View links to different websites</li> 
+                <li><a href='page7.html'>Resources:</a> View links to different websites and resources</li> 
             </ul>
             """;
 
@@ -137,6 +137,8 @@ public class PageIndex implements Handler {
                 html = html + "<li>" + "<b> Outcome " + target.OutcomeID + "</b> " + target.Descrip + "</li>";
             }
             html = html + "</ul>";
+            //Close Outcome div
+            html = html + "</div>";
 
         // Close Content div
         html = html + "</div>";

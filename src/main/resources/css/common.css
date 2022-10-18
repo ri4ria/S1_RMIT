@@ -195,7 +195,7 @@ img.top-image {
 /* Round the edges of the image https://www.w3schools.com/howto/howto_css_rounded_images.asp */
 img {
    border-radius: 50%;
-   transform: rotate(45deg);
+   /* transform: rotate(45deg); */
 }
 
 /* https://www.w3schools.com/cssref/css3_pr_word-wrap.asp */

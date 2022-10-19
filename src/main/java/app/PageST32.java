@@ -70,6 +70,66 @@ public class PageST32 implements Handler {
         // Add Div for page Content
         html = html + "<div class='content'>";
 
+        // Adding a filter sidebar
+        // https://stackoverflow.com/questions/36712967/single-dropdown-with-search-box-in-it
+        html = html + """
+                <fieldset>
+
+                    <legend>Dataset</legend>
+
+                    <input id = 'highestSchoolYearRadio' name = 'datasetList'
+                        type = 'radio' value = 'highestSchoolYear'>
+                    <label for = 'highestSchoolYearRadio'>Highest Year of High School Completed</label>
+
+                    <input id = 'indigenousStatusRadio' name = 'datasetList'
+                        type = 'radio' value = 'indigenousStatus'>
+                    <label for = 'indigenousStatusRadio'>Indigenous Status</label>
+
+                    <input id = 'householdIncomeRadio' name = 'datasetList'
+                        type = 'radio' value = 'householdIncome'>
+                    <label for = 'householdIncomeRadio'>Total Weekly Household Income</label>
+                
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>LGA/State</legend>
+
+                    <input id = 'LGARadio' name = 'LGAStateList'
+                           type = 'radio' value = 'LGA'>
+                    <label for = 'LGARadio'>LGA</label>
+
+                    <input id = 'stateRadio' name = 'LGAStateList'
+                           type = 'radio' value = 'State'>
+                    <label for = 'stateRadio'>State</label>
+
+                    <br>
+                    <br>
+
+                    <datalist id = 'suggestions'>
+                        <option>First option</option>
+                        <option>Second option</option>
+                    </datalist>
+                    <input autoComplete = 'on' list = 'suggestions'/>
+
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>Value Type</legend>
+
+                    <input id = 'rawRadio' name = 'valueTypeList'
+                           type = 'radio' value = 'Raw'>
+                    <label for = 'rawRadio'>Raw</label>
+
+                    <input id = 'proportionalRadio' name = 'valueTypeList'
+                           type = 'radio' value = 'Proportional'>
+                    <label for = 'proportionalRadio'>Proportional</label>
+
+                </fieldset>
+
+                """;
+
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();

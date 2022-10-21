@@ -1,6 +1,7 @@
-<html>
-
+<!doctype html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Homepage</title>
     <link rel='stylesheet' type='text/css' href='common.css' />
 </head>
@@ -58,6 +59,7 @@
             <p>Strong economic participation and development of Aboriginal and Torres Strait Islander people and
                 communities</p>
         </div>
+        <!--
         <h1>Page information</h1>
         <ul class='bulletspacing'>
             <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>
@@ -77,9 +79,14 @@
                 </ul>
             </li>
             <li><a href='page7.html'>Resources:</a> View links to different websites and resources</li>
-        </ul>
+        </ul> -->
+
         <div class='outcome'></div>
-    </div>
+            <ul>
+                <li th:each= "target : ${outcome}" th:text="${target}"></li>
+            </ul>
+        </div>
+
     <div class='footer'>
         <h3>
             Acknowledgement of Country

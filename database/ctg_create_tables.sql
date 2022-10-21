@@ -5,6 +5,9 @@ drop table if exists PopulationStatistics;
 drop table if exists HouseholdStatistics;
 drop table if exists EducationStatistics;
 drop table if exists Outcomes;
+drop table if exists LTHCStatistics;
+drop table if exists Persona;
+drop table if exists PersonaAttribute;
 PRAGMA foreign_keys = ON;
 
 -- CREATE TABLE LGA (

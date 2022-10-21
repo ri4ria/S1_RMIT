@@ -49,7 +49,7 @@ public class App {
         // Add / uncomment POST commands for any pages that need web form POSTS
         // app.post(PageIndex.URL, new PageIndex());
         // app.post(PageMission.URL, new PageMission());
-        // app.post(PageST21.URL, new PageST21());
+        app.post(PageST21.URL, new PageST21());
         app.post(PageST22.URL, new PageST22());
         // app.post(PageST31.URL, new PageST31());
         // app.post(PageST32.URL, new PageST32());

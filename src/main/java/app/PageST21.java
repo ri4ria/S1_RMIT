@@ -78,6 +78,23 @@ public class PageST21 implements Handler {
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
+        /* Add HTML for the web form
+         * We are giving two ways here
+         *  - one for a text box
+         *  - one for a drop down
+         * 
+         * Whitespace is used to help us understand the HTML!
+         * 
+         * IMPORTANT! the action speicifes the URL for POST!
+         */
+
+        html = html + "<form action='/page3.html' method='post'>";
+
+        html = html + "   <div class='form-group'>";
+        html = html + "      <label for='direct_drop'>Select a director from the dropdown(Dropdown):</label>";
+        html = html + "      <select id='direct_drop' name='direct_drop'>";
+
+
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 

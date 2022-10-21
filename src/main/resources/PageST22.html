@@ -1,0 +1,228 @@
+<html>
+
+<head>
+    <title>Subtask 2.2</title>
+    <link rel='stylesheet' type='text/css' href='common.css' />
+</head>
+
+<body>
+    <div class='topnav'>
+        <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
+        <ul>
+            <a href='/'>Home</a>
+            <a href='mission.html'>Mission Statement</a>
+            <div class='dropdown'>
+                <button class='dropbtn'>Data Analyses
+                    <i class='fa fa-caret-down'></i>
+                </button>
+                <div class='dropdown-content'>
+                    <a href='page3.html'>2021 Census Results</a>
+                    <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                    <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                    <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
+                </div>
+            </div>
+            <a href='page7.html'>Resources</a>
+        </ul>
+        <input type='text' placeholder='Search...'>
+    </div>
+    <div class='header'>
+        <h1>Subtask 2.2</h1>
+    </div>
+    <div class='content'>
+        <form action='/page4.html' method='post'>
+            <div class='form-group'>
+                <fieldset>
+
+                    <legend>Dataset</legend>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='highestSchoolYear'>
+                    <label for='datasetRadio'>Highest Year of High School Completed</label>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='indigenousStatus'>
+                    <label for='datasetRadio'>Indigenous Status</label>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='householdIncome'>
+                    <label for='datasetRadio'>Total Weekly Household Income</label>
+
+                </fieldset>
+            </div>
+
+            <button type='submit' class='btn btn-primary'>Apply Filters</button>
+
+        </form>
+
+
+        <div class='form-group'>
+            <fieldset>
+
+                <legend>LGA/State</legend>
+
+                <input id='LGARadio' name='LGAStateList' type='radio' value='LGA'>
+                <label for='LGARadio'>LGA</label>
+
+                <input id='stateRadio' name='LGAStateList' type='radio' value='State'>
+                <label for='stateRadio'>State</label>
+
+                <br>
+                <br>
+
+                <datalist id='suggestions'>
+                    <option>First option</option>
+                    <option>Second option</option>
+                </datalist>
+                <input autoComplete='on' list='suggestions' />
+
+            </fieldset>
+        </div>
+
+        <div class='form-group'>
+            <fieldset>
+
+                <legend>Value Type</legend>
+
+                <input id='rawRadio' name='valueTypeList' type='radio' value='Raw'>
+                <label for='rawRadio'>Raw</label>
+
+                <input id='proportionalRadio' name='valueTypeList' type='radio' value='Proportional'>
+                <label for='proportionalRadio'>Proportional</label>
+
+            </fieldset>
+        </div>
+
+        <h1>Changes between 2016 and 2021 Censuses</h1>
+        <p>On this page, you can find the difference between 2016 and 2021 data on local government areas (LGAs) or
+            states.</p>
+        <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
+    </div>
+    <div class='footer'>
+        <h3>
+            Acknowledgement of Country
+        </h3>
+        <p id='acknowledgementText'>
+            Group 11 acknowledge and pay respect to Elders, both past and present, and all
+            generations of Aboriginal and Torres Strait <br> Islander People now and into the
+            future as the Traditional Owners of this land.
+        </p>
+        <p id='teamMemberCredit'>
+            COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez
+            (s3922406).
+        </p>
+    </div>
+</body>
+
+</html>
+<html>
+
+<head>
+    <title>Subtask 2.2</title>
+    <link rel='stylesheet' type='text/css' href='common.css' />
+</head>
+
+<body>
+    <div class='topnav'>
+        <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
+        <ul>
+            <a href='/'>Home</a>
+            <a href='mission.html'>Mission Statement</a>
+            <div class='dropdown'>
+                <button class='dropbtn'>Data Analyses
+                    <i class='fa fa-caret-down'></i>
+                </button>
+                <div class='dropdown-content'>
+                    <a href='page3.html'>2021 Census Results</a>
+                    <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                    <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                    <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
+                </div>
+            </div>
+            <a href='page7.html'>Resources</a>
+        </ul>
+        <input type='text' placeholder='Search...'>
+    </div>
+    <div class='header'>
+        <h1>Subtask 2.2</h1>
+    </div>
+    <div class='content'>
+        <form action='/page4.html' method='post'>
+            <div class='form-group'>
+                <fieldset>
+
+                    <legend>Dataset</legend>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='highestSchoolYear'>
+                    <label for='datasetRadio'>Highest Year of High School Completed</label>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='indigenousStatus'>
+                    <label for='datasetRadio'>Indigenous Status</label>
+
+                    <input id='datasetRadio' name='datasetRadio' type='radio' value='householdIncome'>
+                    <label for='datasetRadio'>Total Weekly Household Income</label>
+
+                </fieldset>
+            </div>
+
+            <button type='submit' class='btn btn-primary'>Apply Filters</button>
+
+        </form>
+
+
+        <div class='form-group'>
+            <fieldset>
+
+                <legend>LGA/State</legend>
+
+                <input id='LGARadio' name='LGAStateList' type='radio' value='LGA'>
+                <label for='LGARadio'>LGA</label>
+
+                <input id='stateRadio' name='LGAStateList' type='radio' value='State'>
+                <label for='stateRadio'>State</label>
+
+                <br>
+                <br>
+
+                <datalist id='suggestions'>
+                    <option>First option</option>
+                    <option>Second option</option>
+                </datalist>
+                <input autoComplete='on' list='suggestions' />
+
+            </fieldset>
+        </div>
+
+        <div class='form-group'>
+            <fieldset>
+
+                <legend>Value Type</legend>
+
+                <input id='rawRadio' name='valueTypeList' type='radio' value='Raw'>
+                <label for='rawRadio'>Raw</label>
+
+                <input id='proportionalRadio' name='valueTypeList' type='radio' value='Proportional'>
+                <label for='proportionalRadio'>Proportional</label>
+
+            </fieldset>
+        </div>
+
+        <h1>Changes between 2016 and 2021 Censuses</h1>
+        <p>On this page, you can find the difference between 2016 and 2021 data on local government areas (LGAs) or
+            states.</p>
+        <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
+    </div>
+    <div class='footer'>
+        <h3>
+            Acknowledgement of Country
+        </h3>
+        <p id='acknowledgementText'>
+            Group 11 acknowledge and pay respect to Elders, both past and present, and all
+            generations of Aboriginal and Torres Strait <br> Islander People now and into the
+            future as the Traditional Owners of this land.
+        </p>
+        <p id='teamMemberCredit'>
+            COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez
+            (s3922406).
+        </p>
+    </div>
+</body>
+
+</html>

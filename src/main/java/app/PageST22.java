@@ -105,8 +105,8 @@ public class PageST22 implements Handler {
         
         // TODO: add method for finding corresponding dataset
 
-        String datasetRadio = context.formParam("datasetRadio");
-        html = html + outputDataset(datasetRadio);
+        // String datasetRadio = context.formParam("datasetRadio");
+        // html = html + outputDataset(datasetRadio);
                 
         html = html + """
                 
@@ -160,7 +160,7 @@ public class PageST22 implements Handler {
 
         html = html + "<p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>";
         
-        /* // Look up some information from JDBC
+        // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
@@ -178,7 +178,7 @@ public class PageST22 implements Handler {
         }
 
         // Finish the List HTML
-        html = html + "</ul>"; */
+        html = html + "</ul>";
 
         // Close Content div
         html = html + "</div>";
@@ -203,10 +203,10 @@ public class PageST22 implements Handler {
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
         
-
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+        
     }
 
     public String outputDataset(String type) {

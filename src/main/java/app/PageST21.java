@@ -98,6 +98,7 @@ public class PageST21 implements Handler {
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 
+        
         // Add HTML for the LGA list
         html = html + "<h1>All LGAs</h1>" + "<ul>";
 
@@ -132,8 +133,7 @@ public class PageST21 implements Handler {
         """;
 
         // Finish the HTML webpage
-        html = html + "</body>" + "</html>";
-        
+        html = html + "</body>" + "</html>";      
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage

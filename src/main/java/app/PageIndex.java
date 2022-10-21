@@ -163,7 +163,6 @@ public class PageIndex implements Handler {
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
 
-
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);

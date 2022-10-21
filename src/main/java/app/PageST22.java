@@ -68,11 +68,16 @@ public class PageST22 implements Handler {
         """;
 
         // Add Div for page Content
-        html = html + "<div class='content'>";
+        html = html + "<div class='content'>";        
 
         // Adding a filter sidebar
         // https://stackoverflow.com/questions/36712967/single-dropdown-with-search-box-in-it
+
+        // Action below specifies the URL for POST
+        html = html + "<form action = '/page4.html' method = 'post'>";
+
         html = html + """
+                <div class = 'form-group'>
                 <fieldset>
 
                     <legend>Dataset</legend>
@@ -90,7 +95,21 @@ public class PageST22 implements Handler {
                     <label for = 'householdIncomeRadio'>Total Weekly Household Income</label>
                 
                 </fieldset>
+                </div>
 
+                <button type = 'submit' class = 'btn btn-primary'>Apply Filter</button>
+
+                </form>
+
+                """;
+        
+        // TODO: add method for finding corresponding dataset
+
+        String highestSchoolYearRadio = context.formParam("highSchoolYearRadio");
+                
+        html = html + """
+                
+                <div class = 'form-group'>
                 <fieldset>
 
                     <legend>LGA/State</legend>
@@ -113,7 +132,9 @@ public class PageST22 implements Handler {
                     <input autoComplete = 'on' list = 'suggestions'/>
 
                 </fieldset>
+                </div>
 
+                <div class = 'form-group'>
                 <fieldset>
 
                     <legend>Value Type</legend>
@@ -127,6 +148,7 @@ public class PageST22 implements Handler {
                     <label for = 'proportionalRadio'>Proportional</label>
 
                 </fieldset>
+                </div>
 
                 """;
 
@@ -136,7 +158,8 @@ public class PageST22 implements Handler {
         html = html + "<p>On this page, you can find the difference between 2016 and 2021 data on local government areas (LGAs) or states.</p>";
 
         html = html + "<p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>";
-        // Look up some information from JDBC
+        
+        /* // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
@@ -154,7 +177,9 @@ public class PageST22 implements Handler {
         }
 
         // Finish the List HTML
-        html = html + "</ul>";
+        html = html + "</ul>"; */
+
+        html = html + outputDataset("Highest School Year Completed");
 
 
         // Close Content div
@@ -184,6 +209,25 @@ public class PageST22 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+    }
+
+    public String outputDataset(String type) {
+        String html = "";
+        html = html + "<h2>2016 vs. 2021 " + type + " Datasets</h2>";
+
+        // Look up datasets from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> ST22Results = jdbc.getST22Results(); // at the moment, this will only output results for EducationStatistics
+
+        // Add HTML for the data list
+        // TODO: code this to be a table
+        html = html + "<ul>";
+        for (String result : ST22Results) {
+            html = html + "<li>" + result.toString() + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
     }
 
 }

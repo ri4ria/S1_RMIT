@@ -265,4 +265,78 @@ public class JDBCConnection {
         // Finally we return all of the lga
         return outcomes;
     }
+
+    public ArrayList<String> getST22Results() {
+        // Creating ArrayList for results
+        ArrayList<String> ST22Results = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = """
+                SELECT data2016.lga_code AS '2016 LGA Code', 
+                       data2021.lga_code AS '2021 LGA Code', 
+                       data2016.indigenous_status AS 'Indigenous Status', 
+                       data2016.sex AS 'Gender', 
+                       data2016.highest_school_year AS 'Highest School Year Completed', 
+                       data2016.count AS '2016 Result', 
+                       data2021.count AS '2021 Result',
+                       data2021.count - data2016.count AS 'Difference'
+                    FROM EducationStatistics AS data2016 LEFT OUTER JOIN EducationStatistics AS data2021 ON data2016.lga_code = data2021.lga_code AND 
+                                                                                                data2016.indigenous_status = data2021.indigenous_status AND
+                                                                                                data2016.sex = data2021.sex AND
+                                                                                                data2016.highest_school_year = data2021.highest_school_year
+                    WHERE data2016.lga_year = 2016 AND data2021.lga_year = 2021
+                    """;;
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a Movie Object
+                String result = new String();
+
+                result = String.valueOf(results.getInt("2016 LGA Code")) + " ";
+                result = result + String.valueOf(results.getInt("2021 LGA Code")) + " ";
+                result = result + results.getString("Indigenous Status") + " ";
+                result = result + results.getString("Gender") + " ";
+                result = result + results.getString("Highest School Year Completed") + " ";
+                result = result + String.valueOf(results.getInt("2016 Result")) + " ";
+                result = result + String.valueOf(results.getInt("2021 Result")) + " ";
+                result = result + String.valueOf(results.getInt("Difference"));
+
+                ST22Results.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return ST22Results;
+    }
 }

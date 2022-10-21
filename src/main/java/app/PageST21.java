@@ -72,7 +72,7 @@ public class PageST21 implements Handler {
 
         // Add instructions on how to use the filters
         html = html + """
-                <h2>Click an outcome to compare Local Government Area performance</h2>
+                <h2>Click an outcome to compare the Local Government Area performance with latest results from the 2021 census</h2>
         """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class

@@ -87,17 +87,17 @@ public class PageIndex implements Handler {
         html = html + """
             <h1>Our Focus</h1>
                 <div class='division'>
-                    <img src="outcomeA.png" style=width:110px> 
+                    <img src='outcomeA.png' style=width:110px> 
                         <h3><b>Outcome 1</b></h3>
                             <p> Aboriginal and Torres Strait Islander people enjoy long and healthy lives</p>
                 </div>
                 <div class='division'>
-                    <img src="outcomeB.png" style=width:110px> 
+                    <img src='outcomeB.png' style=width:110px> 
                         <h3><b>Ouctome 5</b></h3>
                             <p>Aboriginal and Torres Strait Islander students achieve their full learning potential</p>
                 </div>
                 <div class='division'>
-                    <img src="outcomeC.png" style=width:110px> 
+                    <img src='outcomeC.png' style=width:110px> 
                         <h3><b>Outcome 8</b></h3>
                             <p>Strong economic participation and development of Aboriginal and Torres Strait Islander people and communities</p>
                 </div>

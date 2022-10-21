@@ -36,12 +36,12 @@ public class CTGProcessCSV {
    // MODIFY these to load/store to/from the correct locations
    
    private static final String DATABASE = "jdbc:sqlite:database/ctg.db";
-   private static final String CSV_FILE_indigenousStatus_2016 = "database/indigenousStatus_2021"; // original file name: lga_indigenous_status_by_age_by_sex_census_2016.csv
+   private static final String CSV_FILE_indigenousStatus_2016 = "database/indigenousStatus_2016"; // original file name: lga_indigenous_status_by_age_by_sex_census_2016.csv
    private static final String CSV_FILE_indigenousStatus_2021 = "database/indigenousStatus_2021"; // original file name: lga_indigenous_status_by_age_by_sex_census_2021.csv
    private static final String CSV_FILE_householdIncome_2016 = "database/householdIncome_2016.csv"; // original file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2016
    private static final String CSV_FILE_householdIncome_2021 = "database/householdIncome_2021.csv"; // original file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2021
    private static final String CSV_FILE_highestSchoolYear_2016 = "database/highestSchoolYear_2016.csv"; // original file name: lga_highest_year_of_school_completed_by_indigenous_status_by_sex_2016
-   private static final String CSV_FILE_highestSchoolYear_2021 = "database/highestSchoolYear_2016.csv"; // original file name: lga_highest_year_of_school_completed_by_indigenous_status_by_sex_2021
+   private static final String CSV_FILE_highestSchoolYear_2021 = "database/highestSchoolYear_2021.csv"; // original file name: lga_highest_year_of_school_completed_by_indigenous_status_by_sex_2021
    private static final String CSV_FILE_LTHC_2021 = "database/LTHC_2021.csv"; // original file name: lga_long_term_health_conditions_by_indigenous_status_by_sex_2021
    private static final String CSV_FILE_lgas_2016 = "database/lgas_2016.csv";
    private static final String CSV_FILE_lgas_2021 = "database/lgas_2021.csv";

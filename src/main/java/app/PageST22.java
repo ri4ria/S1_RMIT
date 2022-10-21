@@ -82,22 +82,22 @@ public class PageST22 implements Handler {
 
                     <legend>Dataset</legend>
 
-                    <input id = 'highestSchoolYearRadio' name = 'datasetList'
+                    <input id = 'datasetRadio' name = 'datasetRadio'
                         type = 'radio' value = 'highestSchoolYear'>
-                    <label for = 'highestSchoolYearRadio'>Highest Year of High School Completed</label>
+                    <label for = 'datasetRadio'>Highest Year of High School Completed</label>
 
-                    <input id = 'indigenousStatusRadio' name = 'datasetList'
+                    <input id = 'datasetRadio' name = 'datasetRadio'
                         type = 'radio' value = 'indigenousStatus'>
-                    <label for = 'indigenousStatusRadio'>Indigenous Status</label>
+                    <label for = 'datasetRadio'>Indigenous Status</label>
 
-                    <input id = 'householdIncomeRadio' name = 'datasetList'
+                    <input id = 'datasetRadio' name = 'datasetRadio'
                         type = 'radio' value = 'householdIncome'>
-                    <label for = 'householdIncomeRadio'>Total Weekly Household Income</label>
+                    <label for = 'datasetRadio'>Total Weekly Household Income</label>
                 
                 </fieldset>
                 </div>
 
-                <button type = 'submit' class = 'btn btn-primary'>Apply Filter</button>
+                <button type = 'submit' class = 'btn btn-primary'>Apply Filters</button>
 
                 </form>
 
@@ -105,7 +105,8 @@ public class PageST22 implements Handler {
         
         // TODO: add method for finding corresponding dataset
 
-        String highestSchoolYearRadio = context.formParam("highSchoolYearRadio");
+        String datasetRadio = context.formParam("datasetRadio");
+        html = html + outputDataset(datasetRadio);
                 
         html = html + """
                 
@@ -178,9 +179,6 @@ public class PageST22 implements Handler {
 
         // Finish the List HTML
         html = html + "</ul>"; */
-
-        html = html + outputDataset("Highest School Year Completed");
-
 
         // Close Content div
         html = html + "</div>";

@@ -1,6 +1,8 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -19,8 +21,21 @@ public class PageIndex implements Handler {
     // URL of this page relative to http://localhost:7001/
     public static final String URL = "/";
 
+    // Name of the Thymeleaf HTML template page in the resources folder
+    private static final String TEMPLATE = ("PageIndex.html");
+
     @Override
     public void handle(Context context) throws Exception {
+         // The model of data to provide to Thymeleaf.
+        // In this example the model will remain empty
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        // Add in title for the h1 tag to the model
+        model.put("title", new String("Target Outcomes"));
+
+        
+        /* 
+        
         // Create a simple HTML webpage in a String
         String html = "<html>";
 
@@ -162,10 +177,32 @@ public class PageIndex implements Handler {
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
+        
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
     }
+    */
+        // Look up some information from JDBC
+        // First we need to use your JDBCConnection class 
+        JDBCConnection jdbc = new JDBCConnection(); 
+
+        // Next we will ask this *class* for the outcomes
+        ArrayList<Outcome> outcome = jdbc.getOutcomes();
+
+        ArrayList<String> targetOutcome = new ArrayList<String>();
+        for (Outcome target : outcome) {
+            targetOutcome.add("Outcome " + target.OutcomeID + " " + target.Descrip);
+        }
+
+        // Finally put all of these outcomes into the model
+        model.put("outcome", targetOutcome);
+
+        // DO NOT MODIFY THIS
+        // Makes Javalin render the webpage using Thymeleaf
+        context.render(TEMPLATE, model);
+    }
+
 
 }

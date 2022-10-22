@@ -43,6 +43,25 @@
             <p>This website provides data for the following three outcomes:</p>
         </div>
         <h1>Our Focus</h1>
+        
+        <div class='target-outcome-wrap'>
+            <div class='target-outcome'>
+                <img src='outcomeA.png'>
+                <h4>Outcome 1</h4>
+                <p th:text='${outcome1description}'></p>
+            </div>
+            <div class='target-outcome'>
+                <img src='outcomeB.png'>
+                <h4>Outcome 5</h4>
+                <p th:text='${outcome5description}'></p>
+            </div>
+            <div class='target-outcome'>
+                <img src='outcomeC.png'>
+                <h4>Outcome 8</h4>
+                <p th:text='${outcome8description}'></p>
+            </div>
+        </div>
+<!--
         <div class='division'>
             <img src='outcomeA.png' style=width:110px>
             <h3><b>Outcome 1</b></h3>
@@ -59,7 +78,7 @@
             <p>Strong economic participation and development of Aboriginal and Torres Strait Islander people and
                 communities</p>
         </div>
-        <!--
+        
         <h1>Page information</h1>
         <ul class='bulletspacing'>
             <li><a href='/'>Homepage:</a> View all the current target outcomes and our focus</li>

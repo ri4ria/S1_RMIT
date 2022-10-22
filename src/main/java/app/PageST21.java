@@ -2,6 +2,9 @@ package app;
 
 import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -19,8 +22,29 @@ public class PageST21 implements Handler {
     // URL of this page relative to http://localhost:7001/
     public static final String URL = "/page3.html";
 
+     // Name of the Thymeleaf HTML template page in the resources folder
+     private static final String TEMPLATE = ("PageST21.html");
+
+
     @Override
     public void handle(Context context) throws Exception {
+
+        // The model of data to provide to Thymeleaf.
+        // In this example the model will remain empty
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        // Add in title for the h1 tag to the model
+        model.put("title", new String("2021 Census Results"));
+
+         // Look up some information from JDBC
+        // First, create new connection to JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+
+         // DO NOT MODIFY THIS
+        // Makes Javalin render the webpage using Thymeleaf
+        context.render(TEMPLATE, model);
+
+        /* 
         // Create a simple HTML webpage in a String
         String html = "<html>";
 
@@ -73,6 +97,17 @@ public class PageST21 implements Handler {
         // Add instructions on how to use the filters
         html = html + """
                 <h2>Click an outcome to compare the Local Government Area performance with latest results from the 2021 census</h2>
+                <div>
+                <label>
+                    <input type="radio" name="test" value="small" checked>
+                    <img src='outcomeA.png' alt="Option 1">
+                </label> 
+    
+                <label>
+                    <input type="radio" name="test" value="big">
+                    <img src='outcomeC.png' alt="Option 2">
+                </label>
+                </div>
         """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
@@ -86,7 +121,7 @@ public class PageST21 implements Handler {
          * Whitespace is used to help us understand the HTML!
          * 
          * IMPORTANT! the action speicifes the URL for POST!
-         */
+         
 
         html = html + "<form action='/page3.html' method='post'>";
 
@@ -138,6 +173,7 @@ public class PageST21 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+        */
     }
 
 }

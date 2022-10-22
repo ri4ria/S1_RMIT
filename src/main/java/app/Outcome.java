@@ -14,4 +14,8 @@ public class Outcome {
         this.Title = title; 
         this.Descrip = descrip;
     }
+
+    public String getDescription() {
+        return Descrip;
+    }
 }

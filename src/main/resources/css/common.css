@@ -208,7 +208,8 @@ img {
 .persona {
    display: inline-block;
    background-color: #F0E7D4;
-   border: 5px #BFBFBF; /* TODO: not working at the moment */
+   border: 1px #BFBFBF; /* TODO: not working at the moment */
+   border-style: solid;
    border-radius: 15px;
    width: 600px;
    margin-right: 30px;

@@ -33,6 +33,30 @@ public class PageIndex implements Handler {
         // Add in title for the h1 tag to the model
         model.put("title", new String("Target Outcomes"));
 
+         // Look up some information from JDBC
+        // First, create new connection to JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+
+        // Ask JDBC class for target outcomes
+        ArrayList<Outcome> outcome1 = jdbc.getSpecificOutcome(1);
+        ArrayList<Outcome> outcome5 = jdbc.getSpecificOutcome(5);
+        ArrayList<Outcome> outcome8 = jdbc.getSpecificOutcome(8);
+
+        String outcome1description;
+        String outcome5description;
+        String outcome8description;
+
+        // Put target outcomes into the model
+        for (Outcome outcome : outcome1) {
+            model.put("outcome1description", outcome1description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome5) {
+            model.put("outcome5description", outcome1description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome5) {
+            model.put("outcome8description", outcome1description = outcome.getDescription());
+        }
+
         
         /* 
         
@@ -186,7 +210,7 @@ public class PageIndex implements Handler {
     */
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class 
-        JDBCConnection jdbc = new JDBCConnection(); 
+        //JDBCConnection jdbc = new JDBCConnection(); 
 
         // Next we will ask this *class* for the outcomes
         ArrayList<Outcome> outcome = jdbc.getOutcomes();

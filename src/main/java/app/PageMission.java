@@ -97,6 +97,30 @@ public class PageMission implements Handler {
             model.put("persona2quote", persona2quote = persona.getQuote());
         }
 
+        ArrayList<String> persona2backgroundlist = new ArrayList<String>();
+        for (PersonaAttribute background : persona2background) {
+            persona2backgroundlist.add(background.getDescription());
+        }
+        model.put("persona2backgroundlist", persona2backgroundlist);
+
+        ArrayList<String> persona2needslist = new ArrayList<String>();
+        for (PersonaAttribute need : persona2needs) {
+            persona2needslist.add(need.getDescription());
+        }
+        model.put("persona2needslist", persona2needslist);
+
+        ArrayList<String> persona2goalslist = new ArrayList<String>();
+        for (PersonaAttribute goal : persona2goals) {
+            persona2goalslist.add(goal.getDescription());
+        }
+        model.put("persona2goalslist", persona2goalslist);
+
+        ArrayList<String> persona2skillslist = new ArrayList<String>();
+        for (PersonaAttribute skill : persona2skills) {
+            persona2skillslist.add(skill.getDescription());
+        }
+        model.put("persona2skillslist", persona2skillslist);
+
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);

@@ -1,6 +1,7 @@
-<html>
-
+<!doctype html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Subtask 2.1</title>
     <link rel='stylesheet' type='text/css' href='common.css' />
 </head>
@@ -26,55 +27,70 @@
         </ul>
         <input type='text' placeholder='Search...'>
     </div>
+
     <div class='header'>
         <h1>2021 Census Results</h1>
     </div>
+
     <div class='content'>
-        <h2>Select a dataset to compare Local Government Area performance with the latest results from the 2021 census
-        </h2>
+        <h2>Select a dataset to compare Local Government Area performance with the latest results from the 2021 census</h2>
         <form action='/page3.html' method='post'>
+            <div class='form-group'>
     
-            <div class='target-outcome-wrap'>
-                <div class='target-outcome'>
-                    <label>
-                        <input type='radio'>
-                        <img src='outcomeA.png' alt='Option 1'>
-                        <p><b>Data on Health Conditions</b></p>
-                        <p>(Outcome 1)</p>
-                    </label>
-                </div> 
+                <div class='target-outcome-wrap'>
+                    <div class='target-outcome'>
+                        <label>
+                            <input type='radio'>
+                            <img src='outcomeA.png' alt='Option 1'>
+                            <p><b>Data on Health Conditions</b></p>
+                            <p>(Outcome 1)</p>
+                        </label>
+                    </div> 
 
-                <div class='target-outcome'>
-                    <label class='rotate'>
-                        <input type='radio'>
-                        <img src='outcomeA.png' alt='Option 2'>
-                        <p><b>Data on Population by Age</b></p>
-                        <p>(Outcome 1)</p>
-                    </label>
-                </div> 
+                    <div class='target-outcome'>
+                        <label class='rotate'>
+                            <input type='radio'>
+                            <img src='outcomeA.png' alt='Option 2'>
+                            <p><b>Data on Population by Age</b></p>
+                            <p>(Outcome 1)</p>
+                        </label>
+                    </div> 
                     
-                <div class='target-outcome'>
-                    <label>
-                        <input type='radio'>
-                        <img src='outcomeB.png' alt='Option 3'>
-                        <p><b>Data on Highest Year of Schooling</b></p>
-                        <p>(Outcome 5)</p>
-                    </label>
-                </div> 
+                    <div class='target-outcome'>
+                        <label>
+                            <input type='radio'>
+                            <img src='outcomeB.png' alt='Option 3'>
+                            <p><b>Data on Highest Year of Schooling</b></p>
+                            <p>(Outcome 5)</p>
+                        </label>
+                    </div> 
 
-                <div class='target-outcome'>
-                    <label>
-                        <input type='radio'>
-                        <img src='outcomeC.png' alt='Option 4'>
-                        <p><b>Data on Weekly Household Income</b></p>
-                        <p>(Outcome 8)</p>
-                    </label>
-                </div> 
+                    <div class='target-outcome'>
+                        <label>
+                            <input type='radio'>
+                            <img src='outcomeC.png' alt='Option 4'>
+                            <p><b>Data on Weekly Household Income</b></p>
+                            <p>(Outcome 8)</p>
+                        </label>
+                    </div> 
+                </div>
             </div>
+        </form>
 
-            <div class='form-group'> <label for='direct_drop'>Select a director from the dropdown(Dropdown):</label>
+            <div class='form-group'> <label for='direct_drop'>Select Health Condition from dropdown:</label>
                 <select id='direct_drop' name='direct_drop'></ul>
             </div>
+            <div class='form-group'> <label for='direct_drop'>Select Age Range from dropdown:</label>
+                <select id='direct_drop' name='direct_drop'></ul>
+            </div>
+            <div class='form-group'> <label for='direct_drop'>Select Highest Year of Schooling from dropdown:</label>
+                <select id='direct_drop' name='direct_drop'></ul>
+            </div>
+            <div class='form-group'> <label for='direct_drop'>Select Weekly Income Bracket from dropdown:</label>
+                <select id='direct_drop' name='direct_drop'></ul>
+            </div>
+
+    </div>
             <div class='footer'>
                 <h3>
                     Acknowledgement of Country
@@ -89,6 +105,7 @@
                     (s3922406).
                 </p>
             </div>
+
 </body>
 
 </html>

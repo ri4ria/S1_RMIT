@@ -206,8 +206,11 @@ img {
 
 /* Persona styling on Mission Statement page */
 .persona {
+   display: inline-block;
    background-color: #F0E7D4;
    border: 5px #BFBFBF; /* TODO: not working at the moment */
    border-radius: 15px;
-   padding: 10px 10px 10px 10px;
+   width: 600px;
+   padding: 30px;
+   margin: 30px;
 }

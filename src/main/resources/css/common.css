@@ -203,3 +203,11 @@ img {
    word-wrap: break-word;
    width: 60%;
 }
+
+/* Persona styling on Mission Statement page */
+.persona {
+   background-color: #F0E7D4;
+   border: 5px #BFBFBF; /* TODO: not working at the moment */
+   border-radius: 15px;
+   padding: 10px 10px 10px 10px;
+}

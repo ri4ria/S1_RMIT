@@ -208,6 +208,10 @@ img {
 }
 
 /* Mission Statement page styling */
+.section {
+   margin-bottom: 50px;
+}
+
 .target-outcome-wrap {
    display: flex;
    align-content: center;
@@ -217,16 +221,23 @@ img {
 .target-outcome {
    display: inline-block;
    text-align: center;
+   background-color: #F0E7D4;
    border-radius: 15px;
    border: 1px #BFBFBF;
    border-style: solid;
    width: 250px;
-   padding-top: 15px;
+   padding-top: 15px; padding-left: 20px; padding-right: 20px;
    margin: 15px;
 }
 
 .target-outcome img {
    width: 110px;
+}
+
+.personas-wrap {
+   display: flex;
+   align-content: center;
+   justify-content: center;
 }
 
 .persona {

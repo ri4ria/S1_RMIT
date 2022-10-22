@@ -38,18 +38,30 @@ public class PageMission implements Handler {
 
         // Ask the JDBC class for the personas
         ArrayList<Persona> persona1 = jdbc.getPersonas("Joanna Tilden the GP");
+        ArrayList<Persona> persona2 = jdbc.getPersonas("Lara King the Lawyer");
 
-        String persona1name;
-        int persona1age;
-        String persona1ethnicity;
-        String persona1quote;
+        String persona1name; String persona2name;
+        String persona1imagepath; String persona2imagepath;
+        int persona1age; int persona2age;
+        String persona1ethnicity; String persona2ethnicity;
+        String persona1quote; String persona2quote;
         
         // Put persona1 details into the model
         for (Persona persona : persona1) {
             model.put("persona1name", persona1name = persona.getName());
+            model.put("persona1imagepath", persona1imagepath = persona.getImageFilePath());
             model.put("persona1age", persona1age = persona.getAge());
             model.put("persona1ethnicity", persona1ethnicity = persona.getEthnicity());
             model.put("persona1quote", persona1quote = persona.getQuote());
+        }
+
+        // Put persona2 details into the model
+        for (Persona persona : persona2) {
+            model.put("persona2name", persona2name = persona.getName());
+            model.put("persona2imagepath", persona2imagepath = persona.getImageFilePath());
+            model.put("persona2age", persona2age = persona.getAge());
+            model.put("persona2ethnicity", persona2ethnicity = persona.getEthnicity());
+            model.put("persona2quote", persona2quote = persona.getQuote());
         }
 
         // DO NOT MODIFY THIS

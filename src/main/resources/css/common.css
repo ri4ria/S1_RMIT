@@ -211,6 +211,10 @@ img {
    border: 5px #BFBFBF; /* TODO: not working at the moment */
    border-radius: 15px;
    width: 600px;
-   padding: 30px;
-   margin: 30px;
+   margin-right: 30px;
+   padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 30px;
+}
+
+.persona-details {
+   display: inline-block;
 }

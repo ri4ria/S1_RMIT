@@ -36,6 +36,26 @@ public class PageMission implements Handler {
         // First, create new connection to JDBC
         JDBCConnection jdbc = new JDBCConnection();
 
+        // Ask JDBC class for target outcomes
+        ArrayList<Outcome> outcome1 = jdbc.getSpecificOutcome(1);
+        ArrayList<Outcome> outcome5 = jdbc.getSpecificOutcome(5);
+        ArrayList<Outcome> outcome8 = jdbc.getSpecificOutcome(8);
+
+        String outcome1description;
+        String outcome5description;
+        String outcome8description;
+
+        // Put target outcomes into the model
+        for (Outcome outcome : outcome1) {
+            model.put("outcome1description", outcome1description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome5) {
+            model.put("outcome5description", outcome1description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome5) {
+            model.put("outcome8description", outcome1description = outcome.getDescription());
+        }
+
         // Ask the JDBC class for the personas
         ArrayList<Persona> persona1 = jdbc.getPersonas("Joanna Tilden the GP");
         ArrayList<PersonaAttribute> persona1background = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Background");

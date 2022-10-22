@@ -19,7 +19,7 @@ import io.javalin.http.Handler;
 public class PageMission implements Handler {
 
     // URL of this page relative to http://localhost:7001/
-    public static final String URL = "/PageMission.html";
+    public static final String URL = "/mission.html";
 
     // Name of the Thymeleaf HTML template page in the resources folder
     private static final String TEMPLATE = ("PageMission.html");

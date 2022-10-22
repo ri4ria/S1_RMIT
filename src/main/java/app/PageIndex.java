@@ -193,7 +193,7 @@ public class PageIndex implements Handler {
 
         ArrayList<String> targetOutcome = new ArrayList<String>();
         for (Outcome target : outcome) {
-            targetOutcome.add("Outcome " + target.OutcomeID + " " + target.Descrip);
+            targetOutcome.add("Outcome " + target.OutcomeID + ": " + target.Descrip);
         }
 
         // Finally put all of these outcomes into the model

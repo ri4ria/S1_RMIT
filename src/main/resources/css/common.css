@@ -183,7 +183,10 @@ img.top-image {
 }
 
 /* To add spacing between each bullet point */
-.content ul.bulletspacing li {margin-top: 10px;}
+.content ul.bulletspacing li {
+   margin-top: 10px;
+   list-style: none;
+}
 
 /* To make each outcome align next to the other */
 .division {

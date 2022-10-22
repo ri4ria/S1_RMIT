@@ -38,7 +38,16 @@ public class PageMission implements Handler {
 
         // Ask the JDBC class for the personas
         ArrayList<Persona> persona1 = jdbc.getPersonas("Joanna Tilden the GP");
+        ArrayList<PersonaAttribute> persona1background = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Background");
+        ArrayList<PersonaAttribute> persona1needs = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Needs");
+        ArrayList<PersonaAttribute> persona1goals = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Goals");
+        ArrayList<PersonaAttribute> persona1skills = jdbc.getPersonaAttribute("Joanna Tilden the GP", "Skills");
+
         ArrayList<Persona> persona2 = jdbc.getPersonas("Lara King the Lawyer");
+        ArrayList<PersonaAttribute> persona2background = jdbc.getPersonaAttribute("Lara King the Lawyer", "Background");
+        ArrayList<PersonaAttribute> persona2needs = jdbc.getPersonaAttribute("Lara King the Lawyer", "Needs");
+        ArrayList<PersonaAttribute> persona2goals = jdbc.getPersonaAttribute("Lara King the Lawyer", "Goals");
+        ArrayList<PersonaAttribute> persona2skills = jdbc.getPersonaAttribute("Lara King the Lawyer", "Skills");
 
         String persona1name; String persona2name;
         String persona1imagepath; String persona2imagepath;
@@ -54,6 +63,30 @@ public class PageMission implements Handler {
             model.put("persona1ethnicity", persona1ethnicity = persona.getEthnicity());
             model.put("persona1quote", persona1quote = persona.getQuote());
         }
+
+        ArrayList<String> persona1backgroundlist = new ArrayList<String>();
+        for (PersonaAttribute background : persona1background) {
+            persona1backgroundlist.add(background.getDescription());
+        }
+        model.put("persona1backgroundlist", persona1backgroundlist);
+
+        ArrayList<String> persona1needslist = new ArrayList<String>();
+        for (PersonaAttribute need : persona1needs) {
+            persona1needslist.add(need.getDescription());
+        }
+        model.put("persona1needslist", persona1needslist);
+
+        ArrayList<String> persona1goalslist = new ArrayList<String>();
+        for (PersonaAttribute goal : persona1goals) {
+            persona1goalslist.add(goal.getDescription());
+        }
+        model.put("persona1goalslist", persona1goalslist);
+
+        ArrayList<String> persona1skillslist = new ArrayList<String>();
+        for (PersonaAttribute skill : persona1skills) {
+            persona1skillslist.add(skill.getDescription());
+        }
+        model.put("persona1skillslist", persona1skillslist);
 
         // Put persona2 details into the model
         for (Persona persona : persona2) {

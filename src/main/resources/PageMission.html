@@ -82,6 +82,22 @@
                     <li th:text='${persona1ethnicity}'></li>
                     <li>"<i th:text='${persona1quote}'></i>"</li>
                 </ul>
+                <h3>Background</h3>
+                <ul>
+                    <li th:each = 'background : ${persona1backgroundlist}' th:text = '${background}'></li>
+                </ul>
+                <h3>Needs</h3>
+                <ul>
+                    <li th:each = 'need : ${persona1needslist}' th:text = '${need}'></li>
+                </ul>
+                <h3>Goals</h3>
+                <ul>
+                    <li th:each = 'goal : ${persona1goalslist}' th:text = '${goal}'></li>
+                </ul>
+                <h3>Skills and Experience</h3>
+                <ul>
+                    <li th:each = 'skill : ${persona1skillslist}' th:text = '${skill}'></li>
+                </ul>
             </div>
             <div class = 'persona'>
                 <h2 th:text='${persona2name}'></h2>

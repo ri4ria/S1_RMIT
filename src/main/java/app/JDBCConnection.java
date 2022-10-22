@@ -238,10 +238,10 @@ public class JDBCConnection {
                 String Title     = results.getString("title");
                 String Descrip  = results.getString("descrip");
 
-                // Create a LGA Object
+                // Create a Outcome Object
                 Outcome target = new Outcome(OutcomeID, Title, Descrip);
 
-                // Add the lga object to the array
+                // Add the target object to the array
                 outcomes.add(target);
             }
 

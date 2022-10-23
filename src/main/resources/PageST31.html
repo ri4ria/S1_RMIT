@@ -1,5 +1,5 @@
-<html>
-
+<!doctype html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"></html>
 <head>
     <title>Subtask 3.1</title>
     <link rel='stylesheet' type='text/css' href='common.css' />
@@ -27,9 +27,132 @@
         <input type='text' placeholder='Search...'>
     </div>
     <div class='header'>
-        <h1>Subtask 3.1</h1>
+        <h1>Gap Score Between Indigenous & Non-Indigenous</h1>
     </div>
-    <div class='content'></div>
+
+    <div class='content'>
+
+        <h2>Compare Gap Scores for different Local Government Areas and changes in scores over census years</h2>
+        <h3><b>Gap Score</b></br> Large inequalities are depicted by a negative Gap Score, whereas small inequalities are depicted with a positive Gap Score</h3>
+        <h3><b>Change Score</b></br> Large inequality changes are depicted by a negative Change Score, whereas small inequality changes are depicted with a positive Change Score</h3>
+
+        <form action='/page5.html' method='post'>
+            
+                <fieldset>
+                <legend>Select options from the following datasets:</legend>
+               
+                    <div class='form-group'> 
+                    <label for='age_drop'>Select the Age Range:</label></br>
+                        <select id='age_drop' name='age_drop'>
+                        <option value='0to4'>0 to 4 years old</option> 
+                        <option value='5to10'>5 to 10 years old</option>
+                        <option value='10to15'>10 to 15 years old </option>
+                        <option value='15to19'>15 to 19 years old</option> 
+                        <option value='20to24'>20 to 24 years old</option> 
+                        <option value='25to29'>25 to 29 years old</option> 
+                        <option value='30to34'>30 to 34 years old</option> 
+                        <option value='35to39'>35 to 39 years old</option>
+                        <option value='40to44'>40 to 44 years old</option> 
+                        <option value='45to49'>45 to 49 years old</option> 
+                        <option value='50to54'>50 to 54 years old</option> 
+                        <option value='55to59'>55 to 59 years old</option> 
+                        <option value='60to64'>60 to 64 years old</option> 
+                        <option value='65+'>65+ years old</option> 
+                        </select>
+                    </div>
+
+                    <div class='form-group'> 
+                    <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                        <select id='school_drop' name='direct_drop'>
+
+                        </select>
+                    </div>
+
+                    <div class='form-group'> 
+                    <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                        <select id='income_drop' name='direct_drop'>
+                       
+                        </select>
+                    </div>
+
+                </fieldset>
+
+                 <!--Select LGA Order-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select LGA Order</legend>
+                        <input type='radio' name='LGAOrder' id='AscendingLGA' value='Ascending'>
+                        <label for='AscendingLGA'>Ascending</label> 
+                        </br>
+                        <input type='radio' name='LGAOrder' id='DescendingLGA' value='Descending'>
+                        <lable for='DescendingLGA'>Descending</lable>
+                </fieldset>
+            </div>
+
+             <!--Select Data Type-->
+             <div class='form-group'> 
+                <fieldset>
+                <legend>Select Data Type</legend>
+                    <input type='radio' name='DataType' id='RawDataType' value='Raw'>
+                        <label for='RawDataType'>Raw</label> 
+                        </br>
+                        <input type='radio' name='DataType' id='ProportionalDataType' value='Proportional'>
+                        <lable for='ProportionalDataType'>Proportional</lable>
+                </fieldset>
+            </div>
+
+            <!--Select Indigenous and Non-indigenous-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_checkbox-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select both to view 'the Gap'</legend>
+                    <input type='checkbox' name='IndStatus' id='IndStatus' value='Indigenous'>   
+                    <label for='IndStatus'>Indigenous</label>
+                    </br>
+                    <input type='checkbox' name='NonIndStatus' id='NonIndStatus' value='Non-Indigenous'>   
+                    <label for='NonIndStatus'>Non-Indigenous</label>
+                </fieldset>
+            </div>
+
+            <!--Select Sex-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select Sex</legend>
+                    <input type='checkbox' name='FStatus' id='FStatus' value='Female'>   
+                    <label for='FStatus'>Female</label>
+                    </br>
+                    <input type='checkbox' name='MStatus' id='MStatus' value='Male'>   
+                    <label for='MStatus'>Male</label>
+                </fieldset>
+            </div>
+
+            <!--Select Year-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select both to view 'Gap Change'</legend>
+                    <input type='checkbox' name='YearView' id='2016Year' value='2016'>   
+                    <label for='2016Year'>2016 Gap Score</label>
+                    </br>
+                    <input type='checkbox' name='YearView' id='2021Year' value='2021'>   
+                    <label for='2021Year'>2021 Gap Score</label>
+                </fieldset>
+            </div>
+
+             <!--Select LGA area range-->
+             <div class='form-group'> 
+                <fieldset>
+                <legend>Select LGA Area Range</legend> 
+                    <label for='LGAAreaRange'>Area in kilometers (between 0 and 1,000,000):</label>
+                    <input type='range' name='LGAAreaRange' id='LGAAreaRange' min='0' max='1000000'>  
+                </fieldset>
+            </div>
+
+
+            <!-- Submit Button-->
+            <button type='submit' class='btn'>View data</button>
+        </form>
+    </div>
     <div class='footer'>
         <h3>
             Acknowledgement of Country

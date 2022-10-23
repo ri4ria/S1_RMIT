@@ -255,3 +255,7 @@ img {
 .persona-details {
    display: inline-block;
 }
+
+.d-none {
+   display: none;
+}

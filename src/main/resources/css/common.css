@@ -256,6 +256,17 @@ img {
    display: inline-block;
 }
 
+/* filter sidebar styling */
+.filter-sidebar {
+   width: 250px;
+}
+
+.filter-sidebar ul {
+   list-style-type: none; /* currently not working */
+   margin: 0px;
+   padding: 0px;
+}
+
 .d-none {
    display: none;
 }

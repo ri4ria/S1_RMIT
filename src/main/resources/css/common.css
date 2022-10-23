@@ -198,6 +198,7 @@ img.top-image {
 /* Round the edges of the image https://www.w3schools.com/howto/howto_css_rounded_images.asp */
 img {
    border-radius: 50%;
+   width: 110px;
    /* transform: rotate(45deg); */
 }
 
@@ -253,4 +254,8 @@ img {
 
 .persona-details {
    display: inline-block;
+}
+
+.d-none {
+   display: none;
 }

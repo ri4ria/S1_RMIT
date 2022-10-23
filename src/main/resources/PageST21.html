@@ -1,6 +1,7 @@
-<html>
-
+<!doctype html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Subtask 2.1</title>
     <link rel='stylesheet' type='text/css' href='common.css' />
 </head>
@@ -26,16 +27,196 @@
         </ul>
         <input type='text' placeholder='Search...'>
     </div>
+
     <div class='header'>
         <h1>2021 Census Results</h1>
     </div>
+
     <div class='content'>
-        <h2>Click an outcome to compare the Local Government Area performance with latest results from the 2021 census
-        </h2>
+        <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
         <form action='/page3.html' method='post'>
-            <div class='form-group'> <label for='direct_drop'>Select a director from the dropdown(Dropdown):</label>
-                <select id='direct_drop' name='direct_drop'></ul>
+            <div class='form-group'>
+                <fieldset>
+                <legend>Select a dataset:</legend>
+                <!--Allow user to only select one Dataset-->
+                <div class='target-outcome-wrap'>
+                    <div class='target-outcome'>
+                        <label for='DatasetRadio1' onchange='enableSet(this)'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio1' value='1'>
+                            <img src='outcomeA.png' alt='Option 1'>
+                            <p><b>Data on Health Conditions</b></p>
+                            <p>(Outcome 1)</p>
+                        </label>
+                    </div> 
+
+                    <div class='target-outcome'>
+                        <label for='DatasetRadio2' class='rotate'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio2' value='2'>
+                            <img src='outcomeA.png' alt='Option 2'>
+                            <p><b>Data on Population by Age</b></p>
+                            <p>(Outcome 1)</p>
+                        </label>
+                    </div> 
+                    
+                    <div class='target-outcome'>
+                        <label class='dataset' for='DatasetRadio3'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio3' value='3'>
+                            <img src='outcomeB.png' alt='Option 3'>
+                            <p><b>Data on Highest Year of Schooling</b></p>
+                            <p>(Outcome 5)</p>
+                        </label>
+                    </div> 
+
+                    <div class='target-outcome'>
+                        <label for='DatasetRadio4'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio4' value='4'>
+                            <img src='outcomeC.png' alt='Option 4'>
+                            <p><b>Data on Weekly Household Income</b></p>
+                            <p>(Outcome 8)</p>
+                        </label>
+                    </div> 
+                </div>
+                </fieldset>
             </div>
+
+            <!-- Dropdown that will only be available if the relevant dataset is selected-->
+            <fieldset>
+                <legend>Filter the dataset</legend>
+                <div class='form-group'> 
+                    <label for='condition_drop'>Select the Health Condition:</label></br>
+                        <select id='condition_drop' name='condition_drop'>
+                            <option value='Arthritis'>Arthritis</option> 
+                            <option value='Asthma'>Asthma</option>
+                            <option value='Cancer'>Cancer</option> 
+                            <option value='Dementia'>Dementia</option> 
+                            <option value='Diabetes'>Diabetes</option> 
+                            <option value='Heart_disease'>Heart disease</option> 
+                            <option value='Kidney_disease'>Kidney disease</option>
+                            <option value='Lung_condition'>Lung condition</option> 
+                            <option value='Mental_health'>Mental health</option> 
+                            <option value='Stroke'>Stroke</option> 
+                            <option value='Other'>Other</option> 
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='age_drop'>Select the Age Range:</label></br>
+                        <select id='age_drop' name='age_drop'>
+                            <option value='0to4'>0 to 4 years old</option> 
+                            <option value='5to10'>5 to 10 years old</option>
+                            <option value='10to15'>10 to 15 years old </option>
+                            <option value='15to19'>15 to 19 years old</option> 
+                            <option value='20to24'>20 to 24 years old</option> 
+                            <option value='25to29'>25 to 29 years old</option> 
+                            <option value='30to34'>30 to 34 years old</option> 
+                            <option value='35to39'>35 to 39 years old</option>
+                            <option value='40to44'>40 to 44 years old</option> 
+                            <option value='45to49'>45 to 49 years old</option> 
+                            <option value='50to54'>50 to 54 years old</option> 
+                            <option value='55to59'>55 to 59 years old</option> 
+                            <option value='60to64'>60 to 64 years old</option> 
+                            <option value='65+'>65+ years old</option> 
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                        <select id='school_drop' name='direct_drop'>
+
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                        <select id='income_drop' name='direct_drop'>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            <option value='65+'></option>
+                            
+
+                        </select>
+                </div>
+            </fieldset>
+
+            <script>
+                function enableSet(answer) {
+                    if(answer.value == '1') {
+                        document.getElementById('condition_drop').classList.remove('d-none');
+                    } else if (answer.value == '2') {
+                        document.getElementById('age_drop').classList.remove('d-none');
+                    }
+                    else if (answer.value == '3') {
+                        document.getElementById('school_drop').classList.remove('d-none');
+                    }
+                    else if (answer.value == '4') {
+                        document.getElementById('income_drop').classList.remove('d-none');
+                    }
+                }; 
+            </script>
+
+            <!--Select LGA Order-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select LGA Order</legend>
+                        <input type='radio' name='LGAOrder' id='AscendingLGA' value='Ascending'>
+                        <label for='AscendingLGA'>Ascending</label> 
+                        </br>
+                        <input type='radio' name='LGAOrder' id='DescendingLGA' value='Descending'>
+                        <lable for='DescendingLGA'>Descending</lable>
+                </fieldset>
+            </div>
+
+             <!--Select Data Type-->
+             <div class='form-group'> 
+                <fieldset>
+                <legend>Select Data Type</legend>
+                    <input type='radio' name='DataType' id='RawDataType' value='Raw'>
+                        <label for='RawDataType'>Raw</label> 
+                        </br>
+                        <input type='radio' name='DataType' id='ProportionalDataType' value='Proportional'>
+                        <lable for='ProportionalDataType'>Proportional</lable>
+                </fieldset>
+            </div>
+
+            <!--Select Indigenous and Non-indigenous-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_checkbox-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select both to view 'the Gap'</legend>
+                    <input type='checkbox' name='IndStatus' id='IndStatus' value='Indigenous'>   
+                    <label for='IndStatus'>Indigenous</label>
+                    </br>
+                    <input type='checkbox' name='NonIndStatus' id='NonIndStatus' value='Non-Indigenous'>   
+                    <label for='NonIndStatus'>Non-Indigenous</label>
+                </fieldset>
+            </div>
+
+            <!--Select Sex-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select Sex</legend>
+                    <input type='checkbox' name='FStatus' id='FStatus' value='Female'>   
+                    <label for='FStatus'>Female</label>
+                    </br>
+                    <input type='checkbox' name='MStatus' id='MStatus' value='Male'>   
+                    <label for='MStatus'>Male</label>
+                </fieldset>
+            </div>
+
+            <!-- Submit Button-->
+            <button type='submit' class='btn'>Compare LGAs</button>
+        </form>
+    </div>
             <div class='footer'>
                 <h3>
                     Acknowledgement of Country
@@ -50,6 +231,7 @@
                     (s3922406).
                 </p>
             </div>
+
 </body>
 
 </html>

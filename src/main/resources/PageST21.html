@@ -41,8 +41,8 @@
                 <!--Allow user to only select one Dataset-->
                 <div class='target-outcome-wrap'>
                     <div class='target-outcome'>
-                        <label for='DatasetRadio1'>
-                            <input type='radio' name='DatasetRadio' id='DatasetRadio1'>
+                        <label for='DatasetRadio1' onchange='enableSet(this)'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio1' value='1'>
                             <img src='outcomeA.png' alt='Option 1'>
                             <p><b>Data on Health Conditions</b></p>
                             <p>(Outcome 1)</p>
@@ -51,7 +51,7 @@
 
                     <div class='target-outcome'>
                         <label for='DatasetRadio2' class='rotate'>
-                            <input type='radio' name='DatasetRadio' id='DatasetRadio2'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio2' value='2'>
                             <img src='outcomeA.png' alt='Option 2'>
                             <p><b>Data on Population by Age</b></p>
                             <p>(Outcome 1)</p>
@@ -60,7 +60,7 @@
                     
                     <div class='target-outcome'>
                         <label class='dataset' for='DatasetRadio3'>
-                            <input type='radio' name='DatasetRadio' id='DatasetRadio3'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio3' value='3'>
                             <img src='outcomeB.png' alt='Option 3'>
                             <p><b>Data on Highest Year of Schooling</b></p>
                             <p>(Outcome 5)</p>
@@ -69,7 +69,7 @@
 
                     <div class='target-outcome'>
                         <label for='DatasetRadio4'>
-                            <input type='radio' name='DatasetRadio' id='DatasetRadio4'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio4' value='4'>
                             <img src='outcomeC.png' alt='Option 4'>
                             <p><b>Data on Weekly Household Income</b></p>
                             <p>(Outcome 8)</p>
@@ -96,19 +96,35 @@
                         </select>
                 </div>
                 <div class='form-group'> 
-                    <label for='direct_drop'>Select the Highest Year of Schooling:</label></br>
-                        <select id='direct_drop' name='direct_drop'>
+                    <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                        <select id='school_drop' name='direct_drop'>
 
                         </select>
                 </div>
                 <div class='form-group'> 
-                    <label for='direct_drop'>Select the Weekly Household Income Bracket:</label></br>
-                        <select id='direct_drop' name='direct_drop'>
+                    <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                        <select id='income_drop' name='direct_drop'>
 
                         </select>
                 </div>
             </fieldset>
-        
+
+            <script>
+                function enableSet(answer) {
+                    if(answer.value == '1') {
+                        document.getElementById('condition_drop').classList.remove('d-none');
+                    } else if (answer.value == '2') {
+                        document.getElementById('age_drop').classList.remove('d-none');
+                    }
+                    else if (answer.value == '3') {
+                        document.getElementById('school_drop').classList.remove('d-none');
+                    }
+                    else if (answer.value == '4') {
+                        document.getElementById('income_drop').classList.remove('d-none');
+                    }
+                }; 
+            </script>
+
             <!--Select LGA Order-->
             <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
             <div class='form-group'> 
@@ -150,7 +166,7 @@
             <!--Select Sex-->
             <div class='form-group'> 
                 <fieldset>
-                <legend>Select sex</legend>
+                <legend>Select Sex</legend>
                     <input type='checkbox' name='FStatus' id='FStatus' value='Female'>   
                     <label for='FStatus'>Female</label>
                     </br>

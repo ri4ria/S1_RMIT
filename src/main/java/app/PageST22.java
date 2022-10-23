@@ -1,6 +1,8 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -14,13 +16,57 @@ import io.javalin.http.Handler;
  * @author Timothy Wiley, 2021. email: timothy.wiley@rmit.edu.au
  * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
  */
+
 public class PageST22 implements Handler {
 
     // URL of this page relative to http://localhost:7001/
     public static final String URL = "/page4.html";
 
+    // Name of the Thymeleaf HTML template page in the resources folder
+    private static final String TEMPLATE = ("PageST22.html");
+
     @Override
     public void handle(Context context) throws Exception {
+        // The model of data to provide to Thymeleaf
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        // Add in title for the h1 tag to the model
+        model.put("title", new String("Changes between 2016 & 2021 Censuses"));
+
+        // Create connection to JDBC class
+        JDBCConnection jdbc = new JDBCConnection();
+
+        String dataset = context.formParam("dataset"); // name of the dataset
+        String locationType = context.formParam("locationType"); // LGA or state
+        String location = context.formParam("location"); // location filter
+        String valueType = context.formParam("valueType"); // raw or proportional
+
+        if (dataset == null || locationType == null || location == null || valueType == null) {
+            // If NULL, show nothing, therefore we make "No Results" HTML
+            // Also store empty ArrayList for completeness
+            // TODO: add another if-else statement to add 'Error' messages for missing input
+            model.put("titleResults", new String("No results to show."));
+        } else {
+            // If NOT NULL, then look up the specified dataset
+            if (dataset == "EducationStatistics") {
+                model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
+                if (locationType == "LGA") {
+                    String locationTypeSQL = "lga_code";
+                    ArrayList<String> results = jdbc.getST22EducationResults(dataset, locationTypeSQL, locationType, valueType);
+                    model.put("dataset", results);
+                } else if (locationType == "State") {
+                    String locationTypeSQL = "state";
+                    ArrayList<String> results = jdbc.getST22EducationResults(dataset, locationTypeSQL, locationType, valueType);
+                    model.put("dataset", results);
+                }
+            }
+        }
+
+        // DO NOT MODIFY THIS
+        // Makes Javalin render the webpage using Thymeleaf
+        context.render(TEMPLATE, model);
+
+        /*
         // Create a simple HTML webpage in a String
         String html = "<html>";
 
@@ -226,6 +272,7 @@ public class PageST22 implements Handler {
         html = html + "</ul>";
 
         return html;
+        */
     }
 
 }

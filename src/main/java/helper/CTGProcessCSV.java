@@ -55,7 +55,6 @@ public class CTGProcessCSV {
       // JDBC Database Object
       Connection connection = null;
 
-      /*
       // The following arrays define the order of columns in the INPUT CSV.
       // The order of each array MUST match the order of the CSV.
       // These are specific to the given file and should be changed for each file.
@@ -166,8 +165,6 @@ public class CTGProcessCSV {
          e.printStackTrace();
       }
 
-      */
-
       // Implementing indigenousStatus_2021 CSV file
 
       String category_indigenousStatus_2021[] = {
@@ -275,8 +272,6 @@ public class CTGProcessCSV {
       } catch (Exception e) {
          e.printStackTrace();
       }
-
-   /*
 
       // Implementing state CSV file
 
@@ -1122,7 +1117,7 @@ public class CTGProcessCSV {
 
    } catch (Exception e) {
       e.printStackTrace();
-   } */
+   }
 
    } //keep second to last
 } //keep last

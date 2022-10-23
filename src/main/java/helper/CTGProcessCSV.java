@@ -36,8 +36,8 @@ public class CTGProcessCSV {
    // MODIFY these to load/store to/from the correct locations
    
    private static final String DATABASE = "jdbc:sqlite:database/ctg.db";
-   private static final String CSV_FILE_indigenousStatus_2016 = "database/indigenousStatus_2016"; // original file name: lga_indigenous_status_by_age_by_sex_census_2016.csv
-   private static final String CSV_FILE_indigenousStatus_2021 = "database/indigenousStatus_2021"; // original file name: lga_indigenous_status_by_age_by_sex_census_2021.csv
+   private static final String CSV_FILE_indigenousStatus_2016 = "database/indigenousStatus_2016.csv"; // original file name: lga_indigenous_status_by_age_by_sex_census_2016.csv
+   private static final String CSV_FILE_indigenousStatus_2021 = "database/indigenousStatus_2021.csv"; // original file name: lga_indigenous_status_by_age_by_sex_census_2021.csv
    private static final String CSV_FILE_householdIncome_2016 = "database/householdIncome_2016.csv"; // original file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2016
    private static final String CSV_FILE_householdIncome_2021 = "database/householdIncome_2021.csv"; // original file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2021
    private static final String CSV_FILE_highestSchoolYear_2016 = "database/highestSchoolYear_2016.csv"; // original file name: lga_highest_year_of_school_completed_by_indigenous_status_by_sex_2016
@@ -48,12 +48,291 @@ public class CTGProcessCSV {
    private static final String CSV_FILE_targetOutcomes = "database/targetOutcomes.csv";
    private static final String CSV_FILE_persona = "database/persona.csv";
    private static final String CSV_FILE_personaAttribute = "database/personaAttribute.csv";
+   private static final String CSV_FILE_states = "database/state.csv";
 
    public static void main (String[] args) {
 
       // JDBC Database Object
       Connection connection = null;
 
+      /*
+      // The following arrays define the order of columns in the INPUT CSV.
+      // The order of each array MUST match the order of the CSV.
+      // These are specific to the given file and should be changed for each file.
+      // This is a *simple* way to help you get up and running quickly wihout being confusing
+      String category_indigenousStatus_2016[] = {
+         "_0_4",
+         "_5_9",
+         "_10_14",
+         "_15_19",
+         "_20_24",
+         "_25_29",
+         "_30_34",
+         "_35_39",
+         "_40_44",
+         "_45_49",
+         "_50_54",
+         "_55_59",
+         "_60_64",
+         "_65_yrs_ov"
+      };
+      String status_indigenousStatus_2016[] = {
+         "indig",
+         "non_indig",
+         "indig_ns"
+      };
+      String sex_indigenousStatus_2016[] = {
+         "f",
+         "m"
+      };
+
+      // JDBC Database Object
+      // Connection connection = null;
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_indigenousStatus_2016));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            // These indicies track which column we are up to
+            int indexStatus = 0;
+            int indexSex = 0;
+            int indexCategory = 0;
+
+            // Save the lga_code as we need it for the foreign key
+            String lgaCode = rowScanner.next();
+
+            // Skip lga_name
+            // String lgaName = rowScanner.next();
+
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext() && indexCategory < category_indigenousStatus_2016.length) {
+               String count = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into PopulationStatistics VALUES ("
+                              + lgaCode + ","
+                              + "2016" + ","
+                              + "'" + status_indigenousStatus_2016[indexStatus] + "',"
+                              + "'" + sex_indigenousStatus_2016[indexSex] + "',"
+                              + "'" + category_indigenousStatus_2016[indexCategory] + "',"
+                              + count + ")";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               // Update indices - go to next sex
+               indexSex++;
+               if (indexSex >= sex_indigenousStatus_2016.length) {
+                  // Go to next status
+                  indexSex = 0;
+                  indexStatus++;
+
+                  if (indexStatus >= status_indigenousStatus_2016.length) {
+                     // Go to next Category
+                     indexStatus = 0;
+                     indexCategory++;
+                  }
+               }
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      */
+
+      // Implementing indigenousStatus_2021 CSV file
+
+      String category_indigenousStatus_2021[] = {
+         "_0_4",
+         "_5_9",
+         "_10_14",
+         "_15_19",
+         "_20_24",
+         "_25_29",
+         "_30_34",
+         "_35_39",
+         "_40_44",
+         "_45_49",
+         "_50_54",
+         "_55_59",
+         "_60_64",
+         "_65_yrs_ov"
+      };
+      String status_indigenousStatus_2021[] = {
+         "indig",
+         "non_indig",
+         "indig_ns"
+      };
+      String sex_indigenousStatus_2021[] = {
+         "f",
+         "m"
+      };
+
+      // JDBC Database Object
+      // Connection connection = null;
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_indigenousStatus_2021));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            // These indicies track which column we are up to
+            int indexStatus = 0;
+            int indexSex = 0;
+            int indexCategory = 0;
+
+            // Save the lga_code as we need it for the foreign key
+            String lgaCode = rowScanner.next();
+
+            // Skip lga_name
+            // String lgaName = rowScanner.next();
+
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext() && indexCategory < category_indigenousStatus_2021.length) {
+               String count = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into PopulationStatistics VALUES ("
+                              + lgaCode + ","
+                              + "2021" + ","
+                              + "'" + status_indigenousStatus_2021[indexStatus] + "',"
+                              + "'" + sex_indigenousStatus_2021[indexSex] + "',"
+                              + "'" + category_indigenousStatus_2021[indexCategory] + "',"
+                              + count + ")";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               // Update indices - go to next sex
+               indexSex++;
+               if (indexSex >= sex_indigenousStatus_2021.length) {
+                  // Go to next status
+                  indexSex = 0;
+                  indexStatus++;
+
+                  if (indexStatus >= status_indigenousStatus_2021.length) {
+                     // Go to next Category
+                     indexStatus = 0;
+                     indexCategory++;
+                  }
+               }
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+   /*
+
+      // Implementing state CSV file
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_states));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext()) {
+
+               // Save the lga_code as we need it for the foreign key
+               int lga_starting_number = rowScanner.nextInt();
+               String state = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into State VALUES ("
+                              + lga_starting_number + ","
+                              + "'" + state + "')";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      
       // Implementing persona CSV file
 
       // Like JDBCConnection, we need some error handling.
@@ -685,224 +964,6 @@ public class CTGProcessCSV {
       } catch (Exception e) {
          e.printStackTrace();
       }
-      
-      // The following arrays define the order of columns in the INPUT CSV.
-      // The order of each array MUST match the order of the CSV.
-      // These are specific to the given file and should be changed for each file.
-      // This is a *simple* way to help you get up and running quickly wihout being confusing
-      String category_indigenousStatus_2016[] = {
-         "_0_4",
-         "_5_9",
-         "_10_14",
-         "_15_19",
-         "_20_24",
-         "_25_29",
-         "_30_34",
-         "_35_39",
-         "_40_44",
-         "_45_49",
-         "_50_54",
-         "_55_59",
-         "_60_64",
-         "_65_yrs_ov"
-      };
-      String status_indigenousStatus_2016[] = {
-         "indig",
-         "non_indig",
-         "indig_ns"
-      };
-      String sex_indigenousStatus_2016[] = {
-         "f",
-         "m"
-      };
-
-      // JDBC Database Object
-      // Connection connection = null;
-
-      // Like JDBCConnection, we need some error handling.
-      try {
-         // Open A CSV File to process, one line at a time
-         // CHANGE THIS to process a different file
-         Scanner lineScanner = new Scanner(new File(CSV_FILE_indigenousStatus_2016));
-
-         // Read the first line of "headings"
-         String header = lineScanner.nextLine();
-         System.out.println("Heading row" + header + "\n");
-
-         // Setup JDBC
-         // Connect to JDBC data base
-         connection = DriverManager.getConnection(DATABASE);
-
-         // Read each line of the CSV
-         int row = 1;
-         while (lineScanner.hasNext()) {
-            // Always get scan by line
-            String line = lineScanner.nextLine();
-            
-            // Create a new scanner for this line to delimit by commas (,)
-            Scanner rowScanner = new Scanner(line);
-            rowScanner.useDelimiter(",");
-
-            // These indicies track which column we are up to
-            int indexStatus = 0;
-            int indexSex = 0;
-            int indexCategory = 0;
-
-            // Save the lga_code as we need it for the foreign key
-            String lgaCode = rowScanner.next();
-
-            // Skip lga_name
-            String lgaName = rowScanner.next();
-
-            // Go through the data for the row
-            // If we run out of categories, stop for safety (so the code doesn't crash)
-            while (rowScanner.hasNext() && indexCategory < category_indigenousStatus_2016.length) {
-               String count = rowScanner.next();
-
-               // Prepare a new SQL Query & Set a timeout
-               Statement statement = connection.createStatement();
-
-               // Create Insert Statement
-               String query = "INSERT into PopulationStatistics VALUES ("
-                              + lgaCode + ","
-                              + "2016" + ","
-                              + "'" + status_indigenousStatus_2016[indexStatus] + "',"
-                              + "'" + sex_indigenousStatus_2016[indexSex] + "',"
-                              + "'" + category_indigenousStatus_2016[indexCategory] + "',"
-                              + count + ")";
-
-               // Execute the INSERT
-               System.out.println("Executing: " + query);
-               statement.execute(query);
-
-               // Update indices - go to next sex
-               indexSex++;
-               if (indexSex >= sex_indigenousStatus_2016.length) {
-                  // Go to next status
-                  indexSex = 0;
-                  indexStatus++;
-
-                  if (indexStatus >= status_indigenousStatus_2016.length) {
-                     // Go to next Category
-                     indexStatus = 0;
-                     indexCategory++;
-                  }
-               }
-               row++;
-            }
-         }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-
-      // Implementing indigenousStatus_2021 CSV file
-
-      String category_indigenousStatus_2021[] = {
-         "_0_4",
-         "_5_9",
-         "_10_14",
-         "_15_19",
-         "_20_24",
-         "_25_29",
-         "_30_34",
-         "_35_39",
-         "_40_44",
-         "_45_49",
-         "_50_54",
-         "_55_59",
-         "_60_64",
-         "_65_yrs_ov"
-      };
-      String status_indigenousStatus_2021[] = {
-         "indig",
-         "non_indig",
-         "indig_ns"
-      };
-      String sex_indigenousStatus_2021[] = {
-         "f",
-         "m"
-      };
-
-      // JDBC Database Object
-      // Connection connection = null;
-
-      // Like JDBCConnection, we need some error handling.
-      try {
-         // Open A CSV File to process, one line at a time
-         // CHANGE THIS to process a different file
-         Scanner lineScanner = new Scanner(new File(CSV_FILE_indigenousStatus_2021));
-
-         // Read the first line of "headings"
-         String header = lineScanner.nextLine();
-         System.out.println("Heading row" + header + "\n");
-
-         // Setup JDBC
-         // Connect to JDBC data base
-         connection = DriverManager.getConnection(DATABASE);
-
-         // Read each line of the CSV
-         int row = 1;
-         while (lineScanner.hasNext()) {
-            // Always get scan by line
-            String line = lineScanner.nextLine();
-            
-            // Create a new scanner for this line to delimit by commas (,)
-            Scanner rowScanner = new Scanner(line);
-            rowScanner.useDelimiter(",");
-
-            // These indicies track which column we are up to
-            int indexStatus = 0;
-            int indexSex = 0;
-            int indexCategory = 0;
-
-            // Save the lga_code as we need it for the foreign key
-            String lgaCode = rowScanner.next();
-
-            // Skip lga_name
-            String lgaName = rowScanner.next();
-
-            // Go through the data for the row
-            // If we run out of categories, stop for safety (so the code doesn't crash)
-            while (rowScanner.hasNext() && indexCategory < category_indigenousStatus_2021.length) {
-               String count = rowScanner.next();
-
-               // Prepare a new SQL Query & Set a timeout
-               Statement statement = connection.createStatement();
-
-               // Create Insert Statement
-               String query = "INSERT into PopulationStatistics VALUES ("
-                              + lgaCode + ","
-                              + "2016" + ","
-                              + "'" + status_indigenousStatus_2021[indexStatus] + "',"
-                              + "'" + sex_indigenousStatus_2021[indexSex] + "',"
-                              + "'" + category_indigenousStatus_2021[indexCategory] + "',"
-                              + count + ")";
-
-               // Execute the INSERT
-               System.out.println("Executing: " + query);
-               statement.execute(query);
-
-               // Update indices - go to next sex
-               indexSex++;
-               if (indexSex >= sex_indigenousStatus_2021.length) {
-                  // Go to next status
-                  indexSex = 0;
-                  indexStatus++;
-
-                  if (indexStatus >= status_indigenousStatus_2021.length) {
-                     // Go to next Category
-                     indexStatus = 0;
-                     indexCategory++;
-                  }
-               }
-               row++;
-            }
-         }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
 
       // Implementing LTHC_2021 CSV file
 
@@ -1061,7 +1122,7 @@ public class CTGProcessCSV {
 
    } catch (Exception e) {
       e.printStackTrace();
-   }
+   } */
 
    } //keep second to last
 } //keep last

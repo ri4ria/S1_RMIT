@@ -23,7 +23,7 @@ public class PageST31 implements Handler {
     public static final String URL = "/page5.html";
 
     // Name of the Thymeleaf HTML template page in the resources folder
-    private static final String TEMPLATE = ("page5.html");
+    private static final String TEMPLATE = ("PageST31.html");
 
     @Override
     public void handle(Context context) throws Exception {

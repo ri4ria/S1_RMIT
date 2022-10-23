@@ -33,14 +33,16 @@
     </div>
 
     <div class='content'>
-        <h2>Select a dataset to compare Local Government Area performance with the latest results from the 2021 census</h2>
+        <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
         <form action='/page3.html' method='post'>
             <div class='form-group'>
-    
+                <fieldset>
+                <legend>Select a dataset:</legend>
+                <!--Allow user to only select one Dataset-->
                 <div class='target-outcome-wrap'>
                     <div class='target-outcome'>
-                        <label>
-                            <input type='radio'>
+                        <label for='DatasetRadio1'>
+                            <input type='radio' name='DatasetRadio1' id='DatasetRadio1'>
                             <img src='outcomeA.png' alt='Option 1'>
                             <p><b>Data on Health Conditions</b></p>
                             <p>(Outcome 1)</p>
@@ -48,8 +50,8 @@
                     </div> 
 
                     <div class='target-outcome'>
-                        <label class='rotate'>
-                            <input type='radio'>
+                        <label for='DatasetRadio2' class='rotate'>
+                            <input type='radio' name='DatasetRadio2' id='DatasetRadio2'>
                             <img src='outcomeA.png' alt='Option 2'>
                             <p><b>Data on Population by Age</b></p>
                             <p>(Outcome 1)</p>
@@ -57,8 +59,8 @@
                     </div> 
                     
                     <div class='target-outcome'>
-                        <label>
-                            <input type='radio'>
+                        <label for='DatasetRadio3'>
+                            <input type='radio' name='DatasetRadio3' id='DatasetRadio3'>
                             <img src='outcomeB.png' alt='Option 3'>
                             <p><b>Data on Highest Year of Schooling</b></p>
                             <p>(Outcome 5)</p>
@@ -66,31 +68,98 @@
                     </div> 
 
                     <div class='target-outcome'>
-                        <label>
-                            <input type='radio'>
+                        <label for='DatasetRadio4'>
+                            <input type='radio' name='DatasetRadio4' id='DatasetRadio4'>
                             <img src='outcomeC.png' alt='Option 4'>
                             <p><b>Data on Weekly Household Income</b></p>
                             <p>(Outcome 8)</p>
                         </label>
                     </div> 
                 </div>
+                </fieldset>
             </div>
-        
 
+            <!-- Dropdown that will only be available if the relevant dataset is selected-->
+            <fieldset>
+                <legend>Selected dataset</legend>
+                <div class='form-group'> 
+                    <label for='condition_drop'>Select Health Condition:</label></br>
+                        <select id='condition_drop' name='condition_drop'>
+                            <option value='insertfromArray'>TODO</option>
+                            <option value='insertfromArray'>Test</option>
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='age_drop'>Select Age Range:</label></br>
+                        <select id='age_drop' name='age_drop'>
+
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='direct_drop'>Select Highest Year of Schooling:</label></br>
+                        <select id='direct_drop' name='direct_drop'>
+
+                        </select>
+                </div>
+                <div class='form-group'> 
+                    <label for='direct_drop'>Select Household Weekly Income Bracket:</label></br>
+                        <select id='direct_drop' name='direct_drop'>
+                            
+                        </select>
+                </div>
+            </fieldset>
+        
+            <!--Select LGA Order-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
             <div class='form-group'> 
-                <label for='direct_drop'>Select Health Condition from dropdown:</label>
-                    <select id='direct_drop' name='direct_drop'></select>
+                <fieldset>
+                <legend>Select LGA Order</legend>
+                        <input type='radio' name='AscendingLGA' id='AscendingLGA' value='Ascending'>
+                        <label for='AscendingLGA'>Ascending</label> 
+                        </br>
+                        <input type='radio' name='DescendingLGA' id='DescendingLGA' value='Descending'>
+                        <lable for='DescendingLGA'>Descending</lable>
+                </fieldset>
             </div>
+
+             <!--Select Data Type-->
+             <div class='form-group'> 
+                <fieldset>
+                <legend>Select Data Type</legend>
+                    <input type='radio' name='RawDataType' id='RawDataType' value='Raw'>
+                        <label for='RawDataType'>Raw</label> 
+                        </br>
+                        <input type='radio' name='ProportionalDataType' id='ProportionalDataType' value='Proportional'>
+                        <lable for='ProportionalDataType'>Proportional</lable>
+                </fieldset>
+            </div>
+
+            <!--Select Indigenous and Non-indigenous-->
+            <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_checkbox-->
             <div class='form-group'> 
-                <label for='direct_drop'>Select Age Range from dropdown:</label>
-                    <select id='direct_drop' name='direct_drop'></select>
+                <fieldset>
+                <legend>Select both to view 'the Gap'</legend>
+                    <input type='checkbox' name='IndStatus' id='IndStatus' value='Indigenous'>   
+                    <label for='IndStatus'>Indigenous</label>
+                    </br>
+                    <input type='checkbox' name='NonIndStatus' id='NonIndStatus' value='Non-Indigenous'>   
+                    <label for='NonIndStatus'>Non-Indigenous</label>
+                </fieldset>
             </div>
-            <div class='form-group'> <label for='direct_drop'>Select Highest Year of Schooling from dropdown:</label>
-                <select id='direct_drop' name='direct_drop'></select>
+
+            <!--Select Sex-->
+            <div class='form-group'> 
+                <fieldset>
+                <legend>Select sex</legend>
+                    <input type='checkbox' name='FStatus' id='FStatus' value='Female'>   
+                    <label for='FStatus'>Female</label>
+                    </br>
+                    <input type='checkbox' name='MStatus' id='MStatus' value='Male'>   
+                    <label for='MStatus'>Male</label>
+                </fieldset>
             </div>
-            <div class='form-group'> <label for='direct_drop'>Select Weekly Income Bracket from dropdown:</label>
-                <select id='direct_drop' name='direct_drop'></select>
-            </div>
+
+            <!-- Submit Button-->
             <button type='submit' class='btn'>Compare LGAs</button>
         </form>
     </div>

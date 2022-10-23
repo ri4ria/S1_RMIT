@@ -322,7 +322,7 @@ public class JDBCConnection {
         return outcome;
     }
 
-    public ArrayList<String> getST22Results() {
+    public ArrayList<String> getST22EducationResults(String dataset, String locationType, String location, String valueType) {
         // Creating ArrayList for results
         ArrayList<String> ST22Results = new ArrayList<String>();
 
@@ -337,7 +337,6 @@ public class JDBCConnection {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            // The Query
             String query = """
                 SELECT data2016.lga_code AS '2016 LGA Code', 
                        data2021.lga_code AS '2021 LGA Code', 
@@ -352,7 +351,8 @@ public class JDBCConnection {
                                                                                                 data2016.sex = data2021.sex AND
                                                                                                 data2016.highest_school_year = data2021.highest_school_year
                     WHERE data2016.lga_year = 2016 AND data2021.lga_year = 2021
-                    """;;
+                    """;
+
             System.out.println(query);
             
             // Get Result

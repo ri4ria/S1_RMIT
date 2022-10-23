@@ -20,6 +20,12 @@ PRAGMA foreign_keys = ON;
 --    PRIMARY KEY (lga_code16)
 -- );
 
+CREATE TABLE State (
+    lga_starting_number INTEGER NOT NULL,
+    state               TEXT NOT NULL,
+    PRIMARY KEY (lga_starting_number)
+)
+
 CREATE TABLE LGA (
     lga_code        INTEGER NOT NULL,
     lga_year        INTEGER NOT NULL,

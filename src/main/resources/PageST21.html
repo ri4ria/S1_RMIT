@@ -42,7 +42,7 @@
                 <div class='target-outcome-wrap'>
                     <div class='target-outcome'>
                         <label for='DatasetRadio1'>
-                            <input type='radio' name='DatasetRadio1' id='DatasetRadio1'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio1'>
                             <img src='outcomeA.png' alt='Option 1'>
                             <p><b>Data on Health Conditions</b></p>
                             <p>(Outcome 1)</p>
@@ -51,7 +51,7 @@
 
                     <div class='target-outcome'>
                         <label for='DatasetRadio2' class='rotate'>
-                            <input type='radio' name='DatasetRadio2' id='DatasetRadio2'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio2'>
                             <img src='outcomeA.png' alt='Option 2'>
                             <p><b>Data on Population by Age</b></p>
                             <p>(Outcome 1)</p>
@@ -59,8 +59,8 @@
                     </div> 
                     
                     <div class='target-outcome'>
-                        <label for='DatasetRadio3'>
-                            <input type='radio' name='DatasetRadio3' id='DatasetRadio3'>
+                        <label class='dataset' for='DatasetRadio3'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio3'>
                             <img src='outcomeB.png' alt='Option 3'>
                             <p><b>Data on Highest Year of Schooling</b></p>
                             <p>(Outcome 5)</p>
@@ -69,7 +69,7 @@
 
                     <div class='target-outcome'>
                         <label for='DatasetRadio4'>
-                            <input type='radio' name='DatasetRadio4' id='DatasetRadio4'>
+                            <input type='radio' name='DatasetRadio' id='DatasetRadio4'>
                             <img src='outcomeC.png' alt='Option 4'>
                             <p><b>Data on Weekly Household Income</b></p>
                             <p>(Outcome 8)</p>
@@ -114,10 +114,10 @@
             <div class='form-group'> 
                 <fieldset>
                 <legend>Select LGA Order</legend>
-                        <input type='radio' name='AscendingLGA' id='AscendingLGA' value='Ascending'>
+                        <input type='radio' name='LGAOrder' id='AscendingLGA' value='Ascending'>
                         <label for='AscendingLGA'>Ascending</label> 
                         </br>
-                        <input type='radio' name='DescendingLGA' id='DescendingLGA' value='Descending'>
+                        <input type='radio' name='LGAOrder' id='DescendingLGA' value='Descending'>
                         <lable for='DescendingLGA'>Descending</lable>
                 </fieldset>
             </div>
@@ -126,10 +126,10 @@
              <div class='form-group'> 
                 <fieldset>
                 <legend>Select Data Type</legend>
-                    <input type='radio' name='RawDataType' id='RawDataType' value='Raw'>
+                    <input type='radio' name='DataType' id='RawDataType' value='Raw'>
                         <label for='RawDataType'>Raw</label> 
                         </br>
-                        <input type='radio' name='ProportionalDataType' id='ProportionalDataType' value='Proportional'>
+                        <input type='radio' name='DataType' id='ProportionalDataType' value='Proportional'>
                         <lable for='ProportionalDataType'>Proportional</lable>
                 </fieldset>
             </div>

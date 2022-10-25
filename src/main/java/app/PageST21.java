@@ -185,12 +185,7 @@ public class PageST21 implements Handler {
 
                     html = html + "      </select>";
                     html = html + "   </div>";
-                    html = html + "   <button type='submit' class='btn btn-primary'>View Health Conditions</button>";
-            
-                    html = html + "</form>";
-
                 
-
         html = html + """
             <div class='form-group'> 
                 <label for='age_drop'>Select the Age Range:</label></br>
@@ -322,6 +317,21 @@ public class PageST21 implements Handler {
         html = html + "</ul>";
         */
 
+          /* Get the Form Data
+                    *  from the drop down list
+                    * Need to be Careful!!
+                    *  If the form is not filled in, then the form will return null!
+                    */
+                    String condition_drop = context.formParam("condition_drop");
+                    // String movietype_drop = context.queryParam("movietype_drop");
+                    if (condition_drop == null) {
+                    // If NULL, nothing to show, therefore we make some "no results" HTML
+                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    } else {
+                    // If NOT NULL, then lookup the movie by type!
+                    html = html + outputDataByHealthCond(condition_drop);
+                    }
+
         // Close Content div
         html = html + "</div>";
 
@@ -349,4 +359,25 @@ public class PageST21 implements Handler {
         // Makes Javalin render the webpage
         context.html(html);
     }
+
+    
+    
+    public String outputDataByHealthCond(String selectedCondition) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition);
+        
+        // Add HTML for the movies list
+        html = html + "<ul>";
+        for (String result : healthConditions21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
 }

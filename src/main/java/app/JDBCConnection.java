@@ -412,7 +412,7 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
     
             // The Query
-            String query = "SELECT DISTINCT(condition) FROM LTHCStatistics";
+            String query = "SELECT DISTINCT condition FROM LTHCStatistics";
             System.out.println(query);
             
             // Get Result
@@ -420,7 +420,7 @@ public class JDBCConnection {
     
             // Process all of the results
             while (results.next()) {
-                healthCond.add(results.getString("condiiton"));
+                healthCond.add(results.getString("condition"));
             }
     
             // Close the statement because we are done with it

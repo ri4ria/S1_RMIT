@@ -166,76 +166,54 @@ public class PageST21 implements Handler {
                     ArrayList<String> healthCond = jdbc.getHealthConditions(); 
 
                     for (String health : healthCond) {
-                        switch (health) {
-                            case "heartdisease":
-                                html = html + "<option>heart disease</option>";
-                                break;
-                            case "kidneydisease":
-                                html = html + "<option>kidney disease</option>";
-                                break;
-  			                case "lungcondition":
-                                html = html + "<option>lung condition</option>";
-                                break;
-  			                case "mentalhealth":
-                                html = html + "<option>mental health</option>";
-                                break;
-                        }
                         html = html + "<option>" + health + "</option>";
                     }
 
                     html = html + "      </select>";
                     html = html + "   </div>";
-                
+        
+        /* 
         html = html + """
             <div class='form-group'> 
                 <label for='age_drop'>Select the Age Range:</label></br>
                     <select id='age_drop' name='age_drop'>
-                        <option value='0to4'>0 to 4 years old</option> 
-                        <option value='5to10'>5 to 10 years old</option>
-                        <option value='10to15'>10 to 15 years old </option>
-                        <option value='15to19'>15 to 19 years old</option> 
-                        <option value='20to24'>20 to 24 years old</option> 
-                        <option value='25to29'>25 to 29 years old</option> 
-                        <option value='30to34'>30 to 34 years old</option> 
-                        <option value='35to39'>35 to 39 years old</option>
-                        <option value='40to44'>40 to 44 years old</option> 
-                        <option value='45to49'>45 to 49 years old</option> 
-                        <option value='50to54'>50 to 54 years old</option> 
-                        <option value='55to59'>55 to 59 years old</option> 
-                        <option value='60to64'>60 to 64 years old</option> 
-                        <option value='65+'>65+ years old</option> 
-                    </select>
-            </div>
+                    """;
+                    ArrayList<String> ageNum = jdbc.getAge(); 
+
+                    for (String anything : ageNum) {
+                        html = html + "<option>" + anything + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+                    */
+                
+        html = html + """
             <div class='form-group'> 
                 <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
                     <select id='school_drop' name='direct_drop'>
+                    """;
+                     ArrayList<String> schoolingYears = jdbc.getSchooling(); 
 
-                    </select>
-            </div>
+                    for (String schooled : schoolingYears) {
+                        html = html + "<option>" + schooled + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+                
+        html = html + """        
             <div class='form-group'> 
                 <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
                     <select id='income_drop' name='direct_drop'>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
-                        <option value='65+'></option>
+                    """;
+                       
                         
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+        html = html + "</fieldset>";
 
-                    </select>
-            </div>
-        </fieldset>
-
+        html = html + """  
         <script>
             function enableSet(answer) {
                 if(answer.value == '1') {
@@ -327,10 +305,32 @@ public class PageST21 implements Handler {
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
-                    } else {
+                    } {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByHealthCond(condition_drop);
                     }
+
+                    //age_drop
+                    String age_drop = context.formParam("age_drop");
+                    // String movietype_drop = context.queryParam("movietype_drop");
+                    if (age_drop == null) {
+                    // If NULL, nothing to show, therefore we make some "no results" HTML
+                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    } else {
+                    // If NOT NULL, then lookup the movie by type!
+                    html = html + outputDataByAge(age_drop);
+                    }
+
+                     //age_drop
+                     String school_drop = context.formParam("school_drop");
+                     // String movietype_drop = context.queryParam("movietype_drop");
+                     if (school_drop == null) {
+                     // If NULL, nothing to show, therefore we make some "no results" HTML
+                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     } else {
+                     // If NOT NULL, then lookup the movie by type!
+                     html = html + outputDataBySchool(school_drop);
+                     }
 
         // Close Content div
         html = html + "</div>";
@@ -361,7 +361,7 @@ public class PageST21 implements Handler {
     }
 
     
-    
+    //get data for first query
     public String outputDataByHealthCond(String selectedCondition) {
         String html = "";
         html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
@@ -370,9 +370,47 @@ public class PageST21 implements Handler {
         JDBCConnection jdbc = new JDBCConnection();
         ArrayList<String> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition);
         
-        // Add HTML for the movies list
+        // Add HTML for the health conditions list
         html = html + "<ul>";
         for (String result : healthConditions21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+    //get data for first query
+    public String outputDataByAge(String selectedAge) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people that are " + selectedAge + " years old</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> age21 = jdbc.getDataByAge(selectedAge);
+        
+        // Add HTML for the health conditions list
+        html = html + "<ul>";
+        for (String result : age21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+     //get data for first query
+     public String outputDataBySchool(String selectedSchool) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + "</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool);
+        
+        // Add HTML for the health conditions list
+        html = html + "<ul>";
+        for (String result : school21) {
             html = html + "<li>" + result + "</li>";
         }
         html = html + "</ul>";

@@ -161,6 +161,7 @@ public class PageST21 implements Handler {
             <div class='form-group'> 
                 <label for='condition_drop'>Select the Health Condition:</label></br>
                     <select id='condition_drop' name='condition_drop'>
+                    <option>select</option>
                     """;
 
                     ArrayList<String> healthCond = jdbc.getHealthConditions(); 
@@ -177,6 +178,7 @@ public class PageST21 implements Handler {
             <div class='form-group'> 
                 <label for='age_drop'>Select the Age Range:</label></br>
                     <select id='age_drop' name='age_drop'>
+                    <option>select</option>
                     """;
                     ArrayList<String> ageNum = jdbc.getAge(); 
 
@@ -192,6 +194,7 @@ public class PageST21 implements Handler {
             <div class='form-group'> 
                 <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
                     <select id='school_drop' name='direct_drop'>
+                    <option>select</option>
                     """;
                      ArrayList<String> schoolingYears = jdbc.getSchooling(); 
 
@@ -206,7 +209,13 @@ public class PageST21 implements Handler {
             <div class='form-group'> 
                 <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
                     <select id='income_drop' name='direct_drop'>
+                    <option>select</option>
                     """;
+                    ArrayList<String> incomeBrackets = jdbc.getHousehold(); 
+
+                    for (String income : incomeBrackets) {
+                        html = html + "<option>" + income + "</option>";
+                    }
                        
                         
                     html = html + "      </select>";
@@ -305,7 +314,7 @@ public class PageST21 implements Handler {
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
-                    } {
+                    } else {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByHealthCond(condition_drop);
                     }
@@ -321,7 +330,7 @@ public class PageST21 implements Handler {
                     html = html + outputDataByAge(age_drop);
                     }
 
-                     //age_drop
+                     //school_drop
                      String school_drop = context.formParam("school_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
@@ -330,6 +339,17 @@ public class PageST21 implements Handler {
                      } else {
                      // If NOT NULL, then lookup the movie by type!
                      html = html + outputDataBySchool(school_drop);
+                     }
+
+                     //income_drop
+                     String income_drop = context.formParam("income_drop");
+                     // String movietype_drop = context.queryParam("movietype_drop");
+                     if (income_drop == null) {
+                     // If NULL, nothing to show, therefore we make some "no results" HTML
+                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     } else {
+                     // If NOT NULL, then lookup the movie by type!
+                     html = html + outputDataByIncome(income_drop);
                      }
 
         // Close Content div
@@ -364,7 +384,11 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByHealthCond(String selectedCondition) {
         String html = "";
-        html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+        if (selectedCondition == null) {
+            html = html + "<h2><i>Please select from dropbox</i></h2>";
+            } else {
+            html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+        }
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -411,6 +435,25 @@ public class PageST21 implements Handler {
         // Add HTML for the health conditions list
         html = html + "<ul>";
         for (String result : school21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+    //get data for first query
+    public String outputDataByIncome(String selectedIncome) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedIncome + "</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> income21 = jdbc.getDataBySchool(selectedIncome);
+        
+        // Add HTML for the list
+        html = html + "<ul>";
+        for (String result : income21) {
             html = html + "<li>" + result + "</li>";
         }
         html = html + "</ul>";

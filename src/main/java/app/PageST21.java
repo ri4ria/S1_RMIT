@@ -2,8 +2,8 @@ package app;
 
 import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -23,12 +23,13 @@ public class PageST21 implements Handler {
     public static final String URL = "/page3.html";
 
      // Name of the Thymeleaf HTML template page in the resources folder
-     private static final String TEMPLATE = ("PageST21.html");
+     //private static final String TEMPLATE = ("PageST21.html");
 
 
     @Override
     public void handle(Context context) throws Exception {
 
+        /* 
         // The model of data to provide to Thymeleaf.
         // In this example the model will remain empty
         Map<String, Object> model = new HashMap<String, Object>();
@@ -40,11 +41,16 @@ public class PageST21 implements Handler {
         // First, create new connection to JDBC
         JDBCConnection jdbc = new JDBCConnection();
 
+        ArrayList<String> healthCond = jdbc.getHealthConditions(); 
+        for (String health : healthCond) {
+            System.out.print(health.toString());
+        }
+
          // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
-        context.render(TEMPLATE, model);
+        context.render(TEMPLATE, model);*/
 
-        /* 
+        
         // Create a simple HTML webpage in a String
         String html = "<html>";
 
@@ -96,40 +102,208 @@ public class PageST21 implements Handler {
 
         // Add instructions on how to use the filters
         html = html + """
-                <h2>Click an outcome to compare the Local Government Area performance with latest results from the 2021 census</h2>
-                <div>
-                <label>
-                    <input type="radio" name="test" value="small" checked>
-                    <img src='outcomeA.png' alt="Option 1">
-                </label> 
-    
-                <label>
-                    <input type="radio" name="test" value="big">
-                    <img src='outcomeC.png' alt="Option 2">
-                </label>
-                </div>
+                <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
         """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
-        /* Add HTML for the web form
-         * We are giving two ways here
-         *  - one for a text box
-         *  - one for a drop down
-         * 
-         * Whitespace is used to help us understand the HTML!
-         * 
-         * IMPORTANT! the action speicifes the URL for POST!
-         
-
         html = html + "<form action='/page3.html' method='post'>";
+        
+        html = html + """
+            <div class='form-group'>
+            <fieldset>
+            <legend>Select a dataset:</legend>
+            <!--Allow user to only select one Dataset-->
+            <div class='target-outcome-wrap'>
+                <div class='target-outcome'>
+                    <label for='DatasetRadio1' onchange='enableSet(this)'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio1' value='1'>
+                        <img src='outcomeA.png' alt='Option 1'>
+                        <p><b>Data on Health Conditions</b></p>
+                        <p>(Outcome 1)</p>
+                    </label>
+                </div> 
 
-        html = html + "   <div class='form-group'>";
-        html = html + "      <label for='direct_drop'>Select a director from the dropdown(Dropdown):</label>";
-        html = html + "      <select id='direct_drop' name='direct_drop'>";
+                <div class='target-outcome'>
+                    <label for='DatasetRadio2' class='rotate'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio2' value='2'>
+                        <img src='outcomeA.png' alt='Option 2'>
+                        <p><b>Data on Population by Age</b></p>
+                        <p>(Outcome 1)</p>
+                    </label>
+                </div> 
+                
+                <div class='target-outcome'>
+                    <label class='dataset' for='DatasetRadio3'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio3' value='3'>
+                        <img src='outcomeB.png' alt='Option 3'>
+                        <p><b>Data on Highest Year of Schooling</b></p>
+                        <p>(Outcome 5)</p>
+                    </label>
+                </div> 
 
+                <div class='target-outcome'>
+                    <label for='DatasetRadio4'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio4' value='4'>
+                        <img src='outcomeC.png' alt='Option 4'>
+                        <p><b>Data on Weekly Household Income</b></p>
+                        <p>(Outcome 8)</p>
+                    </label>
+                </div> 
+            </div>
+            </fieldset>
+        </div>
 
+        <!-- Dropdown that will only be available if the relevant dataset is selected-->
+        <fieldset>
+            <legend>Filter the dataset</legend>
+            <div class='form-group'> 
+                <label for='condition_drop'>Select the Health Condition:</label></br>
+                    <select id='condition_drop' name='condition_drop'>
+                    """;
+
+                    ArrayList<String> healthCond = jdbc.getHealthConditions(); 
+
+                    for (String health : healthCond) {
+                        switch (health) {
+                            case "heartdisease":
+                                html = html + "<option>heart disease</option>";
+                                break;
+                            case "kidneydisease":
+                                html = html + "<option>kidney disease</option>";
+                                break;
+  			                case "lungcondition":
+                                html = html + "<option>lung condition</option>";
+                                break;
+  			                case "mentalhealth":
+                                html = html + "<option>mental health</option>";
+                                break;
+                        }
+                        html = html + "<option>" + health + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+                    html = html + "   <button type='submit' class='btn btn-primary'>View Health Conditions</button>";
+            
+                    html = html + "</form>";
+
+                
+
+        html = html + """
+            <div class='form-group'> 
+                <label for='age_drop'>Select the Age Range:</label></br>
+                    <select id='age_drop' name='age_drop'>
+                        <option value='0to4'>0 to 4 years old</option> 
+                        <option value='5to10'>5 to 10 years old</option>
+                        <option value='10to15'>10 to 15 years old </option>
+                        <option value='15to19'>15 to 19 years old</option> 
+                        <option value='20to24'>20 to 24 years old</option> 
+                        <option value='25to29'>25 to 29 years old</option> 
+                        <option value='30to34'>30 to 34 years old</option> 
+                        <option value='35to39'>35 to 39 years old</option>
+                        <option value='40to44'>40 to 44 years old</option> 
+                        <option value='45to49'>45 to 49 years old</option> 
+                        <option value='50to54'>50 to 54 years old</option> 
+                        <option value='55to59'>55 to 59 years old</option> 
+                        <option value='60to64'>60 to 64 years old</option> 
+                        <option value='65+'>65+ years old</option> 
+                    </select>
+            </div>
+            <div class='form-group'> 
+                <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                    <select id='school_drop' name='direct_drop'>
+
+                    </select>
+            </div>
+            <div class='form-group'> 
+                <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                    <select id='income_drop' name='direct_drop'>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        <option value='65+'></option>
+                        
+
+                    </select>
+            </div>
+        </fieldset>
+
+        <script>
+            function enableSet(answer) {
+                if(answer.value == '1') {
+                    document.getElementById('condition_drop').classList.remove('d-none');
+                } else if (answer.value == '2') {
+                    document.getElementById('age_drop').classList.remove('d-none');
+                }
+                else if (answer.value == '3') {
+                    document.getElementById('school_drop').classList.remove('d-none');
+                }
+                else if (answer.value == '4') {
+                    document.getElementById('income_drop').classList.remove('d-none');
+                }
+            }; 
+        </script>
+
+        <!--Select LGA Order-->
+        <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
+        <div class='form-group'> 
+            <fieldset>
+                <legend>Select LGA Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending'>
+                    <label for='AscendingLGA'>View LGA in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingLGA' value='Descending'>
+                    <lable for='DescendingLGA'>View LGA in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select Raw Data Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingRaw' value='Ascending'>
+                    <label for='AscendingRaw'>View Raw Data in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingRaw' value='Descending'>
+                    <lable for='DescendingLGA'>View Raw Data in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select Proportional Data Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingProportional' value='Ascending'>
+                    <label for='AscendingProportional'>View Proportional Data in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingProportional' value='Descending'>
+                    <lable for='DescendingProportional'>View Proportional Data in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select The Gap Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingGap' value='Ascending'>
+                    <label for='AscendingGap'>View The Gap in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingGap' value='Descending'>
+                    <lable for='DescendingGap'>View The Gap in Descending Order</lable>
+            </fieldset>
+        </div>
+
+        <!-- Submit Button-->
+            <button type='submit' class='btn'>Compare LGAs</button>
+        </form>
+    </div>
+                """;
+
+        /* 
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 
@@ -146,6 +320,7 @@ public class PageST21 implements Handler {
 
         // Finish the List HTML
         html = html + "</ul>";
+        */
 
         // Close Content div
         html = html + "</div>";
@@ -173,7 +348,5 @@ public class PageST21 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
-        */
     }
-
 }

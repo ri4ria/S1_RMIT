@@ -444,4 +444,59 @@ public class JDBCConnection {
         return healthCond;
     }
 
+    //Aim to show the raw values, proportional values and difference 
+    //healthconditions 
+    public ArrayList<String> getDataByHealthCondition(String selectedCondition) {
+        ArrayList<String> healthCondData = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT lth.LGA_CODE AS 'LGA', condition FROM LTHCStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.condition = '" + selectedCondition + "'"; 
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a HealthCondition Object
+                String result = new String();
+
+                result = String.valueOf(results.getString("LGA")) + " ";
+                result = result + results.getInt("condition");
+
+                healthCondData.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return healthCondData;
+    }
+
 } // Keep as last bracket

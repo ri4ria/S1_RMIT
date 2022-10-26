@@ -173,7 +173,7 @@ public class PageST21 implements Handler {
                     html = html + "      </select>";
                     html = html + "   </div>";
         
-        /* 
+        
         html = html + """
             <div class='form-group'> 
                 <label for='age_drop'>Select the Age Range:</label></br>
@@ -188,7 +188,6 @@ public class PageST21 implements Handler {
 
                     html = html + "      </select>";
                     html = html + "   </div>";
-                    */
                 
         html = html + """
             <div class='form-group'> 

@@ -415,8 +415,6 @@ public class JDBCConnection {
             String query = 
             "SELECT DISTINCT upper(substr(condition, 1, 1)) || substr(condition, 2) as condition "; //needs space and needs an alias!! 
             query += "FROM LTHCStatistics;";
-
-            
             System.out.println(query);
             
             // Get Result
@@ -519,7 +517,11 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
     
             // The Query
-            String query = "SELECT DISTINCT age FROM PopulationStatistics";
+            String query = 
+            //trim the addtional underscore and rearrange the order
+            "SELECT DISTINCT trim(age,'_') AS age ";
+            query += "FROM PopulationStatistics";
+            query += " ORDER BY SUBSTRING(age, 4);";
             System.out.println(query);
             
             // Get Result

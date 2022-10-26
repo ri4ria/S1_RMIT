@@ -735,8 +735,10 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
     
             // The Query
-            String query = "SELECT DISTINCT income_bracket FROM HouseholdStatistics WHERE lga_year = '2021'";
-            ;
+            String query = 
+            "SELECT DISTINCT income_bracket ";
+            query += "FROM HouseholdStatistics ";
+            query += "ORDER BY SUBSTRING(income_bracket,-1) AND SUBSTRING(income_bracket,-2) AND SUBSTRING(income_bracket,-4);";
             System.out.println(query);
             
             // Get Result

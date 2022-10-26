@@ -666,15 +666,13 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = """
-                SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'
-                FROM EducationStatistics 
-                WHERE EducationStatistics.lga_year = '2021' 
-                AND EducationStatistics.indigenous_status = 'indig'
-                AND EducationStatistics.highest_school_year = 'did_not_go_to_school'
-                AND EducationStatistics.count > 0
-                GROUP BY EducationStatistics.lga_code;
-                    """; 
+            String query = 
+                "SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'";
+                query += "FROM EducationStatistics"; 
+                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig'";
+                query += "AND EducationStatistics.highest_school_year = " + selectedSchool + "AND EducationStatistics.count > 0";
+                query += "GROUP BY EducationStatistics.lga_code;";
+                 
             System.out.println(query);
             
             // Get Result

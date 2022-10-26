@@ -55,6 +55,108 @@ public class CTGProcessCSV {
       // JDBC Database Object
       Connection connection = null;
 
+      // Implementing LTHC_2021 CSV file
+
+      String category_LTHC_2021[] = {
+         "arthritis",
+         "asthma",
+         "cancer",
+         "dementia",
+         "diabetes",
+         "heartdisease",
+         "kidneydisease",
+         "lungcondition",
+         "mentalhealth",
+         "stroke",
+         "other"
+      };
+      String status_LTHC_2021[] = {
+         "indig",
+         "non_indig",
+         "indig_stat_notstated"
+      };
+      String sex_LTHC_2021[] = {
+         "f",
+         "m"
+      };
+
+      // JDBC Database Object
+      // Connection connection = null;
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_LTHC_2021));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            // These indicies track which column we are up to
+            int indexStatus = 0;
+            int indexSex = 0;
+            int indexCategory = 0;
+
+            // Save the lga_code as we need it for the foreign key
+            String lgaCode = rowScanner.next();
+
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext() && indexCategory < category_LTHC_2021.length) {
+               String count = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into LTHCStatistics VALUES ("
+                              + lgaCode + ","
+                              + "2021" + ","
+                              + "'" + status_LTHC_2021[indexStatus] + "',"
+                              + "'" + sex_LTHC_2021[indexSex] + "',"
+                              + "'" + category_LTHC_2021[indexCategory] + "',"
+                              + count + ")";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               // Update indices - go to next sex
+               indexSex++;
+               if (indexSex >= sex_LTHC_2021.length) {
+                  // Go to next status
+                  indexSex = 0;
+                  indexStatus++;
+
+                  if (indexStatus >= status_LTHC_2021.length) {
+                     // Go to next Category
+                     indexStatus = 0;
+                     indexCategory++;
+                  }
+               }
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
       // The following arrays define the order of columns in the INPUT CSV.
       // The order of each array MUST match the order of the CSV.
       // These are specific to the given file and should be changed for each file.
@@ -955,109 +1057,6 @@ public class CTGProcessCSV {
                row++;
          }
       }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-
-      // Implementing LTHC_2021 CSV file
-
-      String category_LTHC_2021[] = {
-         "arthritis",
-         "asthma",
-         "cancer",
-         "dementia",
-         "diabetes",
-         "heartdisease",
-         "kidneydisease",
-         "lungcondition",
-         "mentalhealth",
-         "mentalhealth",
-         "stroke",
-         "other"
-      };
-      String status_LTHC_2021[] = {
-         "indig",
-         "non_indig",
-         "indig_stat_notstated"
-      };
-      String sex_LTHC_2021[] = {
-         "f",
-         "m"
-      };
-
-      // JDBC Database Object
-      // Connection connection = null;
-
-      // Like JDBCConnection, we need some error handling.
-      try {
-         // Open A CSV File to process, one line at a time
-         // CHANGE THIS to process a different file
-         Scanner lineScanner = new Scanner(new File(CSV_FILE_LTHC_2021));
-
-         // Read the first line of "headings"
-         String header = lineScanner.nextLine();
-         System.out.println("Heading row" + header + "\n");
-
-         // Setup JDBC
-         // Connect to JDBC data base
-         connection = DriverManager.getConnection(DATABASE);
-
-         // Read each line of the CSV
-         int row = 1;
-         while (lineScanner.hasNext()) {
-            // Always get scan by line
-            String line = lineScanner.nextLine();
-            
-            // Create a new scanner for this line to delimit by commas (,)
-            Scanner rowScanner = new Scanner(line);
-            rowScanner.useDelimiter(",");
-
-            // These indicies track which column we are up to
-            int indexStatus = 0;
-            int indexSex = 0;
-            int indexCategory = 0;
-
-            // Save the lga_code as we need it for the foreign key
-            String lgaCode = rowScanner.next();
-
-            // Go through the data for the row
-            // If we run out of categories, stop for safety (so the code doesn't crash)
-            while (rowScanner.hasNext() && indexCategory < category_LTHC_2021.length) {
-               String count = rowScanner.next();
-
-               // Prepare a new SQL Query & Set a timeout
-               Statement statement = connection.createStatement();
-
-               // Create Insert Statement
-               String query = "INSERT into LTHCStatistics VALUES ("
-                              + lgaCode + ","
-                              + "2021" + ","
-                              + "'" + status_LTHC_2021[indexStatus] + "',"
-                              + "'" + sex_LTHC_2021[indexSex] + "',"
-                              + "'" + category_LTHC_2021[indexCategory] + "',"
-                              + count + ")";
-
-               // Execute the INSERT
-               System.out.println("Executing: " + query);
-               statement.execute(query);
-
-               // Update indices - go to next sex
-               indexSex++;
-               if (indexSex >= sex_indigenousStatus_2021.length) {
-                  // Go to next status
-                  indexSex = 0;
-                  indexStatus++;
-
-                  if (indexStatus >= status_indigenousStatus_2021.length) {
-                     // Go to next Category
-                     indexStatus = 0;
-                     indexCategory++;
-                  }
-               }
-               row++;
-            }
-         }
 
       } catch (Exception e) {
          e.printStackTrace();

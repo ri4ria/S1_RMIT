@@ -412,7 +412,11 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
     
             // The Query
-            String query = "SELECT DISTINCT condition FROM LTHCStatistics";
+            String query = 
+            "SELECT DISTINCT upper(substr(condition, 1, 1)) || substr(condition, 2) as condition "; //needs space and needs an alias!! 
+            query += "FROM LTHCStatistics;";
+
+            
             System.out.println(query);
             
             // Get Result
@@ -440,7 +444,7 @@ public class JDBCConnection {
             }
         }
     
-        // Finally we return all of the movies
+        // Finally we return all of the conditions
         return healthCond;
     }
 

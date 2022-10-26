@@ -624,7 +624,10 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
     
             // The Query
-            String query = "SELECT DISTINCT highest_school_year FROM EducationStatistics WHERE lga_year = '2021'";
+            String query = 
+            "SELECT DISTINCT highest_school_year ";
+            query += "FROM EducationStatistics ";
+            query += " ORDER BY SUBSTRING(highest_school_year, -1) || SUBSTRING(highest_school_year, 3) DESC;";
             System.out.println(query);
             
             // Get Result

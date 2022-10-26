@@ -51,10 +51,10 @@ public class PageIndex implements Handler {
             model.put("outcome1description", outcome1description = outcome.getDescription());
         }
         for (Outcome outcome : outcome5) {
-            model.put("outcome5description", outcome1description = outcome.getDescription());
+            model.put("outcome5description", outcome5description = outcome.getDescription());
         }
-        for (Outcome outcome : outcome5) {
-            model.put("outcome8description", outcome1description = outcome.getDescription());
+        for (Outcome outcome : outcome8) {
+            model.put("outcome8description", outcome8description = outcome.getDescription());
         }
 
         

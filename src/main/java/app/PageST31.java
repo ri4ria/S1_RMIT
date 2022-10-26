@@ -2,6 +2,9 @@ package app;
 
 import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -19,9 +22,28 @@ public class PageST31 implements Handler {
     // URL of this page relative to http://localhost:7001/
     public static final String URL = "/page5.html";
 
+    // Name of the Thymeleaf HTML template page in the resources folder
+    private static final String TEMPLATE = ("PageST31.html");
+
     @Override
     public void handle(Context context) throws Exception {
         // Create a simple HTML webpage in a String
+        
+        // The model of data to provide to Thymeleaf.
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        // Add in title for the h1 tag to the model
+        model.put("title", new String("Gap Score Between Indigenous and Non-Indigenous"));
+
+         // Look up some information from JDBC
+        // First, create new connection to JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+
+        // DO NOT MODIFY THIS
+        // Makes Javalin render the webpage using Thymeleaf
+        context.render(TEMPLATE, model);
+        
+        /* 
         String html = "<html>";
 
         // Add some Head information
@@ -116,6 +138,7 @@ public class PageST31 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+        */
     }
 
 }

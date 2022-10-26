@@ -395,4 +395,430 @@ public class JDBCConnection {
         // Finally we return all of the movies
         return ST22Results;
     }
-}
+
+    //Generate a list of all the health conditions for the drop down
+    public ArrayList<String> getHealthConditions() {
+        ArrayList<String> healthCond = new ArrayList<String>();
+    
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+    
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+    
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+    
+            // The Query
+            String query = "SELECT DISTINCT condition FROM LTHCStatistics";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+    
+            // Process all of the results
+            while (results.next()) {
+                healthCond.add(results.getString("condition"));
+            }
+    
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+    
+        // Finally we return all of the movies
+        return healthCond;
+    }
+
+    //Aim to show the raw values, proportional values and difference 
+    //healthconditions 
+    public ArrayList<String> getDataByHealthCondition(String selectedCondition) {
+        ArrayList<String> healthCondData = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT lth.LGA_CODE AS 'LGA', condition FROM LTHCStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.condition = '" + selectedCondition + "'"; 
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a HealthCondition Object
+                String result = new String();
+
+                result = String.valueOf(results.getString("LGA")) + " ";
+                result = result + results.getString("condition");
+
+                healthCondData.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return healthCondData;
+    }
+
+     //Generate a list of all the health conditions for the drop down
+     public ArrayList<String> getAge() {
+        ArrayList<String> ageNum = new ArrayList<String>();
+    
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+    
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+    
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+    
+            // The Query
+            String query = "SELECT DISTINCT age FROM PopulationStatistics";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+    
+            // Process all of the results
+            while (results.next()) {
+                ageNum.add(results.getString("age"));
+            }
+    
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+    
+        // Finally we return all of the age brackets
+        return ageNum;
+    }
+
+    //healthconditions 
+    public ArrayList<String> getDataByAge(String selectedAge) {
+        ArrayList<String> selectedAgeData = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT lth.LGA_CODE AS 'LGA', age FROM PopulationStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.age = '" + selectedAge + "'"; 
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a HealthCondition Object
+                String result = new String();
+
+                result = String.valueOf(results.getString("LGA")) + " ";
+                result = result + results.getString("age");
+
+                selectedAgeData.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return selectedAgeData;
+    }
+
+
+     //Generate a list for the drop down
+     public ArrayList<String> getSchooling() {
+        ArrayList<String> schoolingYears = new ArrayList<String>();
+    
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+    
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+    
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+    
+            // The Query
+            String query = "SELECT DISTINCT highest_school_year FROM EducationStatistics WHERE lga_year = '2021'";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+    
+            // Process all of the results
+            while (results.next()) {
+                schoolingYears.add(results.getString("highest_school_year"));
+            }
+    
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+    
+        // Finally we return a list for the dropdown field
+        return schoolingYears;
+    }
+
+      //healthconditions 
+      public ArrayList<String> getDataBySchool(String selectedSchool) {
+        ArrayList<String> schoolData = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = 
+                "SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'";
+                query += "FROM EducationStatistics"; 
+                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig'";
+                query += "AND EducationStatistics.highest_school_year = " + selectedSchool + "AND EducationStatistics.count > 0";
+                query += "GROUP BY EducationStatistics.lga_code;";
+                 
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a HealthCondition Object
+                String result = new String();
+
+                result = String.valueOf(results.getString("LGA")) + " ";
+                result = result + results.getString("highest_school_year");
+
+                schoolData.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return schoolData;
+    }
+
+     //Generate a list for the drop down
+     public ArrayList<String> getHousehold() {
+        ArrayList<String> incomeBracket = new ArrayList<String>();
+    
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+    
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+    
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+    
+            // The Query
+            String query = "SELECT DISTINCT income_bracket FROM HouseholdStatistics WHERE lga_year = '2021'";
+            ;
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+    
+            // Process all of the results
+            while (results.next()) {
+                incomeBracket.add(results.getString("income_bracket"));
+            }
+    
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+    
+        // Finally we return a list for the dropdown field
+        return incomeBracket;
+    }
+
+     //healthconditions 
+     public ArrayList<String> getDataByHouse(String selectedIncome) {
+        ArrayList<String> incomeData = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = """
+                SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'
+                FROM EducationStatistics 
+                WHERE EducationStatistics.lga_year = '2021' 
+                AND EducationStatistics.indigenous_status = 'indig'
+                AND EducationStatistics.highest_school_year = 'did_not_go_to_school'
+                AND EducationStatistics.count > 0
+                GROUP BY EducationStatistics.lga_code;
+                    """; 
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a HealthCondition Object
+                String result = new String();
+
+                result = String.valueOf(results.getString("LGA")) + " ";
+                result = result + results.getString("income_bracket");
+
+                incomeData.add(result);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return incomeData;
+    }
+
+} // Keep as last bracket

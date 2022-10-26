@@ -2,8 +2,8 @@ package app;
 
 import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -23,12 +23,13 @@ public class PageST21 implements Handler {
     public static final String URL = "/page3.html";
 
      // Name of the Thymeleaf HTML template page in the resources folder
-     private static final String TEMPLATE = ("PageST21.html");
+     //private static final String TEMPLATE = ("PageST21.html");
 
 
     @Override
     public void handle(Context context) throws Exception {
 
+        /* 
         // The model of data to provide to Thymeleaf.
         // In this example the model will remain empty
         Map<String, Object> model = new HashMap<String, Object>();
@@ -40,11 +41,16 @@ public class PageST21 implements Handler {
         // First, create new connection to JDBC
         JDBCConnection jdbc = new JDBCConnection();
 
+        ArrayList<String> healthCond = jdbc.getHealthConditions(); 
+        for (String health : healthCond) {
+            System.out.print(health.toString());
+        }
+
          // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
-        context.render(TEMPLATE, model);
+        context.render(TEMPLATE, model);*/
 
-        /* 
+        
         // Create a simple HTML webpage in a String
         String html = "<html>";
 
@@ -96,40 +102,189 @@ public class PageST21 implements Handler {
 
         // Add instructions on how to use the filters
         html = html + """
-                <h2>Click an outcome to compare the Local Government Area performance with latest results from the 2021 census</h2>
-                <div>
-                <label>
-                    <input type="radio" name="test" value="small" checked>
-                    <img src='outcomeA.png' alt="Option 1">
-                </label> 
-    
-                <label>
-                    <input type="radio" name="test" value="big">
-                    <img src='outcomeC.png' alt="Option 2">
-                </label>
-                </div>
+                <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
         """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
-        /* Add HTML for the web form
-         * We are giving two ways here
-         *  - one for a text box
-         *  - one for a drop down
-         * 
-         * Whitespace is used to help us understand the HTML!
-         * 
-         * IMPORTANT! the action speicifes the URL for POST!
-         
-
         html = html + "<form action='/page3.html' method='post'>";
+        
+        html = html + """
+            <div class='form-group'>
+            <fieldset>
+            <legend>Select a dataset:</legend>
+            <!--Allow user to only select one Dataset-->
+            <div class='target-outcome-wrap'>
+                <div class='target-outcome'>
+                    <label for='DatasetRadio1' onchange='enableSet(this)'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio1' value='1'>
+                        <img src='outcomeA.png' alt='Option 1'>
+                        <p><b>Data on Health Conditions</b></p>
+                        <p>(Outcome 1)</p>
+                    </label>
+                </div> 
 
-        html = html + "   <div class='form-group'>";
-        html = html + "      <label for='direct_drop'>Select a director from the dropdown(Dropdown):</label>";
-        html = html + "      <select id='direct_drop' name='direct_drop'>";
+                <div class='target-outcome'>
+                    <label for='DatasetRadio2' class='rotate'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio2' value='2'>
+                        <img src='outcomeA.png' alt='Option 2'>
+                        <p><b>Data on Population by Age</b></p>
+                        <p>(Outcome 1)</p>
+                    </label>
+                </div> 
+                
+                <div class='target-outcome'>
+                    <label class='dataset' for='DatasetRadio3'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio3' value='3'>
+                        <img src='outcomeB.png' alt='Option 3'>
+                        <p><b>Data on Highest Year of Schooling</b></p>
+                        <p>(Outcome 5)</p>
+                    </label>
+                </div> 
 
+                <div class='target-outcome'>
+                    <label for='DatasetRadio4'>
+                        <input type='radio' name='DatasetRadio' id='DatasetRadio4' value='4'>
+                        <img src='outcomeC.png' alt='Option 4'>
+                        <p><b>Data on Weekly Household Income</b></p>
+                        <p>(Outcome 8)</p>
+                    </label>
+                </div> 
+            </div>
+            </fieldset>
+        </div>
 
+        <!-- Dropdown that will only be available if the relevant dataset is selected-->
+        <fieldset>
+            <legend>Filter the dataset</legend>
+            <div class='form-group'> 
+                <label for='condition_drop'>Select the Health Condition:</label></br>
+                    <select id='condition_drop' name='condition_drop'>
+                    <option>select</option>
+                    """;
+
+                    ArrayList<String> healthCond = jdbc.getHealthConditions(); 
+
+                    for (String health : healthCond) {
+                        html = html + "<option>" + health + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+        
+        
+        html = html + """
+            <div class='form-group'> 
+                <label for='age_drop'>Select the Age Range:</label></br>
+                    <select id='age_drop' name='age_drop'>
+                    <option>select</option>
+                    """;
+                    ArrayList<String> ageNum = jdbc.getAge(); 
+
+                    for (String anything : ageNum) {
+                        html = html + "<option>" + anything + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+                
+        html = html + """
+            <div class='form-group'> 
+                <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                    <select id='school_drop' name='direct_drop'>
+                    <option>select</option>
+                    """;
+                     ArrayList<String> schoolingYears = jdbc.getSchooling(); 
+
+                    for (String schooled : schoolingYears) {
+                        html = html + "<option>" + schooled + "</option>";
+                    }
+
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+                
+        html = html + """        
+            <div class='form-group'> 
+                <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                    <select id='income_drop' name='direct_drop'>
+                    <option>select</option>
+                    """;
+                    ArrayList<String> incomeBrackets = jdbc.getHousehold(); 
+
+                    for (String income : incomeBrackets) {
+                        html = html + "<option>" + income + "</option>";
+                    }
+                       
+                        
+                    html = html + "      </select>";
+                    html = html + "   </div>";
+        html = html + "</fieldset>";
+
+        html = html + """  
+        <script>
+            function enableSet(answer) {
+                if(answer.value == '1') {
+                    document.getElementById('condition_drop').classList.remove('d-none');
+                } else if (answer.value == '2') {
+                    document.getElementById('age_drop').classList.remove('d-none');
+                }
+                else if (answer.value == '3') {
+                    document.getElementById('school_drop').classList.remove('d-none');
+                }
+                else if (answer.value == '4') {
+                    document.getElementById('income_drop').classList.remove('d-none');
+                }
+            }; 
+        </script>
+
+        <!--Select LGA Order-->
+        <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
+        <div class='form-group'> 
+            <fieldset>
+                <legend>Select LGA Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending'>
+                    <label for='AscendingLGA'>View LGA in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingLGA' value='Descending'>
+                    <lable for='DescendingLGA'>View LGA in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select Raw Data Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingRaw' value='Ascending'>
+                    <label for='AscendingRaw'>View Raw Data in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingRaw' value='Descending'>
+                    <lable for='DescendingLGA'>View Raw Data in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select Proportional Data Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingProportional' value='Ascending'>
+                    <label for='AscendingProportional'>View Proportional Data in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingProportional' value='Descending'>
+                    <lable for='DescendingProportional'>View Proportional Data in Descending Order</lable>
+                    </br>
+            </fieldset>
+            <fieldset>
+                <legend>Select The Gap Order</legend>
+                    <input type='radio' name='SortOrder' id='AscendingGap' value='Ascending'>
+                    <label for='AscendingGap'>View The Gap in Ascending Order</label> 
+                    </br>
+                    <input type='radio' name='SortOrder' id='DescendingGap' value='Descending'>
+                    <lable for='DescendingGap'>View The Gap in Descending Order</lable>
+            </fieldset>
+        </div>
+
+        <!-- Submit Button-->
+            <button type='submit' class='btn'>Compare LGAs</button>
+        </form>
+    </div>
+                """;
+
+        /* 
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 
@@ -146,6 +301,55 @@ public class PageST21 implements Handler {
 
         // Finish the List HTML
         html = html + "</ul>";
+        */
+
+          /* Get the Form Data
+                    *  from the drop down list
+                    * Need to be Careful!!
+                    *  If the form is not filled in, then the form will return null!
+                    */
+                    String condition_drop = context.formParam("condition_drop");
+                    // String movietype_drop = context.queryParam("movietype_drop");
+                    if (condition_drop == null) {
+                    // If NULL, nothing to show, therefore we make some "no results" HTML
+                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    } else {
+                    // If NOT NULL, then lookup the movie by type!
+                    html = html + outputDataByHealthCond(condition_drop);
+                    }
+
+                    //age_drop
+                    String age_drop = context.formParam("age_drop");
+                    // String movietype_drop = context.queryParam("movietype_drop");
+                    if (age_drop == null) {
+                    // If NULL, nothing to show, therefore we make some "no results" HTML
+                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    } else {
+                    // If NOT NULL, then lookup the movie by type!
+                    html = html + outputDataByAge(age_drop);
+                    }
+
+                     //school_drop
+                     String school_drop = context.formParam("school_drop");
+                     // String movietype_drop = context.queryParam("movietype_drop");
+                     if (school_drop == null) {
+                     // If NULL, nothing to show, therefore we make some "no results" HTML
+                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     } else {
+                     // If NOT NULL, then lookup the movie by type!
+                     html = html + outputDataBySchool(school_drop);
+                     }
+
+                     //income_drop
+                     String income_drop = context.formParam("income_drop");
+                     // String movietype_drop = context.queryParam("movietype_drop");
+                     if (income_drop == null) {
+                     // If NULL, nothing to show, therefore we make some "no results" HTML
+                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     } else {
+                     // If NOT NULL, then lookup the movie by type!
+                     html = html + outputDataByIncome(income_drop);
+                     }
 
         // Close Content div
         html = html + "</div>";
@@ -173,7 +377,87 @@ public class PageST21 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
-        */
+    }
+
+    
+    //get data for first query
+    public String outputDataByHealthCond(String selectedCondition) {
+        String html = "";
+        if (selectedCondition == null) {
+            html = html + "<h2><i>Please select from dropbox</i></h2>";
+            } else {
+            html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+        }
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition);
+        
+        // Add HTML for the health conditions list
+        html = html + "<ul>";
+        for (String result : healthConditions21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+    //get data for first query
+    public String outputDataByAge(String selectedAge) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people that are " + selectedAge + " years old</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> age21 = jdbc.getDataByAge(selectedAge);
+        
+        // Add HTML for the health conditions list
+        html = html + "<ul>";
+        for (String result : age21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+     //get data for first query
+     public String outputDataBySchool(String selectedSchool) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + "</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool);
+        
+        // Add HTML for the health conditions list
+        html = html + "<ul>";
+        for (String result : school21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
+    }
+
+    //get data for first query
+    public String outputDataByIncome(String selectedIncome) {
+        String html = "";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedIncome + "</h2>";
+
+        // Look up movies from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<String> income21 = jdbc.getDataBySchool(selectedIncome);
+        
+        // Add HTML for the list
+        html = html + "<ul>";
+        for (String result : income21) {
+            html = html + "<li>" + result + "</li>";
+        }
+        html = html + "</ul>";
+
+        return html;
     }
 
 }

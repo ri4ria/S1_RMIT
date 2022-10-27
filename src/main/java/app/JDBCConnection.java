@@ -530,9 +530,10 @@ public class JDBCConnection {
             // The Query
             String query = 
             //trim the addtional underscore and rearrange the order
-            "SELECT DISTINCT trim(age,'_') AS age ";
-            query += "FROM PopulationStatistics";
-            query += " ORDER BY SUBSTRING(age, 4);";
+            //"SELECT DISTINCT trim(age,'_') AS age ";
+            "SELECT DISTINCT age ";
+            query += "FROM PopulationStatistics ";
+            query += "ORDER BY SUBSTRING(age, 4);";
             System.out.println(query);
             
             // Get Result
@@ -797,15 +798,8 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = """
-                SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'
-                FROM EducationStatistics 
-                WHERE EducationStatistics.lga_year = '2021' 
-                AND EducationStatistics.indigenous_status = 'indig'
-                AND EducationStatistics.highest_school_year = 'did_not_go_to_school'
-                AND EducationStatistics.count > 0
-                GROUP BY EducationStatistics.lga_code;
-                    """; 
+            String query = 
+                " "; 
             System.out.println(query);
             
             // Get Result

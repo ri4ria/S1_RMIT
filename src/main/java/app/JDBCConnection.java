@@ -413,7 +413,8 @@ public class JDBCConnection {
     
             // The Query
             String query = 
-            "SELECT DISTINCT upper(substr(condition, 1, 1)) || substr(condition, 2) as condition "; //needs space and needs an alias!! 
+            //"SELECT DISTINCT upper(substr(condition, 1, 1)) || substr(condition, 2) as condition "; //needs space and needs an alias!! 
+            "SELECT DISTINCT condition ";
             query += "FROM LTHCStatistics;";
             System.out.println(query);
             
@@ -463,7 +464,16 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT lth.LGA_CODE AS 'LGA', condition FROM LTHCStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.condition = '" + selectedCondition + "'"; 
+            String query = 
+            "SELECT health.LGA_CODE AS code, SUM(health.count) AS RAW ";
+            query += "FROM LTHCStatistics AS health ";
+            //query += "JOIN LGA AS LGAnum ";
+            //query += "ON health.LGA_CODE = LGAnum.LGA_CODE ";
+            query += "WHERE health.indigenous_status = 'indig' ";
+            query += "AND health.condition = '" + selectedCondition + "' ";
+            //query += "AND LGAnum.lga_year = '2021' "; 
+            query += "GROUP BY health.LGA_CODE;";  
+
             System.out.println(query);
             
             // Get Result
@@ -474,8 +484,8 @@ public class JDBCConnection {
                 // Create a HealthCondition Object
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("condition");
+                result = String.valueOf(results.getString("code")) + " ";
+                result = result + results.getString("RAW");
 
                 healthCondData.add(result);
             }

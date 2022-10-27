@@ -749,8 +749,8 @@ public class JDBCConnection {
             // The Query
             String query = 
             "SELECT DISTINCT income_bracket ";
-            query += "FROM HouseholdStatistics ";
-            query += "ORDER BY SUBSTRING(income_bracket,-1) AND SUBSTRING(income_bracket,-2) AND SUBSTRING(income_bracket,-4);";
+            query += "FROM HouseholdStatistics; ";
+            //query += "ORDER BY SUBSTRING(income_bracket,-1) AND SUBSTRING(income_bracket,-2) AND SUBSTRING(income_bracket,-4);";
             System.out.println(query);
             
             // Get Result
@@ -799,7 +799,29 @@ public class JDBCConnection {
 
             // The Query
             String query = 
-                " "; 
+                "SELECT incomedata.code AS 'cod', LGA.lga_name AS 'nam', incomedata.indig AS 'indi', incomedata.nonindig AS 'nonindi', incomedata.total AS 'total', incomedata.proportional AS 'prop' ";
+                query +="FROM LGA ";
+                query +="JOIN (SELECT H1.lga_code AS code, H1.count AS 'indig', HIgap.nonindig AS 'nonindig', H2.count AS 'total', HIgap.gap, printf('%d%%', H1.count*100/H2.count) AS 'proportional' "; 
+                query +="FROM HouseholdStatistics H1 ";
+                query +="OUTER LEFT JOIN HouseholdStatistics H2 ";
+                query +="JOIN (SELECT *, SUM(H1.count), SUM(H2.count) AS 'nonindig', (H1.count - H2.count) AS gap ";
+                query +="FROM HouseholdStatistics H1 ";
+                query +="OUTER LEFT JOIN HouseholdStatistics H2 ";
+                query +="WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
+                query +="AND H1.income_bracket = '" + selectedIncome + "' AND H2.income_bracket ='" + selectedIncome + "' ";
+                query +="AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%other%' ";
+                query +="AND H1.lga_code = H2.lga_code ";
+                query +="GROUP BY H1.lga_Code) AS HIgap ";
+                query +="ON HIgap.lga_code = H2.lga_code ";
+                query +="WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
+                query +="AND H1.income_bracket = '" + selectedIncome + "' AND H2.income_bracket ='" + selectedIncome + "' ";
+                query +="AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%total%' ";
+                query +="AND H1.lga_code = H2.lga_code ";
+                query +="GROUP BY H1.lga_Code) AS incomedata ";
+                query +="WHERE incomedata.code = LGA.lga_code ";
+                query +="AND LGA.lga_year = '2021' ";
+                query +="AND incomedata.indig > 0 ";
+                query +="AND incomedata.indig <= incomedata.total;";
             System.out.println(query);
             
             // Get Result
@@ -810,8 +832,12 @@ public class JDBCConnection {
                 // Create a HealthCondition Object
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("income_bracket");
+                result = String.valueOf(results.getString("cod")) + " ";
+                result = result + results.getString("nam");
+                result = result + results.getString("indi");
+                result = result + results.getString("nonindi");
+                result = result + results.getString("indi");
+                result = result + results.getString("prop");
 
                 incomeData.add(result);
             }

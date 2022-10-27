@@ -465,13 +465,13 @@ public class JDBCConnection {
 
             // The Query
             String query = 
-            "SELECT health.LGA_CODE AS code, SUM(health.count) AS RAW ";
+            "SELECT health.LGA_CODE AS code, LGAnum.LGA_name AS name, SUM(health.count) AS RAW ";
             query += "FROM LTHCStatistics AS health ";
-            //query += "JOIN LGA AS LGAnum ";
-            //query += "ON health.LGA_CODE = LGAnum.LGA_CODE ";
+            query += "JOIN LGA AS LGAnum ";
+            query += "ON health.LGA_CODE = LGAnum.LGA_CODE ";
             query += "WHERE health.indigenous_status = 'indig' ";
             query += "AND health.condition = '" + selectedCondition + "' ";
-            //query += "AND LGAnum.lga_year = '2021' "; 
+            query += "AND LGAnum.lga_year = '2021' "; 
             query += "GROUP BY health.LGA_CODE;";  
 
             System.out.println(query);
@@ -485,6 +485,7 @@ public class JDBCConnection {
                 String result = new String();
 
                 result = String.valueOf(results.getString("code")) + " ";
+                result += results.getString("name") + " ";
                 result = result + results.getString("RAW");
 
                 healthCondData.add(result);

@@ -192,7 +192,7 @@ public class PageST21 implements Handler {
         html = html + """
             <div class='form-group'> 
                 <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
-                    <select id='school_drop' name='direct_drop'>
+                    <select id='school_drop' name='school_drop'>
                     <option>select</option>
                     """;
                      ArrayList<String> schoolingYears = jdbc.getSchooling(); 
@@ -207,7 +207,7 @@ public class PageST21 implements Handler {
         html = html + """        
             <div class='form-group'> 
                 <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
-                    <select id='income_drop' name='direct_drop'>
+                    <select id='income_drop' name='income_drop'>
                     <option>select</option>
                     """;
                     ArrayList<String> incomeBrackets = jdbc.getHousehold(); 
@@ -444,11 +444,13 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByIncome(String selectedIncome) {
         String html = "";
-        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedIncome + "</h2>";
+        html = html + "<h2> Table showing: population of indigenous household, non-indigenous household, total population, </br>";
+        html = html + "the gap and percent of indigenous population proportional to total for the </br>"; 
+        html = html + " selected household income bracket: $" + selectedIncome + " for all the LGAs.</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> income21 = jdbc.getDataBySchool(selectedIncome);
+        ArrayList<String> income21 = jdbc.getDataByHouse(selectedIncome);
         
         // Add HTML for the list
         html = html + "<ul>";

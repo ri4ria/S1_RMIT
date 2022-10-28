@@ -322,9 +322,101 @@ public class JDBCConnection {
         return outcome;
     }
 
-    public ArrayList<String> getST22EducationResults(String dataset, String locationType, String location, String valueType) {
+    public ArrayList<String> getLGACodes () {
+        ArrayList<String> lgaCodes = new ArrayList<String>();
+
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(DATABASE);
+            
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT * FROM LGAS";
+
+            System.out.println(query);
+
+            ResultSet results = statement.executeQuery(query);
+
+            while (results.next()) {
+                String result = new String();
+
+                result = String.valueOf(results.getInt("lga_code"));
+
+                lgaCodes.add(result);
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return lgaCodes;
+    }
+
+    public ArrayList<String> getAgeGroups () {
+        ArrayList<String> ageGroups = new ArrayList<String>();
+
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(DATABASE);
+            
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT age FROM PopulationStatistics GROUP BY age";
+
+            System.out.println(query);
+
+            ResultSet results = statement.executeQuery(query);
+
+            while (results.next()) {
+                String result = new String();
+
+                result = results.getString("age");
+
+                ageGroups.add(result);
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return ageGroups;
+    }
+
+    /*
+
+    public ArrayList<String> getST22PopulationResults(String locationType, String location, String valueType, String indigenousStatus, String sex, String age) {
+
+        // locationType = LGA or state
+        // location = LGA code or state name
+        // valueType = raw or proportional
+        // indigenousStatus = indig, non_indig, indig_ns
+        // sex = f or m
+        // age = _0_4, _10_14, _15_19, _20_24, _25_29, _30_34, _35_39, _40_44, _45_49, _50_54, _55_59, _5_9, _60_64, _65_yrs_ov
+
         // Creating ArrayList for results
-        ArrayList<String> ST22Results = new ArrayList<String>();
+        ArrayList<String> ST22PopulationResults = new ArrayList<String>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -337,22 +429,13 @@ public class JDBCConnection {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            String query = """
-                SELECT data2016.lga_code AS '2016 LGA Code', 
-                       data2021.lga_code AS '2021 LGA Code', 
-                       data2016.indigenous_status AS 'Indigenous Status', 
-                       data2016.sex AS 'Gender', 
-                       data2016.highest_school_year AS 'Highest School Year Completed', 
-                       data2016.count AS '2016 Result', 
-                       data2021.count AS '2021 Result',
-                       data2021.count - data2016.count AS 'Difference'
-                    FROM EducationStatistics AS data2016 LEFT OUTER JOIN EducationStatistics AS data2021 ON data2016.lga_code = data2021.lga_code AND 
-                                                                                                data2016.indigenous_status = data2021.indigenous_status AND
-                                                                                                data2016.sex = data2021.sex AND
-                                                                                                data2016.highest_school_year = data2021.highest_school_year
-                    WHERE data2016.lga_year = 2016 AND data2021.lga_year = 2021
-                    """;
-
+            String query = "SELECT * ";
+            query += "FROM PS2016VS2021 ";
+            query += "WHERE (`2016 LGA Code` = " + location + " OR `2021 LGA Code` = " + location + ") AND ";
+            query += "(`2016 Indigenous Status` = '" + indigenousStatus + "' OR `2021 Indigenous Status` = '" + indigenousStatus + "') AND ";
+            query += "(`2016 Sex` = '" + sex + "' OR `2021 Sex` = '"+ sex + "') AND ";
+            query += "(`2016 Age` = '" + age + "' OR `2021 Age` = '" + age + "');";
+            
             System.out.println(query);
             
             // Get Result
@@ -360,19 +443,20 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results.next()) {
-                // Create a Movie Object
+                // Create a result object
                 String result = new String();
 
-                result = String.valueOf(results.getInt("2016 LGA Code")) + " ";
-                result = result + String.valueOf(results.getInt("2021 LGA Code")) + " ";
-                result = result + results.getString("Indigenous Status") + " ";
-                result = result + results.getString("Gender") + " ";
-                result = result + results.getString("Highest School Year Completed") + " ";
-                result = result + String.valueOf(results.getInt("2016 Result")) + " ";
-                result = result + String.valueOf(results.getInt("2021 Result")) + " ";
-                result = result + String.valueOf(results.getInt("Difference"));
+                result += location + " ";
+                result += results.getString("2016 LGA Name") + " ";
+                result += results.getString("2016 LGA State") + " ";
+                result += results.getString("2016 LGA Type") + " ";
+                result += results.getString("2021 LGA Name") + " ";
+                result += results.getString("2021 LGA State") + " ";
+                result += results.getString("2021 LGA Type") + " ";
+                result += String.valueOf(results.getInt("2016 Result")) + " ";
+                result += String.valueOf(results.getInt("2021 Result"));
 
-                ST22Results.add(result);
+                ST22PopulationResults.add(result);
             }
 
             // Close the statement because we are done with it
@@ -392,8 +476,82 @@ public class JDBCConnection {
             }
         }
 
-        // Finally we return all of the movies
-        return ST22Results;
+        // Finally we return all of the results
+        return ST22PopulationResults;
+    }
+
+    */
+
+    public PSST22Results getST22PopulationResults(String locationType, String location, String valueType, String indigenousStatus, String sex, String age) {
+
+        // locationType = LGA or state
+        // location = LGA code or state name
+        // valueType = raw or proportional
+        // indigenousStatus = indig, non_indig, indig_ns
+        // sex = f or m
+        // age = _0_4, _10_14, _15_19, _20_24, _25_29, _30_34, _35_39, _40_44, _45_49, _50_54, _55_59, _5_9, _60_64, _65_yrs_ov
+
+        // Creating ArrayList for results
+        // PSST22Results ST22Results = new PSST22Results();
+
+        // Create PSST22Results object
+        PSST22Results ST22PopulationResults = new PSST22Results();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT * ";
+            query += "FROM PS2016VS2021 ";
+            query += "WHERE (`2016 LGA Code` = " + location + " OR `2021 LGA Code` = " + location + ") AND ";
+            query += "(`2016 Indigenous Status` = '" + indigenousStatus + "' OR `2021 Indigenous Status` = '" + indigenousStatus + "') AND ";
+            query += "(`2016 Sex` = '" + sex + "' OR `2021 Sex` = '"+ sex + "') AND ";
+            query += "(`2016 Age` = '" + age + "' OR `2021 Age` = '" + age + "');";
+            
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+
+                ST22PopulationResults.setLGACode(location);
+                ST22PopulationResults.setLGAName2016(results.getString("2016 LGA Name"));
+                ST22PopulationResults.setLGAState2016(results.getString("2016 LGA State"));
+                ST22PopulationResults.setLGAType2016(results.getString("2016 LGA Type"));
+                ST22PopulationResults.setLGAName2021(results.getString("2021 LGA Name"));
+                ST22PopulationResults.setLGAState2021(results.getString("2021 LGA State"));
+                ST22PopulationResults.setLGAType2021(results.getString("2021 LGA Type"));
+                ST22PopulationResults.setResult2016(results.getInt("2016 Result"));
+                ST22PopulationResults.setResult2021(results.getInt("2021 Result"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return ST22PopulationResults;
     }
 
     //Generate a list of all the health conditions for the drop down

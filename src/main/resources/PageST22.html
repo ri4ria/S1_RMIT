@@ -37,6 +37,14 @@
             states.</p>
         <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
 
+        <p th:text = '${dataset}'></p>
+        <p th:text = '${locationType}'></p>
+        <p th:text = '${location}'></p>
+        <p th:text = '${valueType}'></p>
+        <p th:text = '${indigenousStatus}'></p>
+        <p th:text = '${sex}'></p>
+        <p th:text = '${age}'></p>
+
         <div class='filter-sidebar'>
 
             <form action='/page4.html' method='post'>
@@ -86,13 +94,14 @@
 
                         <br>
 
-                        <datalist id='suggestions'> <!--TODO: retrieve options from database-->
-                            <select id ='location' name = 'location'>
-                                <option>10050</option>
-                                <option>Second option</option>
+                        <!-- <datalist id='locationSuggestions'> --> <!--TODO: retrieve options from database--> 
+                            <!-- <select id ='location' name = 'location'> -->
+                            <select class = 'form-control' id = 'location' name = 'location'>
+                                <option value = ''>Please select...</option>
+                                <option th:each = 'code : ${lgaCodes}' th:text = '${code}' th:value = '${code}'></option>
                             </select>
-                        </datalist>
-                        <input autoComplete='on' list='suggestions'>
+                        <!-- </datalist> -->
+                        <!-- <input autoComplete='on' list='locationSuggestions'> -->
 
                     </fieldset>
 
@@ -120,15 +129,91 @@
 
                 </div>
 
+                <div class='form-group'>
+
+                    <fieldset>
+
+                        <legend>Other</legend>
+
+                        <h4>Indigenous Status</h4>
+
+                        <ul style='list-style-type: none;'>
+                            <!--TODO: find a way to implement this in external CSS stylesheet-->
+                            <li>
+                                <input id='nonIndigenous' name='indigenousStatus' type='radio' value='non_indig'>
+                                <label for='indigenousStatus'>Non-Indigenous</label>
+                            </li>
+                            <li>
+                                <input id='indigenous' name='indigenousStatus' type='radio' value='indig'>
+                                <label for='indigenousStatus'>Indigenous</label>
+                            </li>
+                            <li>
+                                <input id='notStated' name='indigenousStatus' type='radio' value='indig_ns'>
+                                <label for='indigenousStatus'>Not Stated</label>
+                            </li>
+                        </ul>
+
+                        <h4>Sex</h4>
+
+                        <ul>
+                            <li>
+                                <input id='notStated' name='sex' type='radio' value='m'>
+                                <label for='sex'>Male</label>
+                            </li>
+                            <li>
+                                <input id='notStated' name='sex' type='radio' value='f'>
+                                <label for='sex'>Female</label>
+                            </li>
+                        </ul>
+
+                        <h4>Age</h4>
+
+                        <!-- <datalist id='ageSuggestions'> --> <!--TODO: retrieve options from database-->
+                            <select id ='age' name = 'age'>
+                                <option th:each = 'group : ${ageGroups}' th:text = '${group}' th:value = '${group}'></option>
+                            </select>
+                        <!-- </datalist> -->
+                        <!-- <input autoComplete='on' list='ageSuggestions'> -->
+
+                    </fieldset>
+
+                </div>
+
                 <button type='submit' class='btn btn-primary'>Apply Filters</button>
 
             </form>
         </div>
 
         <h1 th:text='${titleResults}'></h1>
+        
         <ul>
-            <li th:each='result : ${dataset}' th:text='${result}'></li>
+            <li th:each='result : ${results}' th:text='${result}'></li>
         </ul>
+
+        <table>
+            <tr>
+                <th>LGA Code</th>
+                <th>2016 LGA Name</th>
+                <th>2016 LGA State</th>
+                <th>2016 LGA Type</th>
+                <th>2021 LGA Name</th>
+                <th>2021 LGA State</th>
+                <th>2021 LGA Type</th>
+                <th>2016 Result</th>
+                <th>2021 Result</th>
+            </tr>
+            <tr>
+                <td th:text = '${lgaCode}'></td>
+                <td th:text = '${lgaName2016}'></td>
+                <td th:text = '${lgaState2016}'></td>
+                <td th:text = '${lgaType2016}'></td>
+                <td th:text = '${lgaName2021}'></td>
+                <td th:text = '${lgaState2021}'></td>
+                <td th:text = '${lgaType2021}'></td>
+                <td th:text = '${results2016}'></td>
+                <td th:text = '${results2021}'></td>
+            </tr>
+        </table>
 
     </div>
 

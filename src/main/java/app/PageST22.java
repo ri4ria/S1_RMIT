@@ -44,6 +44,14 @@ public class PageST22 implements Handler {
         ArrayList<String> ageGroups = jdbc.getAgeGroups();
         model.put("ageGroups", ageGroups);
 
+        // Retrieving highest school year brackets for dropdown list
+        ArrayList<String> years = jdbc.getHighSchoolYears();
+        model.put("schoolYears", years);
+
+        // Retrieving highest school year brackets for dropdown list
+        ArrayList<String> brackets = jdbc.getIncomeBrackets();
+        model.put("incomeBrackets", brackets);
+
         String dataset = context.formParam("dataset"); // name of the dataset
         String locationType = context.formParam("locationType"); // LGA or state
         String location = context.formParam("location"); // location filter
@@ -62,8 +70,8 @@ public class PageST22 implements Handler {
 
         model.put("titleResults", new String("2016 vs. 2021 Indigenous Status Results"));
 
-        // create PSST22Results object
-        PSST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
+        // create SST22Results object
+        ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
 
         model.put("lgaCode", results.getLGACode());
         model.put("lgaName2016", results.getLGAName2016());

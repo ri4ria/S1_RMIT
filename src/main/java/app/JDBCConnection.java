@@ -739,7 +739,25 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT lth.LGA_CODE AS 'LGA', age FROM PopulationStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.age = '" + selectedAge + "'"; 
+            String query = 
+            //"SELECT lth.LGA_CODE AS 'LGA', age FROM PopulationStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.age = '" + selectedAge + "'"; 
+            "SELECT pop.code AS 'code', lga_name AS 'name', printf('%,d', pop.indig) AS 'indig', printf('%,d', pop.nonindig) AS 'nonindig', printf('%,d', pop.nonstated) AS 'nonstated', ";
+            query += "printf('%,d', pop.total) AS total, printf('%,d', pop.gap) AS gap, printf('%d%%', pop.proportional) AS proportional ";
+            query += "FROM LGA JOIN (SELECT P1.lga_code AS code,  popINNON.indig AS indig, popINNON.nonindig AS nonindig, (P1.count + P2.count) AS nonstated, ";
+            query += "(popINNON.indig + popINNON.nonindig + P1.count + P2.count) AS total, ";
+            query += "(popINNON.indig - popINNON.nonindig) AS gap, (popINNON.indig * 100 /(popINNON.indig + popINNON.nonindig + P1.count + P2.count)) AS proportional ";
+            query += "FROM PopulationStatistics as P1 JOIN PopulationStatistics as P2 JOIN (SELECT P1.lga_code AS code, popIn.indig AS indig, (P1.count + P2.count) AS nonindig ";
+            query += "FROM PopulationStatistics as P1 JOIN PopulationStatistics as P2 JOIN (SELECT P1.lga_code, (P1.count + P2.count) AS indig ";
+            query += "FROM PopulationStatistics as P1 JOIN PopulationStatistics as P2 WHERE P1.lga_year = '2021' AND P2.lga_year = '2021' ";
+            query += "AND P1.age = '" + selectedAge + "' AND P2.age = '" + selectedAge + "' AND P1.sex = 'f' AND P2.sex = 'm' AND P1.indigenous_status = 'indig' AND P2.indigenous_status = 'indig' ";
+            query += "AND P1.lga_code = P2.lga_code) AS popIn ON popIn.lga_code = P1.lga_code ";
+            query += "WHERE P1.lga_year = '2021' AND P2.lga_year = '2021' AND P1.age = '" + selectedAge + "' AND P2.age = '" + selectedAge + "' ";
+            query += "AND P1.sex = 'f' AND P2.sex = 'm' AND P1.indigenous_status = 'non_indig' AND P2.indigenous_status = 'non_indig' ";
+            query += "AND P1.lga_code = P2.lga_code) AS popINNON ON popINNON.code = P1.lga_code WHERE P1.lga_year = '2021' AND P2.lga_year = '2021' ";
+            query += "AND P1.age = '" + selectedAge + "' AND P2.age = '" + selectedAge + "' AND P1.sex = 'f' AND P2.sex = 'm' ";
+            query += "AND P1.indigenous_status = 'indig_ns' AND P2.indigenous_status = 'indig_ns' AND P1.lga_code = P2.lga_code) AS pop ";
+            query += "ON pop.code = LGA.lga_code GROUP BY pop.code;";
+
             System.out.println(query);
             
             // Get Result
@@ -750,8 +768,14 @@ public class JDBCConnection {
                 // Create a HealthCondition Object
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("age");
+                result = String.valueOf(results.getString("code")) + " ";
+                result = result + results.getString("name") + " ";
+                result = result + results.getString("indig") + " ";
+                result = result + results.getString("nonindig") + " ";
+                result = result + results.getString("nonstated") + " ";
+                result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                result = result + results.getString("proportional");
 
                 selectedAgeData.add(result);
             }

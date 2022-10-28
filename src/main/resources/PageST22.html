@@ -37,14 +37,17 @@
             states.</p>
         <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
 
-        <p th:text = '${dataset}'></p>
-        <p th:text = '${locationType}'></p>
-        <p th:text = '${location}'></p>
-        <p th:text = '${valueType}'></p>
-        <p th:text = '${indigenousStatus}'></p>
-        <p th:text = '${sex}'></p>
-        <p th:text = '${age}'></p>
+        <p th:text='${dataset}'></p>
+        <p th:text='${locationType}'></p>
+        <p th:text='${location}'></p>
+        <p th:text='${valueType}'></p>
+        <p th:text='${indigenousStatus}'></p>
+        <p th:text='${sex}'></p>
+        <p th:text='${age}'></p>
 
+        <h1 th:text='${titleResults}'></h1>
+
+        <div class='sidebar-results-wrapper'></div>
         <div class='filter-sidebar'>
 
             <form action='/page4.html' method='post'>
@@ -94,12 +97,13 @@
 
                         <br>
 
-                        <!-- <datalist id='locationSuggestions'> --> <!--TODO: retrieve options from database--> 
-                            <!-- <select id ='location' name = 'location'> -->
-                            <select class = 'form-control' id = 'location' name = 'location'>
-                                <option value = ''>Please select...</option>
-                                <option th:each = 'code : ${lgaCodes}' th:text = '${code}' th:value = '${code}'></option>
-                            </select>
+                        <!-- <datalist id='locationSuggestions'> -->
+                        <!--TODO: retrieve options from database-->
+                        <!-- <select id ='location' name = 'location'> -->
+                        <select class='form-control' id='location' name='location'>
+                            <option value=''>Please select...</option>
+                            <option th:each='code : ${lgaCodes}' th:text='${code}' th:value='${code}'></option>
+                        </select>
                         <!-- </datalist> -->
                         <!-- <input autoComplete='on' list='locationSuggestions'> -->
 
@@ -168,12 +172,19 @@
 
                         <h4>Age</h4>
 
-                        <!-- <datalist id='ageSuggestions'> --> <!--TODO: retrieve options from database-->
-                            <select id ='age' name = 'age'>
-                                <option th:each = 'group : ${ageGroups}' th:text = '${group}' th:value = '${group}'></option>
-                            </select>
+                        <!-- <datalist id='ageSuggestions'> -->
+                        <!--TODO: retrieve options from database-->
+                        <select id='age' name='age'>
+                            <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
+                        </select>
                         <!-- </datalist> -->
                         <!-- <input autoComplete='on' list='ageSuggestions'> -->
+
+                        <h4>Highest Year of School Completed</h4>
+
+                        <select id = 'highestSchoolYearCompleted' name = 'highestSchoolYearCompleted'>
+                            <option th:each = 'year : ${schoolYears}' th:text = '${year}' th:value = '${year}'></option>
+                        </select>
 
                     </fieldset>
 
@@ -184,37 +195,34 @@
             </form>
         </div>
 
-        <h1 th:text='${titleResults}'></h1>
-        
-        <ul>
-            <li th:each='result : ${results}' th:text='${result}'></li>
-        </ul>
+        <div class='results-table'>
+            <table>
+                <tr>
+                    <th>LGA Code</th>
+                    <th>2016 LGA Name</th>
+                    <th>2016 LGA State</th>
+                    <th>2016 LGA Type</th>
+                    <th>2021 LGA Name</th>
+                    <th>2021 LGA State</th>
+                    <th>2021 LGA Type</th>
+                    <th>2016 Result</th>
+                    <th>2021 Result</th>
+                </tr>
+                <tr>
+                    <td th:text='${lgaCode}'></td>
+                    <td th:text='${lgaName2016}'></td>
+                    <td th:text='${lgaState2016}'></td>
+                    <td th:text='${lgaType2016}'></td>
+                    <td th:text='${lgaName2021}'></td>
+                    <td th:text='${lgaState2021}'></td>
+                    <td th:text='${lgaType2021}'></td>
+                    <td th:text='${results2016}'></td>
+                    <td th:text='${results2021}'></td>
+                </tr>
+            </table>
+        </div>
 
-        <table>
-            <tr>
-                <th>LGA Code</th>
-                <th>2016 LGA Name</th>
-                <th>2016 LGA State</th>
-                <th>2016 LGA Type</th>
-                <th>2021 LGA Name</th>
-                <th>2021 LGA State</th>
-                <th>2021 LGA Type</th>
-                <th>2016 Result</th>
-                <th>2021 Result</th>
-            </tr>
-            <tr>
-                <td th:text = '${lgaCode}'></td>
-                <td th:text = '${lgaName2016}'></td>
-                <td th:text = '${lgaState2016}'></td>
-                <td th:text = '${lgaType2016}'></td>
-                <td th:text = '${lgaName2021}'></td>
-                <td th:text = '${lgaState2021}'></td>
-                <td th:text = '${lgaType2021}'></td>
-                <td th:text = '${results2016}'></td>
-                <td th:text = '${results2021}'></td>
-            </tr>
-        </table>
-
+    </div>
     </div>
 
     <div class='footer'>

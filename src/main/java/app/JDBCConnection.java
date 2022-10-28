@@ -1003,9 +1003,9 @@ public class JDBCConnection {
 
             // The Query
             String query = 
-                "SELECT incomedata.code AS 'cod', LGA.lga_name AS 'nam', incomedata.indig AS 'indi', incomedata.nonindig AS 'nonindi', incomedata.gap AS 'gap', incomedata.total AS 'total', incomedata.proportional AS 'prop' ";
+                "SELECT incomedata.code AS 'cod', LGA.lga_name AS 'nam', printf('%,d', incomedata.indig) AS 'indi', printf('%,d', incomedata.nonindig) AS 'nonindi', printf('%,d', incomedata.gap) AS 'gap', printf('%,d', incomedata.total) AS 'total', printf('%d%%', incomedata.proportional) AS 'prop' ";
                 query +="FROM LGA ";
-                query +="JOIN (SELECT H1.lga_code AS code, H1.count AS 'indig', HIgap.nonindig AS 'nonindig', H2.count AS 'total', HIgap.gap AS 'gap', printf('%d%%', H1.count*100/H2.count) AS 'proportional' "; 
+                query +="JOIN (SELECT H1.lga_code AS code, H1.count AS 'indig', HIgap.nonindig AS 'nonindig', H2.count AS 'total', HIgap.gap AS 'gap', (H1.count*100/H2.count) AS 'proportional' "; 
                 query +="FROM HouseholdStatistics H1 ";
                 query +="OUTER LEFT JOIN HouseholdStatistics H2 ";
                 query +="JOIN (SELECT *, SUM(H1.count), SUM(H2.count) AS 'nonindig', (H1.count - H2.count) AS gap ";
@@ -1040,8 +1040,9 @@ public class JDBCConnection {
                 result = result + results.getString("nam") + " ";
                 result = result + results.getString("indi") + " ";
                 result = result + results.getString("nonindi") + " ";
-                result = result + results.getString("gap") + " ";
                 result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                //result = result + results.getString("total") + " ";
                 result = result + results.getString("prop")+ " ";
 
                 incomeData.add(result);

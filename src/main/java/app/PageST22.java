@@ -36,31 +36,82 @@ public class PageST22 implements Handler {
         // Create connection to JDBC class
         JDBCConnection jdbc = new JDBCConnection();
 
+        // Retrieving LGA codes for dropdown list
+        ArrayList<String> lgaCodes = jdbc.getLGACodes();
+        model.put("lgaCodes", lgaCodes);
+
+        // Retrieving age groups for dropdown list
+        ArrayList<String> ageGroups = jdbc.getAgeGroups();
+        model.put("ageGroups", ageGroups);
+
         String dataset = context.formParam("dataset"); // name of the dataset
         String locationType = context.formParam("locationType"); // LGA or state
         String location = context.formParam("location"); // location filter
         String valueType = context.formParam("valueType"); // raw or proportional
+        String indigenousStatus = context.formParam("indigenousStatus");
+        String sex = context.formParam("sex");
+        String age = context.formParam("age");
 
-        if (dataset == null || locationType == null || location == null || valueType == null) {
+        model.put("dataset", dataset);
+        model.put("locationType", locationType);
+        model.put("location", location);
+        model.put("valueType", valueType);
+        model.put("indigenousStatus", indigenousStatus);
+        model.put("sex", sex);
+        model.put("age", age);
+
+        model.put("titleResults", new String("2016 vs. 2021 Indigenous Status Results"));
+
+        // create PSST22Results object
+        PSST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
+
+        model.put("lgaCode", results.getLGACode());
+        model.put("lgaName2016", results.getLGAName2016());
+        model.put("lgaState2016", results.getLGAState2016());
+        model.put("lgaType2016", results.getLGAType2016());
+        model.put("lgaName2021", results.getLGAName2021());
+        model.put("lgaState2021", results.getLGAState2021());
+        model.put("lgaType2021", results.getLGAType2021());
+        model.put("results2016", results.getResult2016());
+        model.put("results2021", results.getResult2021());
+
+        /*/
+        if (dataset == null || dataset == "" || locationType == null || locationType == "" || location == null || location == "" || valueType == null || valueType == "") {
             // If NULL, show nothing, therefore we make "No Results" HTML
-            // Also store empty ArrayList for completeness
             // TODO: add another if-else statement to add 'Error' messages for missing input
+
             model.put("titleResults", new String("No results to show."));
-        } else {
+            ArrayList<String> results = new ArrayList<String>(); // store empty ArrayList for completeness
+            model.put("results", results);
+
             // If NOT NULL, then look up the specified dataset
-            if (dataset == "EducationStatistics") {
-                model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
-                if (locationType == "LGA") {
-                    String locationTypeSQL = "lga_code";
-                    ArrayList<String> results = jdbc.getST22EducationResults(dataset, locationTypeSQL, locationType, valueType);
-                    model.put("dataset", results);
-                } else if (locationType == "State") {
-                    String locationTypeSQL = "state";
-                    ArrayList<String> results = jdbc.getST22EducationResults(dataset, locationTypeSQL, locationType, valueType);
-                    model.put("dataset", results);
-                }
-            }
+        } else if (dataset == "PopulationStatistics") {
+            model.put("titleResults", new String ("2016 vs 2021 Indigenous Status Results"));
+            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
+            model.put("results", results);
         }
+        */
+        
+        /*
+        if (dataset == "PopulationStatistics") {
+            model.put("titleResults", new String("2016 vs. 2021 Indigenous Status Results"));
+            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType,
+                            indigenousStatus, sex, age);
+            model.put("results", results);
+        }
+        */
+
+        /*
+        if (dataset == null || locationType == null || location == null || valueType == null) {
+            model.put("titleResults", new String("No results to show."));
+        }
+        else if (dataset == "PopulationStatistics") {
+            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType,
+                            indigenousStatus, sex, age);
+            model.put("results", results);
+        }
+        */
+        
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf

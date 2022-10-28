@@ -175,6 +175,7 @@
                         <!-- <datalist id='ageSuggestions'> -->
                         <!--TODO: retrieve options from database-->
                         <select id='age' name='age'>
+                            <option value=''>Please select...</option>
                             <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
                         </select>
                         <!-- </datalist> -->
@@ -183,7 +184,15 @@
                         <h4>Highest Year of School Completed</h4>
 
                         <select id = 'highestSchoolYearCompleted' name = 'highestSchoolYearCompleted'>
+                            <option value=''>Please select...</option>
                             <option th:each = 'year : ${schoolYears}' th:text = '${year}' th:value = '${year}'></option>
+                        </select>
+
+                        <h4>Income Bracket</h4>
+
+                        <select id = 'incomeBracket' name = 'incomeBracket'>
+                            <option value=''>Please select...</option>
+                            <option th:each = 'bracket : ${incomeBrackets}' th:text = '${bracket}' th:value = '${bracket}'></option>
                         </select>
 
                     </fieldset>

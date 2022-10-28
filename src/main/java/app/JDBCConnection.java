@@ -780,7 +780,7 @@ public class JDBCConnection {
             query += "AND P1.indigenous_status = 'indig_ns' AND P2.indigenous_status = 'indig_ns' AND P1.lga_code = P2.lga_code) AS pop ";
             query += "ON pop.code = LGA.lga_code GROUP BY pop.code;";
 
-            //System.out.println(query);
+            System.out.println(query);
             
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -892,10 +892,10 @@ public class JDBCConnection {
 
             // The Query
             String query = 
-                "SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'";
-                query += "FROM EducationStatistics"; 
-                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig'";
-                query += "AND EducationStatistics.highest_school_year = " + selectedSchool + "AND EducationStatistics.count > 0";
+                "SELECT EducationStatistics.lga_code AS 'LGA', SUM(EducationStatistics.Count) AS 'raw values' ";
+                query += "FROM EducationStatistics "; 
+                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig' ";
+                query += "AND EducationStatistics.highest_school_year = '" + selectedSchool + "' AND EducationStatistics.count > 0 ";
                 query += "GROUP BY EducationStatistics.lga_code;";
                  
             System.out.println(query);
@@ -909,7 +909,7 @@ public class JDBCConnection {
                 String result = new String();
 
                 result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("highest_school_year");
+                result = result + results.getString("raw values");
 
                 schoolData.add(result);
             }

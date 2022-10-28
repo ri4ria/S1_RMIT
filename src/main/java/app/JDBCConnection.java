@@ -623,16 +623,31 @@ public class JDBCConnection {
 
             // The Query
             String query = 
-            "SELECT health.LGA_CODE AS code, LGAnum.LGA_name AS name, SUM(health.count) AS RAW ";
+            /* "SELECT health.LGA_CODE AS code, LGAnum.LGA_name AS name, SUM(health.count) AS RAW ";
             query += "FROM LTHCStatistics AS health ";
             query += "JOIN LGA AS LGAnum ";
             query += "ON health.LGA_CODE = LGAnum.LGA_CODE ";
             query += "WHERE health.indigenous_status = 'indig' ";
             query += "AND health.condition = '" + selectedCondition + "' ";
             query += "AND LGAnum.lga_year = '2021' "; 
-            query += "GROUP BY health.LGA_CODE;";  
+            query += "GROUP BY health.LGA_CODE;"; */
+            "SELECT hc.lga_code AS 'code', lga.lga_name AS 'name', printf('%,d', hc.indig) AS 'indig', printf('%,d', hc.nonindig) AS 'nonindig', "; 
+            query += "printf('%,d', hc.nonstated) AS 'nonstated', printf('%,d', hc.total) AS 'total', printf('%,d', hc.gap) as 'gap', printf('%d%%', hc.pro) AS 'pro', printf('%d%%', hc.proInd) AS 'proInd' ";
+            query += "FROM LGA JOIN (SELECT health.lga_code, cond.indig AS indig, cond.nonindig AS nonindig, cond.nonstated, cond.total, cond.gap AS gap, cond.proportional AS pro, (cond.indig * 100 /SUM(health.count)) AS proInd ";
+            query += "FROM LTHCStatistics AS health JOIN (SELECT heal.code, heal.indig, heal.nonindig, heal.nonstated, heal.total, heal.gap, heal.proportional ";
+            query += "FROM (SELECT C1.lga_code AS code, hcon.indig AS indig, hcon.nonindig AS nonindig, (C1.count + C2.count) AS nonstated, "; 
+            query += "(hcon.indig + hcon.nonindig + C1.count + C2.count) AS total, (hcon.indig - hcon.nonindig) AS 'gap', (hcon.indig * 100/ (hcon.indig + hcon.nonindig + C1.count + C2.count)) AS proportional ";
+            query += "FROM LTHCStatistics AS C1 OUTER LEFT JOIN LTHCStatistics AS C2 JOIN (SELECT Con1.lga_code, ConIndig.indig, (Con1.count + Con2.count) AS 'nonindig' ";
+            query += "FROM LTHCStatistics AS Con1 OUTER LEFT JOIN LTHCStatistics AS Con2 JOIN (SELECT *, C1.lga_code, (C1.count + C2.count) AS indig ";
+            query += "FROM LTHCStatistics AS C1 OUTER LEFT JOIN LTHCStatistics AS C2 WHERE C1.condition = '" + selectedCondition + "' AND C2.condition = '" + selectedCondition + "' AND C1.indigenous_status = 'indig' AND C2.indigenous_status = 'indig' ";
+            query += "AND C1.sex = 'f' AND C2.sex = 'm' AND C1.lga_code = C2.lga_code) AS ConIndig ON ConIndig.lga_code = Con1.lga_code WHERE Con1.condition = '" + selectedCondition + "' AND Con2.condition = '" + selectedCondition + "' ";
+            query += "AND Con1.indigenous_status = 'non_indig' AND Con2.indigenous_status = 'non_indig' AND Con1.sex = 'f' AND Con2.sex = 'm' ";
+            query += "AND Con1.lga_code = Con2.lga_code) AS hcon ON hcon.lga_code = C1.lga_code ";
+            query += "WHERE C1.condition = '" + selectedCondition + "' AND C2.condition = '" + selectedCondition + "' AND C1.indigenous_status = 'indig_stat_notstated' AND C2.indigenous_status = 'indig_stat_notstated' ";
+            query += "AND C1.sex = 'f' AND C2.sex = 'm' AND C1.lga_code = C2.lga_code) AS heal) AS cond ";
+            query += "ON cond.code = health.lga_code WHERE health.indigenous_status = 'indig' GROUP BY health.lGA_Code) AS hc ON hc.lga_code = lga.lga_code GROUP BY hc.lga_code;";
 
-            System.out.println(query);
+            //System.out.println(query);
             
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -644,7 +659,14 @@ public class JDBCConnection {
 
                 result = String.valueOf(results.getString("code")) + " ";
                 result += results.getString("name") + " ";
-                result = result + results.getString("RAW");
+                result = result + results.getString("indig") + " ";
+                result += results.getString("nonindig") + " ";
+                result += results.getString("nonstated") + " ";
+                result += results.getString("total") + " ";
+                result += results.getString("gap") + " ";
+                result += results.getString("pro") + " ";
+                result += results.getString("proInd") + " ";
+
 
                 healthCondData.add(result);
             }
@@ -758,7 +780,7 @@ public class JDBCConnection {
             query += "AND P1.indigenous_status = 'indig_ns' AND P2.indigenous_status = 'indig_ns' AND P1.lga_code = P2.lga_code) AS pop ";
             query += "ON pop.code = LGA.lga_code GROUP BY pop.code;";
 
-            System.out.println(query);
+            //System.out.println(query);
             
             // Get Result
             ResultSet results = statement.executeQuery(query);

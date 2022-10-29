@@ -1054,8 +1054,8 @@ public class JDBCConnection {
     }
 
     // healthconditions
-    public ArrayList<String> getDataByAge(String selectedAge) {
-        ArrayList<String> selectedAgeData = new ArrayList<String>();
+    public ArrayList<Table> getDataByAge(String selectedAge, String sort) {
+        ArrayList<Table> selectedAgeData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -1069,8 +1069,36 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT lth.LGA_CODE AS 'LGA', age FROM PopulationStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.age = '"
-                    + selectedAge + "'";
+            String query = 
+            
+            /*
+            "SELECT lth.LGA_CODE AS 'LGA', age FROM PopulationStatistics AS lth WHERE lth.indigenous_status = 'indig' AND lth.age = '"
+                    + selectedAge + "'"; 
+            */
+
+            "SELECT sort.code AS 'code', sort.name AS 'name', printf('%,d', sort.indig) AS 'indig', printf('%,d', sort.nonindig) AS 'nonindig', printf('%,d', sort.total) AS 'total', printf('%d%%', sort.propIndig) AS 'propIndig', printf('%d%%', sort.propNon) AS 'propNon', sort.gap AS 'gap' ";
+            query += "FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, ";
+            query += "(Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, ";
+            query += "(((Ef1.count + Ef2.count)*100)/ed.tindig) AS propIndig, (s.nonindig*100/s.tnon) AS propNon,((((Ef1.count + Ef2.count)*100)/ed.tindig)-(s.nonindig*100/s.tnon)) AS gap ";
+            query += "FROM PopulationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name FROM LGA ";
+            query += "WHERE LGA.lga_year = '2021') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated ";
+            query += "FROM PopulationStatistics AS Ef1 OUTER LEFT JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnotstated ";
+            query += "FROM PopulationStatistics AS E WHERE E.indigenous_status = 'indig_ns' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ";
+            query += "ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge + "' AND Ef2.age = '" + selectedAge + "' ";
+            query += "AND Ef1.indigenous_status = 'indig_ns' AND Ef2.indigenous_status = 'indig_ns' AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+            query += "AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code ";
+            query += "OUTER LEFT JOIN PopulationStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon ";
+            query += "FROM PopulationStatistics AS Ef1 OUTER LEFT JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnon ";
+            query += "FROM PopulationStatistics AS E WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2021' ";
+            query += "GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+            query += "AND Ef1.age = '" + selectedAge + "' AND Ef2.age = '" + selectedAge + "' AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+            query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code ";
+            query += "JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tindig FROM PopulationStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code ";
+            query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge + "' AND Ef2.age = '" + selectedAge +"' ";
+            query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+            query += "ORDER BY " + sort + ";";
+
             System.out.println(query);
 
             // Get Result
@@ -1079,6 +1107,7 @@ public class JDBCConnection {
             // Process all of the results
             while (results.next()) {
                 // Create a HealthCondition Object
+                /* 
                 String result = new String();
 
                 result = String.valueOf(results.getString("code")) + " ";
@@ -1089,8 +1118,21 @@ public class JDBCConnection {
                 result = result + results.getString("total") + " ";
                 result = result + results.getString("gap") + " ";
                 result = result + results.getString("proportional");
+                */
+                 //QUERY FOR TABLE - look up the columns we need 
+                 String code =  String.valueOf(results.getString("code"));
+                 String name =  results.getString("name");
+                 String indig =  results.getString("indig");
+                 String nonindig =  results.getString("nonindig");
+                 String total =  results.getString("total");
+                 String propIndig =  results.getString("propIndig");
+                 String propNon =  results.getString("propNon");
+                 String gap =  String.valueOf(results.getString("gap"));
 
-                selectedAgeData.add(result);
+                 //create object for table class
+                 Table tableSex = new Table(code, name, indig, nonindig, total, propIndig, propNon, gap);
+
+                selectedAgeData.add(tableSex);
             }
 
             // Close the statement because we are done with it

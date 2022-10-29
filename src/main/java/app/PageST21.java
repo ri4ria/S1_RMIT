@@ -108,8 +108,10 @@ public class PageST21 implements Handler {
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
+        html = html + " <div class='filter-sidebar'>";
         html = html + "<form action='/page3.html' method='post'>";
         
+        /* 
         html = html + """
             <div class='form-group'>
             <fieldset>
@@ -154,10 +156,13 @@ public class PageST21 implements Handler {
             </div>
             </fieldset>
         </div>
+        """;
+        */
 
+        html = html + """
         <!-- Dropdown that will only be available if the relevant dataset is selected-->
         <fieldset>
-            <legend>Filter the dataset</legend>
+            <legend>Select and filter one dataset</legend>
             <div class='form-group'> 
                 <label for='condition_drop'>Select the Health Condition:</label></br>
                     <select id='condition_drop' name='condition_drop'>
@@ -220,6 +225,25 @@ public class PageST21 implements Handler {
                     html = html + "      </select>";
                     html = html + "   </div>";
         html = html + "</fieldset>";
+        
+        html = html + """ 
+            <fieldset>
+            <legend>Sort the dataset</legend>
+            <div class='form-group'> 
+                <label for='sort_drop'>*** Select data order ***:</label></br>
+                    <select id='sort_drop' name='sort_drop'>
+                        <option>sort.code ASC</option>
+                        <option>sort.code DESC</option>
+                        <option>sort.indig ASC</option>
+                        <option>sort.indig DESC</option>
+                        <option>sort.gap ASC</option>
+                        <option>sort.gap DESC</option>
+                        <option>sort.proportional ASC</option>
+                        <option>sort.proportional DESC</option>
+                    </select>
+            </div>
+            </fieldset> 
+                    """;
 
         html = html + """  
         <script>
@@ -237,13 +261,16 @@ public class PageST21 implements Handler {
                 }
             }; 
         </script>
+                """;
 
+        /* 
+        html = html + """         
         <!--Select LGA Order-->
         <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
         <div class='form-group'> 
             <fieldset>
                 <legend>Select LGA Order</legend>
-                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending'>
+                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending' checked>
                     <label for='AscendingLGA'>View LGA in Ascending Order</label> 
                     </br>
                     <input type='radio' name='SortOrder' id='DescendingLGA' value='Descending'>
@@ -277,7 +304,10 @@ public class PageST21 implements Handler {
                     <lable for='DescendingGap'>View The Gap in Descending Order</lable>
             </fieldset>
         </div>
+                """;
+        */
 
+        html = html + """  
         <!-- Submit Button-->
             <button type='submit' class='btn'>Compare LGAs</button>
         </form>
@@ -312,7 +342,7 @@ public class PageST21 implements Handler {
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
-                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    html = html + "<h2><i>No Results to show for Outcome 1: Health Conditions</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByHealthCond(condition_drop);
@@ -323,7 +353,7 @@ public class PageST21 implements Handler {
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (age_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
-                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    html = html + "<h2><i>No Results to show for Outcome 1: Population By Age</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByAge(age_drop);
@@ -331,13 +361,14 @@ public class PageST21 implements Handler {
 
                      //school_drop
                      String school_drop = context.formParam("school_drop");
+                     String sort_drop = context.formParam("sort_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
-                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     html = html + "<h2><i>No Results to show for Outcome 5: Highest year of shcooling</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
-                     html = html + outputDataBySchool(school_drop);
+                     html = html + outputDataBySchool(school_drop, sort_drop);
                      }
 
                      //income_drop
@@ -345,11 +376,13 @@ public class PageST21 implements Handler {
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (income_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
-                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     html = html + "<h2><i>No Results to show for Outcome 8: Weekely household income</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
                      html = html + outputDataByIncome(income_drop);
                      }
+
+                     html = html + " </div>";
 
         // Close Content div
         html = html + "</div>";
@@ -423,20 +456,74 @@ public class PageST21 implements Handler {
     }
 
      //get data for first query
-     public String outputDataBySchool(String selectedSchool) {
+     public String outputDataBySchool(String selectedSchool, String sort) {
         String html = "";
-        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + "</h2>";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + " " + sort + "</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool);
+        ArrayList<Table> school21 = jdbc.getDataBySchool(selectedSchool, sort);
         
+        /*
         // Add HTML for the health conditions list
         html = html + "<ul>";
-        for (String result : school21) {
+        for (Table result : school21) {
             html = html + "<li>" + result + "</li>";
         }
         html = html + "</ul>";
+        */
+
+        // Add HTML for the health conditions list
+        html = html + "<table>";
+            html = html + "<tr>";
+                html = html + "<th>Code </th>";
+                html = html + "<th>Name </th>";
+                html = html + "<th>Indig </th>";
+                html = html + "<th>Non-Indig </th>";
+                html = html + "<th>Non-stated </th>";
+                html = html + "<th>Total </th>";
+                html = html + "<th>Gap </th>";
+                html = html + "<th>Proportional </th>";
+            html = html + "</tr>";
+            //html = html + "<tr>";
+        for (Table table : school21) {
+            html = html + "<tr>";
+            html = html + "<td>" + table.getCode() + "</td>";
+            html = html + "<td>" + table.getName() + "</td>";
+            html = html + "<td>" + table.getIndig() + "</td>";
+            html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getNonstated() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
+            html = html + "<td>" + table.getGap() + "</td>";
+            html = html + "<td>" + table.getProportional() + "</td>";
+            html = html + "</tr>";
+        }
+        /* 
+        for (Table table : school21) {
+            html = html + "<td>" + table.getName() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getIndig() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getNonindig() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getNonstated() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getTotal() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getGap() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getProportional() + "</td>";
+        }
+        */
+            //html = html + "</tr";
+        html = html + "</table>";
+        
 
         return html;
     }

@@ -931,16 +931,31 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT health.LGA_CODE AS code, LGAnum.LGA_name AS name, SUM(health.count) AS RAW ";
+            String query = /* "SELECT health.LGA_CODE AS code, LGAnum.LGA_name AS name, SUM(health.count) AS RAW ";
             query += "FROM LTHCStatistics AS health ";
             query += "JOIN LGA AS LGAnum ";
             query += "ON health.LGA_CODE = LGAnum.LGA_CODE ";
             query += "WHERE health.indigenous_status = 'indig' ";
             query += "AND health.condition = '" + selectedCondition + "' ";
-            query += "AND LGAnum.lga_year = '2021' ";
-            query += "GROUP BY health.LGA_CODE;";
+            query += "AND LGAnum.lga_year = '2021' "; 
+            query += "GROUP BY health.LGA_CODE;"; */
+            "SELECT hc.lga_code AS 'code', lga.lga_name AS 'name', printf('%,d', hc.indig) AS 'indig', printf('%,d', hc.nonindig) AS 'nonindig', "; 
+            query += "printf('%,d', hc.nonstated) AS 'nonstated', printf('%,d', hc.total) AS 'total', printf('%,d', hc.gap) as 'gap', printf('%d%%', hc.pro) AS 'pro', printf('%d%%', hc.proInd) AS 'proInd' ";
+            query += "FROM LGA JOIN (SELECT health.lga_code, cond.indig AS indig, cond.nonindig AS nonindig, cond.nonstated, cond.total, cond.gap AS gap, cond.proportional AS pro, (cond.indig * 100 /SUM(health.count)) AS proInd ";
+            query += "FROM LTHCStatistics AS health JOIN (SELECT heal.code, heal.indig, heal.nonindig, heal.nonstated, heal.total, heal.gap, heal.proportional ";
+            query += "FROM (SELECT C1.lga_code AS code, hcon.indig AS indig, hcon.nonindig AS nonindig, (C1.count + C2.count) AS nonstated, "; 
+            query += "(hcon.indig + hcon.nonindig + C1.count + C2.count) AS total, (hcon.indig - hcon.nonindig) AS 'gap', (hcon.indig * 100/ (hcon.indig + hcon.nonindig + C1.count + C2.count)) AS proportional ";
+            query += "FROM LTHCStatistics AS C1 OUTER LEFT JOIN LTHCStatistics AS C2 JOIN (SELECT Con1.lga_code, ConIndig.indig, (Con1.count + Con2.count) AS 'nonindig' ";
+            query += "FROM LTHCStatistics AS Con1 OUTER LEFT JOIN LTHCStatistics AS Con2 JOIN (SELECT *, C1.lga_code, (C1.count + C2.count) AS indig ";
+            query += "FROM LTHCStatistics AS C1 OUTER LEFT JOIN LTHCStatistics AS C2 WHERE C1.condition = '" + selectedCondition + "' AND C2.condition = '" + selectedCondition + "' AND C1.indigenous_status = 'indig' AND C2.indigenous_status = 'indig' ";
+            query += "AND C1.sex = 'f' AND C2.sex = 'm' AND C1.lga_code = C2.lga_code) AS ConIndig ON ConIndig.lga_code = Con1.lga_code WHERE Con1.condition = '" + selectedCondition + "' AND Con2.condition = '" + selectedCondition + "' ";
+            query += "AND Con1.indigenous_status = 'non_indig' AND Con2.indigenous_status = 'non_indig' AND Con1.sex = 'f' AND Con2.sex = 'm' ";
+            query += "AND Con1.lga_code = Con2.lga_code) AS hcon ON hcon.lga_code = C1.lga_code ";
+            query += "WHERE C1.condition = '" + selectedCondition + "' AND C2.condition = '" + selectedCondition + "' AND C1.indigenous_status = 'indig_stat_notstated' AND C2.indigenous_status = 'indig_stat_notstated' ";
+            query += "AND C1.sex = 'f' AND C2.sex = 'm' AND C1.lga_code = C2.lga_code) AS heal) AS cond ";
+            query += "ON cond.code = health.lga_code WHERE health.indigenous_status = 'indig' GROUP BY health.lGA_Code) AS hc ON hc.lga_code = lga.lga_code GROUP BY hc.lga_code;";
 
-            System.out.println(query);
+            //System.out.println(query);
 
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -952,7 +967,14 @@ public class JDBCConnection {
 
                 result = String.valueOf(results.getString("code")) + " ";
                 result += results.getString("name") + " ";
-                result = result + results.getString("RAW");
+                result = result + results.getString("indig") + " ";
+                result += results.getString("nonindig") + " ";
+                result += results.getString("nonstated") + " ";
+                result += results.getString("total") + " ";
+                result += results.getString("gap") + " ";
+                result += results.getString("pro") + " ";
+                result += results.getString("proInd") + " ";
+
 
                 healthCondData.add(result);
             }
@@ -1059,8 +1081,14 @@ public class JDBCConnection {
                 // Create a HealthCondition Object
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("age");
+                result = String.valueOf(results.getString("code")) + " ";
+                result = result + results.getString("name") + " ";
+                result = result + results.getString("indig") + " ";
+                result = result + results.getString("nonindig") + " ";
+                result = result + results.getString("nonstated") + " ";
+                result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                result = result + results.getString("proportional");
 
                 selectedAgeData.add(result);
             }
@@ -1137,8 +1165,8 @@ public class JDBCConnection {
     }
 
     // healthconditions
-    public ArrayList<String> getDataBySchool(String selectedSchool) {
-        ArrayList<String> schoolData = new ArrayList<String>();
+    public ArrayList<Table> getDataBySchool(String selectedSchool, String sort) {
+        ArrayList<Table> schoolData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -1152,13 +1180,49 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT EducationStatistics.lga_code, SUM(EducationStatistics.Count) AS 'raw values'";
-            query += "FROM EducationStatistics";
-            query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig'";
-            query += "AND EducationStatistics.highest_school_year = " + selectedSchool
-                    + "AND EducationStatistics.count > 0";
-            query += "GROUP BY EducationStatistics.lga_code;";
+            String query = 
 
+            /* 
+                "SELECT EducationStatistics.lga_code AS 'LGA', SUM(EducationStatistics.Count) AS 'raw values' ";
+                query += "FROM EducationStatistics "; 
+                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig' ";
+                query += "AND EducationStatistics.highest_school_year = '" + selectedSchool + "' AND EducationStatistics.count > 0 ";
+                query += "GROUP BY EducationStatistics.lga_code;";
+            */
+
+                "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.nonstated AS 'nonstated', sort.total AS 'total', sort.gap AS 'gap', sort.proportional AS 'proportional' ";
+                query += "FROM (SELECT Ef1.lga_code AS 'code', L.name AS 'name',  (Ef1.count + Ef2.count) AS 'indig', sc.nonindig AS 'nonindig', sc1.nonstated AS 'nonstated', ";
+                query += "(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated) AS 'total', ";
+                query += "(Ef1.count + Ef2.count - sc.nonindig) AS 'gap', ";
+                query += "((Ef1.count + Ef2.count) *100/(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated)) AS 'proportional' ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 ";
+                query += "JOIN (SELECT lga.lga_code AS code, lga.lga_name AS name ";
+                query += "FROM Lga WHERE LGA.lga_year = '2021') AS L ";
+                query += "ON L.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonstated ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+                query += "AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) AS sc1 ON sc1.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig ";
+                query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) as sc on sc.code = Ef1.lga_code ";
+                query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+                query += "ORDER BY " + sort + ";";
+
+                 
             System.out.println(query);
 
             // Get Result
@@ -1166,13 +1230,37 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results.next()) {
-                // Create a HealthCondition Object
+                /* 
+                // this works
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("highest_school_year");
-
+                result = String.valueOf(results.getString("code")) + " ";
+                result = result + results.getString("name") + " ";
+                result = result + results.getString("indig") + " ";
+                result = result + results.getString("nonindig") + " ";
+                result = result + results.getString("nonstated") + " ";
+                result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                result = result + results.getString("proportional");
                 schoolData.add(result);
+                */
+
+                  //QUERY FOR TABLE - look up the columns we need 
+                  String code =  String.valueOf(results.getString("code"));
+                  String name =  results.getString("name");
+                  String indig =  results.getString("indig");
+                  String nonindig =  results.getString("nonindig");
+                  String nonstated =  results.getString("nonstated");
+                  String total =  results.getString("total");
+                  String gap =  results.getString("gap");
+                  String proportional =  String.valueOf(results.getString("proportional"));
+
+                  //create object for table class
+                  Table tableSchool = new Table(code, name, indig, nonindig, nonstated, total, gap, proportional);
+                  
+                  //add object to the array 
+                  schoolData.add(tableSchool);
+
             }
 
             // Close the statement because we are done with it
@@ -1302,8 +1390,9 @@ public class JDBCConnection {
                 result = result + results.getString("nam") + " ";
                 result = result + results.getString("indi") + " ";
                 result = result + results.getString("nonindi") + " ";
-                result = result + results.getString("gap") + " ";
                 result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                //result = result + results.getString("total") + " ";
                 result = result + results.getString("prop") + " ";
 
                 incomeData.add(result);

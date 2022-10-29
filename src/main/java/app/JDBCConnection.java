@@ -876,8 +876,8 @@ public class JDBCConnection {
     }
 
       //healthconditions 
-      public ArrayList<String> getDataBySchool(String selectedSchool, String sort) {
-        ArrayList<String> schoolData = new ArrayList<String>();
+      public ArrayList<Table> getDataBySchool(String selectedSchool, String sort) {
+        ArrayList<Table> schoolData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -941,7 +941,8 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results.next()) {
-                // Create a HealthCondition Object
+                /* 
+                // this works
                 String result = new String();
 
                 result = String.valueOf(results.getString("code")) + " ";
@@ -953,6 +954,24 @@ public class JDBCConnection {
                 result = result + results.getString("gap") + " ";
                 result = result + results.getString("proportional");
                 schoolData.add(result);
+                */
+
+                  //QUERY FOR TABLE - look up the columns we need 
+                  String code =  String.valueOf(results.getString("code"));
+                  String name =  results.getString("name");
+                  String indig =  results.getString("indig");
+                  String nonindig =  results.getString("nonindig");
+                  String nonstated =  results.getString("nonstated");
+                  String total =  results.getString("total");
+                  String gap =  results.getString("gap");
+                  String proportional =  String.valueOf(results.getString("proportional"));
+
+                  //create object for table class
+                  Table tableSchool = new Table(code, name, indig, nonindig, nonstated, total, gap, proportional);
+                  
+                  //add object to the array 
+                  schoolData.add(tableSchool);
+
             }
 
             // Close the statement because we are done with it

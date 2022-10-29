@@ -111,6 +111,7 @@ public class PageST21 implements Handler {
         html = html + " <div class='filter-sidebar'>";
         html = html + "<form action='/page3.html' method='post'>";
         
+        /* 
         html = html + """
             <div class='form-group'>
             <fieldset>
@@ -155,7 +156,10 @@ public class PageST21 implements Handler {
             </div>
             </fieldset>
         </div>
+        """;
+        */
 
+        html = html + """
         <!-- Dropdown that will only be available if the relevant dataset is selected-->
         <fieldset>
             <legend>Filter the dataset</legend>
@@ -244,7 +248,7 @@ public class PageST21 implements Handler {
         <div class='form-group'> 
             <fieldset>
                 <legend>Select LGA Order</legend>
-                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending'>
+                    <input type='radio' name='SortOrder' id='AscendingLGA' value='Ascending' checked>
                     <label for='AscendingLGA'>View LGA in Ascending Order</label> 
                     </br>
                     <input type='radio' name='SortOrder' id='DescendingLGA' value='Descending'>

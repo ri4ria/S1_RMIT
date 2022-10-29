@@ -59,6 +59,9 @@ public class PageST22 implements Handler {
         String indigenousStatus = context.formParam("indigenousStatus");
         String sex = context.formParam("sex");
         String age = context.formParam("age");
+        String highestSchoolYearCompleted = context.formParam("highestSchoolYearCompleted");
+
+        System.out.println(dataset);
 
         model.put("dataset", dataset);
         model.put("locationType", locationType);
@@ -68,20 +71,43 @@ public class PageST22 implements Handler {
         model.put("sex", sex);
         model.put("age", age);
 
-        model.put("titleResults", new String("2016 vs. 2021 Indigenous Status Results"));
+        model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
 
-        // create SST22Results object
-        ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
+            ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
+            model.put("lgaCode", results.getLGACode());
+            model.put("lgaName2016", results.getLGAName2016());
+            model.put("lgaState2016", results.getLGAState2016());
+            model.put("lgaType2016", results.getLGAType2016());
+            model.put("lgaName2021", results.getLGAName2021());
+            model.put("lgaState2021", results.getLGAState2021());
+            model.put("lgaType2021", results.getLGAType2021());
+            model.put("results2016", results.getResult2016());
+            model.put("results2021", results.getResult2021());
+            model.put("ranking2016", results.getRank2016());
+            model.put("ranking2021", results.getRank2021());
+        
+        /*( if (dataset == "EducationStatistics") {
+            System.out.println("Results for " + dataset + " being retrieved...");
 
-        model.put("lgaCode", results.getLGACode());
-        model.put("lgaName2016", results.getLGAName2016());
-        model.put("lgaState2016", results.getLGAState2016());
-        model.put("lgaType2016", results.getLGAType2016());
-        model.put("lgaName2021", results.getLGAName2021());
-        model.put("lgaState2021", results.getLGAState2021());
-        model.put("lgaType2021", results.getLGAType2021());
-        model.put("results2016", results.getResult2016());
-        model.put("results2021", results.getResult2021());
+            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
+
+            ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
+            model.put("lgaCode", results.getLGACode());
+            model.put("lgaName2016", results.getLGAName2016());
+            model.put("lgaState2016", results.getLGAState2016());
+            model.put("lgaType2016", results.getLGAType2016());
+            model.put("lgaName2021", results.getLGAName2021());
+            model.put("lgaState2021", results.getLGAState2021());
+            model.put("lgaType2021", results.getLGAType2021());
+            model.put("results2016", results.getResult2016());
+            model.put("results2021", results.getResult2021());
+            model.put("ranking2016", results.getRank2016());
+            model.put("ranking2021", results.getRank2021());
+        } else if (dataset == null || dataset == "") {
+            model.put("titleResults", new String("No Results to Show"));
+        }
+
+        */
 
         /*/
         if (dataset == null || dataset == "" || locationType == null || locationType == "" || location == null || location == "" || valueType == null || valueType == "") {

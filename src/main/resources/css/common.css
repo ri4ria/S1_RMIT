@@ -11,7 +11,7 @@ body {
    font-family: Karla;
    padding: 10px;
    background: #fff;
-   width: 1500px; /* width of webpage fixed to 1500px */
+   width: 1750px; /* width of webpage fixed to 1750px */
    margin: 0 auto; /* keeps webpage centred in browser window */
 }
 
@@ -91,6 +91,7 @@ img.top-image {
    margin-left: 20px;
    margin-right: 14px;
    margin-top: 0px;
+   width: 50px;
 }
 
 /*https://www.w3schools.com/howto/howto_css_dropdown_navbar.asp*/
@@ -256,9 +257,18 @@ img {
    display: inline-block;
 }
 
-/* filter sidebar styling */
+.d-none {
+   display: none;
+}
+
+/* filter sidebar and table styling */
+.sidebar-results-wrapper {
+   display: flex;
+}
+
 .filter-sidebar {
-   width: 250px;
+   /* display: flex; */
+   width: 200px;
 }
 
 .filter-sidebar ul {
@@ -267,6 +277,15 @@ img {
    padding: 0px;
 }
 
-.d-none {
-   display: none;
+.results-table th {
+   background-color: #BBA89F;
+}
+
+.results-table td {
+   background-color: #F0E7D4;
+}
+
+.results-table th, td {
+   padding: 15px;
+   flex: 1;
 }

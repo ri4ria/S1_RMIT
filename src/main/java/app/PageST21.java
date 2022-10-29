@@ -350,18 +350,19 @@ public class PageST21 implements Handler {
 
                     //age_drop
                     String age_drop = context.formParam("age_drop");
+                    String sort_drop = context.formParam("sort_drop");
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (age_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
                     html = html + "<h2><i>No Results to show for Outcome 1: Population By Age</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
-                    html = html + outputDataByAge(age_drop);
+                    html = html + outputDataByAge(age_drop, sort_drop);
                     }
 
                      //school_drop
                      String school_drop = context.formParam("school_drop");
-                     String sort_drop = context.formParam("sort_drop");
+                     //String sort_drop = context.formParam("sort_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -437,20 +438,47 @@ public class PageST21 implements Handler {
     }
 
     //get data for first query
-    public String outputDataByAge(String selectedAge) {
+    public String outputDataByAge(String selectedAge, String sort) {
         String html = "";
         html = html + "<h2> Population of indigenous people that are " + selectedAge + " years old</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> age21 = jdbc.getDataByAge(selectedAge);
+        ArrayList<Table> age21 = jdbc.getDataByAge(selectedAge, sort);
         
         // Add HTML for the health conditions list
+        /* 
         html = html + "<ul>";
-        for (String result : age21) {
+        for (Table table : age21) {
             html = html + "<li>" + result + "</li>";
         }
         html = html + "</ul>";
+        */
+        html = html + "<table>";
+            html = html + "<tr>";
+                html = html + "<th>Code </th>";
+                html = html + "<th>Name </th>";
+                html = html + "<th>Indigenous </th>";
+                html = html + "<th>Non-indigenous </th>";
+                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Proportion of total indigenous </th>";
+                html = html + "<th>Proportion of total non-indigenous </th>";
+                html = html + "<th>Gap </th>";
+            html = html + "</tr>";
+            //html = html + "<tr>";
+        for (Table table : age21) {
+            html = html + "<tr>";
+            html = html + "<td>" + table.getCode() + "</td>";
+            html = html + "<td>" + table.getName() + "</td>";
+            html = html + "<td>" + table.getIndig() + "</td>";
+            html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
+            html = html + "<td>" + table.getPropIndig() + "</td>";
+            html = html + "<td>" + table.getPropNon() + "</td>";
+            html = html + "<td>" + table.getGap() + "</td>";
+            html = html + "</tr>";
+        }
+        html = html + "</table>";
 
         return html;
     }
@@ -480,9 +508,9 @@ public class PageST21 implements Handler {
                 html = html + "<th>Name </th>";
                 html = html + "<th>Indigenous </th>";
                 html = html + "<th>Non-indigenous </th>";
+                html = html + "<th>Total population of the LGA </th>";
                 html = html + "<th>Proportion of total indigenous </th>";
                 html = html + "<th>Proportion of total non-indigenous </th>";
-                html = html + "<th>Total population of the LGA </th>";
                 html = html + "<th>Gap </th>";
             html = html + "</tr>";
             //html = html + "<tr>";
@@ -492,9 +520,9 @@ public class PageST21 implements Handler {
             html = html + "<td>" + table.getName() + "</td>";
             html = html + "<td>" + table.getIndig() + "</td>";
             html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
             html = html + "<td>" + table.getPropIndig() + "</td>";
             html = html + "<td>" + table.getPropNon() + "</td>";
-            html = html + "<td>" + table.getTotal() + "</td>";
             html = html + "<td>" + table.getGap() + "</td>";
             html = html + "</tr>";
         }

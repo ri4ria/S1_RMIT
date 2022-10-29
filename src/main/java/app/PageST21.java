@@ -462,14 +462,68 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool, sort);
+        ArrayList<Table> school21 = jdbc.getDataBySchool(selectedSchool, sort);
         
+        /*
         // Add HTML for the health conditions list
         html = html + "<ul>";
-        for (String result : school21) {
+        for (Table result : school21) {
             html = html + "<li>" + result + "</li>";
         }
         html = html + "</ul>";
+        */
+
+        // Add HTML for the health conditions list
+        html = html + "<table>";
+            html = html + "<tr>";
+                html = html + "<th>Code </th>";
+                html = html + "<th>Name </th>";
+                html = html + "<th>Indig </th>";
+                html = html + "<th>Non-Indig </th>";
+                html = html + "<th>Non-stated </th>";
+                html = html + "<th>Total </th>";
+                html = html + "<th>Gap </th>";
+                html = html + "<th>Proportional </th>";
+            html = html + "</tr>";
+            //html = html + "<tr>";
+        for (Table table : school21) {
+            html = html + "<tr>";
+            html = html + "<td>" + table.getCode() + "</td>";
+            html = html + "<td>" + table.getName() + "</td>";
+            html = html + "<td>" + table.getIndig() + "</td>";
+            html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getNonstated() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
+            html = html + "<td>" + table.getGap() + "</td>";
+            html = html + "<td>" + table.getProportional() + "</td>";
+            html = html + "</tr>";
+        }
+        /* 
+        for (Table table : school21) {
+            html = html + "<td>" + table.getName() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getIndig() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getNonindig() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getNonstated() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getTotal() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getGap() + "</td>";
+        }
+        for (Table table : school21) {
+            html = html + "<td>" + table.getProportional() + "</td>";
+        }
+        */
+            //html = html + "</tr";
+        html = html + "</table>";
+        
 
         return html;
     }

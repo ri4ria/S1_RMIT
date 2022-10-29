@@ -361,13 +361,14 @@ public class PageST21 implements Handler {
 
                      //school_drop
                      String school_drop = context.formParam("school_drop");
+                     String sort_drop = context.formParam("sort_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
                      html = html + "<h2><i>No Results to show for Outcome 5: Highest year of shcooling</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
-                     html = html + outputDataBySchool(school_drop);
+                     html = html + outputDataBySchool(school_drop, sort_drop);
                      }
 
                      //income_drop
@@ -455,13 +456,13 @@ public class PageST21 implements Handler {
     }
 
      //get data for first query
-     public String outputDataBySchool(String selectedSchool) {
+     public String outputDataBySchool(String selectedSchool, String sort) {
         String html = "";
-        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + "</h2>";
+        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + " " + sort + "</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool);
+        ArrayList<String> school21 = jdbc.getDataBySchool(selectedSchool, sort);
         
         // Add HTML for the health conditions list
         html = html + "<ul>";

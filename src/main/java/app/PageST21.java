@@ -478,12 +478,12 @@ public class PageST21 implements Handler {
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
                 html = html + "<th>Name </th>";
-                html = html + "<th>Indig </th>";
-                html = html + "<th>Non-Indig </th>";
-                html = html + "<th>Non-stated </th>";
-                html = html + "<th>Total </th>";
+                html = html + "<th>Indigenous </th>";
+                html = html + "<th>Non-indigenous </th>";
+                html = html + "<th>Proportion of total indigenous </th>";
+                html = html + "<th>Proportion of total non-indigenous </th>";
+                html = html + "<th>Total population of the LGA </th>";
                 html = html + "<th>Gap </th>";
-                html = html + "<th>Proportional </th>";
             html = html + "</tr>";
             //html = html + "<tr>";
         for (Table table : school21) {
@@ -492,10 +492,10 @@ public class PageST21 implements Handler {
             html = html + "<td>" + table.getName() + "</td>";
             html = html + "<td>" + table.getIndig() + "</td>";
             html = html + "<td>" + table.getNonindig() + "</td>";
-            html = html + "<td>" + table.getNonstated() + "</td>";
+            html = html + "<td>" + table.getPropIndig() + "</td>";
+            html = html + "<td>" + table.getPropNon() + "</td>";
             html = html + "<td>" + table.getTotal() + "</td>";
             html = html + "<td>" + table.getGap() + "</td>";
-            html = html + "<td>" + table.getProportional() + "</td>";
             html = html + "</tr>";
         }
         /* 

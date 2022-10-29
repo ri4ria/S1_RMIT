@@ -876,7 +876,7 @@ public class JDBCConnection {
     }
 
       //healthconditions 
-      public ArrayList<String> getDataBySchool(String selectedSchool) {
+      public ArrayList<String> getDataBySchool(String selectedSchool, String sort) {
         ArrayList<String> schoolData = new ArrayList<String>();
 
         // Setup the variable for the JDBC connection
@@ -892,11 +892,47 @@ public class JDBCConnection {
 
             // The Query
             String query = 
+
+            /* 
                 "SELECT EducationStatistics.lga_code AS 'LGA', SUM(EducationStatistics.Count) AS 'raw values' ";
                 query += "FROM EducationStatistics "; 
                 query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig' ";
                 query += "AND EducationStatistics.highest_school_year = '" + selectedSchool + "' AND EducationStatistics.count > 0 ";
                 query += "GROUP BY EducationStatistics.lga_code;";
+            */
+
+                "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.nonstated AS 'nonstated', sort.total AS 'total', sort.gap AS 'gap', sort.proportional AS 'proportional' ";
+                query += "FROM (SELECT Ef1.lga_code AS 'code', L.name AS 'name',  (Ef1.count + Ef2.count) AS 'indig', sc.nonindig AS 'nonindig', sc1.nonstated AS 'nonstated', ";
+                query += "(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated) AS 'total', ";
+                query += "(Ef1.count + Ef2.count - sc.nonindig) AS 'gap', ";
+                query += "((Ef1.count + Ef2.count) *100/(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated)) AS 'proportional' ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 ";
+                query += "JOIN (SELECT lga.lga_code AS code, lga.lga_name AS name ";
+                query += "FROM Lga WHERE LGA.lga_year = '2021') AS L ";
+                query += "ON L.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonstated ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+                query += "AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) AS sc1 ON sc1.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig ";
+                query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) as sc on sc.code = Ef1.lga_code ";
+                query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+                query += "ORDER BY " + sort + ";";
+
                  
             System.out.println(query);
             
@@ -908,9 +944,14 @@ public class JDBCConnection {
                 // Create a HealthCondition Object
                 String result = new String();
 
-                result = String.valueOf(results.getString("LGA")) + " ";
-                result = result + results.getString("raw values");
-
+                result = String.valueOf(results.getString("code")) + " ";
+                result = result + results.getString("name") + " ";
+                result = result + results.getString("indig") + " ";
+                result = result + results.getString("nonindig") + " ";
+                result = result + results.getString("nonstated") + " ";
+                result = result + results.getString("total") + " ";
+                result = result + results.getString("gap") + " ";
+                result = result + results.getString("proportional");
                 schoolData.add(result);
             }
 

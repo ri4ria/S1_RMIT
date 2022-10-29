@@ -162,7 +162,7 @@ public class PageST21 implements Handler {
         html = html + """
         <!-- Dropdown that will only be available if the relevant dataset is selected-->
         <fieldset>
-            <legend>Filter the dataset</legend>
+            <legend>Select and filter one dataset</legend>
             <div class='form-group'> 
                 <label for='condition_drop'>Select the Health Condition:</label></br>
                     <select id='condition_drop' name='condition_drop'>
@@ -225,6 +225,25 @@ public class PageST21 implements Handler {
                     html = html + "      </select>";
                     html = html + "   </div>";
         html = html + "</fieldset>";
+        
+        html = html + """ 
+            <fieldset>
+            <legend>Sort the dataset</legend>
+            <div class='form-group'> 
+                <label for='sort_drop'>*** Select data order ***:</label></br>
+                    <select id='sort_drop' name='sort_drop'>
+                        <option>sort.code ASC</option>
+                        <option>sort.code DESC</option>
+                        <option>sort.indig ASC</option>
+                        <option>sort.indig DESC</option>
+                        <option>sort.gap ASC</option>
+                        <option>sort.gap DESC</option>
+                        <option>sort.proportional ASC</option>
+                        <option>sort.proportional DESC</option>
+                    </select>
+            </div>
+            </fieldset> 
+                    """;
 
         html = html + """  
         <script>
@@ -242,7 +261,10 @@ public class PageST21 implements Handler {
                 }
             }; 
         </script>
+                """;
 
+        /* 
+        html = html + """         
         <!--Select LGA Order-->
         <!--https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio-->
         <div class='form-group'> 
@@ -282,7 +304,10 @@ public class PageST21 implements Handler {
                     <lable for='DescendingGap'>View The Gap in Descending Order</lable>
             </fieldset>
         </div>
+                """;
+        */
 
+        html = html + """  
         <!-- Submit Button-->
             <button type='submit' class='btn'>Compare LGAs</button>
         </form>

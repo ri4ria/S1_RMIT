@@ -74,6 +74,12 @@
                         </ul>
 
                     </fieldset>
+                
+                <fieldset>
+                    <button type='submit' value='EducationStatistics' name='dataset'>Highest Year of High School Completed</button>
+                    <button type='submit' value='PopulationStatistics' name='dataset'>Indigenous Status</button>
+                    <button type='submit' value='HouseholdStatistics' name='dataset'>Total Weekly Household Income</button>
+                </fieldset>
 
                 </div>
 
@@ -216,6 +222,8 @@
                     <th>2021 LGA Type</th>
                     <th>2016 Result</th>
                     <th>2021 Result</th>
+                    <th>2016 Rank</th>
+                    <th>2021 Rank</th>
                 </tr>
                 <tr>
                     <td th:text='${lgaCode}'></td>
@@ -227,6 +235,8 @@
                     <td th:text='${lgaType2021}'></td>
                     <td th:text='${results2016}'></td>
                     <td th:text='${results2021}'></td>
+                    <td th:text='${ranking2016}'></td>
+                    <td th:text='${ranking2021}'></td>
                 </tr>
             </table>
         </div>

@@ -8,8 +8,10 @@ public class ST22Results {
     String lgaName2021;
     String lgaState2021;
     String lgaType2021;
-    int result2016;
-    int result2021;
+    float result2016;
+    float result2021;
+    int rank2016;
+    int rank2021;
 
     // constructor method
     public ST22Results () {
@@ -44,12 +46,20 @@ public class ST22Results {
         this.lgaType2021 = lgaType2021;
     }
 
-    public void setResult2016 (int result2016) {
+    public void setResult2016 (float result2016) {
         this.result2016 = result2016;
     }
 
-    public void setResult2021 (int result2021) {
+    public void setResult2021 (float result2021) {
         this.result2021 = result2021;
+    }
+
+    public void setRank2016 (int rank2016) {
+        this.rank2016 = rank2016;
+    }
+
+    public void setRank2021 (int rank2021) {
+        this.rank2021 = rank2021;
     }
 
     // getter methods
@@ -81,11 +91,19 @@ public class ST22Results {
         return this.lgaType2021;
     }
 
-    public int getResult2016 () {
+    public float getResult2016 () {
         return this.result2016;
     }
 
-    public int getResult2021 () {
+    public float getResult2021 () {
         return this.result2021;
+    }
+
+    public int getRank2016 () {
+        return this.rank2016;
+    }
+
+    public int getRank2021 () {
+        return this.rank2021;
     }
 }

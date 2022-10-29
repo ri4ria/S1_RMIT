@@ -108,6 +108,7 @@ public class PageST21 implements Handler {
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
+        html = html + " <div class='filter-sidebar'>";
         html = html + "<form action='/page3.html' method='post'>";
         
         html = html + """
@@ -312,7 +313,7 @@ public class PageST21 implements Handler {
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
-                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    html = html + "<h2><i>No Results to show for Outcome 1: Health Conditions</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByHealthCond(condition_drop);
@@ -323,7 +324,7 @@ public class PageST21 implements Handler {
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (age_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
-                    html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                    html = html + "<h2><i>No Results to show for Outcome 1: Population By Age</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
                     html = html + outputDataByAge(age_drop);
@@ -334,7 +335,7 @@ public class PageST21 implements Handler {
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
-                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     html = html + "<h2><i>No Results to show for Outcome 5: Highest year of shcooling</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
                      html = html + outputDataBySchool(school_drop);
@@ -345,11 +346,13 @@ public class PageST21 implements Handler {
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (income_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
-                     html = html + "<h2><i>No Results to show for dropbox</i></h2>";
+                     html = html + "<h2><i>No Results to show for Outcome 8: Weekely household income</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
                      html = html + outputDataByIncome(income_drop);
                      }
+
+                     html = html + " </div>";
 
         // Close Content div
         html = html + "</div>";

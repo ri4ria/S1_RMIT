@@ -1655,15 +1655,15 @@ public class JDBCConnection {
             query += "AND incomedata.indig <= incomedata.total;";
             */
             "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.total AS 'total', ";
-            query += "printf('%d%%', sort.propIndig) AS 'propIndig', printf('%d%%', sort.propNonindig) AS 'propNon', sort.gap AS 'gap' ";
+            query += "printf('%.2f%', sort.propIndig) AS 'propIndig', printf('%.2f%', sort.propNonindig) AS 'propNon', (printf('%.0f', sort.gap)* 100) AS 'gap' ";
             query += "FROM (SELECT H1.lga_code AS code, L.name AS name, H1.count AS indig, ho.unstatedTotal AS total, hh.nonindig AS nonindig, ";
-            query += "SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, (H1.count * 100/ H2.count) AS propIndig, hh.proNon AS propNonindig, ";
-            query += "((H1.count * 100/ H2.count)-hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name ";
+            query += "SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, ((H1.count * 1.0/ SUM(H2.count))*100) AS propIndig, hh.proNon AS propNonindig, ";
+            query += "(((H1.count * 1.0/ SUM(H2.count))*100)-hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name ";
             query += "FROM LGA WHERE LGA.lga_year = '2021') AS L ON L.lga_code = H1.lga_code JOIN (SELECT H1.lga_code AS code, H1.count AS unstatedTotal, ";
             query += "SUM(H2.count) AS tunstatedLGA, (H1.count * 100/ H2.count) AS proUn FROM HouseholdStatistics H1 LEFT OUTER JOIN HouseholdStatistics H2 ";
             query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome + "' AND H1.indigenous_status LIKE '%total%' AND ";
             query += "H2.indigenous_status LIKE '%total%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) AS ho ON ho.code = H1.lga_code ";
-            query += "JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, (H1.count * 100/ H2.count) AS proNon FROM HouseholdStatistics H1 ";
+            query += "JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, ((H1.count * 1.0/ SUM(H2.count))*100) AS proNon FROM HouseholdStatistics H1 ";
             query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome + "' AND H1.indigenous_status LIKE '%other%' AND ";
             query += "H2.indigenous_status LIKE '%other%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) AS hh ON hh.lga_code = H1.lga_code ";
             query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome + "' AND ";

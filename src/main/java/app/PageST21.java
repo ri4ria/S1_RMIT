@@ -380,7 +380,7 @@ public class PageST21 implements Handler {
                      html = html + "<h2><i>No Results to show for Outcome 8: Weekely household income</i></h2>";
                      } else {
                      // If NOT NULL, then lookup the movie by type!
-                     html = html + outputDataByIncome(income_drop);
+                     html = html + outputDataByIncome(income_drop, sort_drop) ;
                      }
 
                      html = html + " </div>";
@@ -576,7 +576,7 @@ public class PageST21 implements Handler {
     }
 
     //get data for first query
-    public String outputDataByIncome(String selectedIncome) {
+    public String outputDataByIncome(String selectedIncome, String sort) {
         String html = "";
         html = html + "<h2> Table showing: population of indigenous household, non-indigenous household, total population, </br>";
         html = html + "the gap and percent of indigenous population proportional to total for the </br>"; 
@@ -584,14 +584,33 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> income21 = jdbc.getDataByHouse(selectedIncome);
+        ArrayList<Table> income21 = jdbc.getDataByHouse(selectedIncome, sort);
         
-        // Add HTML for the list
-        html = html + "<ul>";
-        for (String result : income21) {
-            html = html + "<li>" + result + "</li>";
+        html = html + "<table>";
+            html = html + "<tr>";
+                html = html + "<th>Code </th>";
+                html = html + "<th>Name </th>";
+                html = html + "<th>Indigenous </th>";
+                html = html + "<th>Non-indigenous </th>";
+                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Proportion of total indigenous </th>";
+                html = html + "<th>Proportion of total non-indigenous </th>";
+                html = html + "<th>Gap </th>";
+            html = html + "</tr>";
+            //html = html + "<tr>";
+        for (Table table : income21) {
+            html = html + "<tr>";
+            html = html + "<td>" + table.getCode() + "</td>";
+            html = html + "<td>" + table.getName() + "</td>";
+            html = html + "<td>" + table.getIndig() + "</td>";
+            html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
+            html = html + "<td>" + table.getPropIndig() + "</td>";
+            html = html + "<td>" + table.getPropNon() + "</td>";
+            html = html + "<td>" + table.getGap() + "</td>";
+            html = html + "</tr>";
         }
-        html = html + "</ul>";
+        html = html + "</table>";
 
         return html;
     }

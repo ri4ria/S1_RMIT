@@ -37,51 +37,10 @@
             states.</p>
         <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
 
-        <p th:text='${dataset}'></p>
-        <p th:text='${locationType}'></p>
-        <p th:text='${location}'></p>
-        <p th:text='${valueType}'></p>
-        <p th:text='${indigenousStatus}'></p>
-        <p th:text='${sex}'></p>
-        <p th:text='${age}'></p>
-
-        <h1 th:text='${titleResults}'></h1>
-
         <div class='sidebar-results-wrapper'></div>
         <div class='filter-sidebar'>
 
             <form action='/page4.html' method='post'>
-
-                <div class='form-group'>
-
-                    <fieldset>
-
-                        <legend>Dataset</legend>
-                        <ul style='list-style-type: none;'>
-                            <!--TODO: find a way to implement this in external CSS stylesheet-->
-                            <li>
-                                <input id='highestSchoolYear' name='dataset' type='radio' value='EducationStatistics'>
-                                <label for='dataset'>Highest Year of High School Completed</label>
-                            </li>
-                            <li>
-                                <input id='indigenousStatus' name='dataset' type='radio' value='PopulationStatistics'>
-                                <label for='dataset'>Indigenous Status</label>
-                            </li>
-                            <li>
-                                <input id='householdIncome' name='dataset' type='radio' value='HouseholdStatistics'>
-                                <label for='dataset'>Total Weekly Household Income</label>
-                            </li>
-                        </ul>
-
-                    </fieldset>
-                
-                <fieldset>
-                    <button type='submit' value='EducationStatistics' name='dataset'>Highest Year of High School Completed</button>
-                    <button type='submit' value='PopulationStatistics' name='dataset'>Indigenous Status</button>
-                    <button type='submit' value='HouseholdStatistics' name='dataset'>Total Weekly Household Income</button>
-                </fieldset>
-
-                </div>
 
                 <div class='form-group'>
 
@@ -108,6 +67,7 @@
                         <!-- <select id ='location' name = 'location'> -->
                         <select class='form-control' id='location' name='location'>
                             <option value=''>Please select...</option>
+                            <option th:each = 'state : ${states}' th:text = '${state}' th:value = '${state}'></option>
                             <option th:each='code : ${lgaCodes}' th:text='${code}' th:value='${code}'></option>
                         </select>
                         <!-- </datalist> -->
@@ -189,16 +149,25 @@
 
                         <h4>Highest Year of School Completed</h4>
 
-                        <select id = 'highestSchoolYearCompleted' name = 'highestSchoolYearCompleted'>
+                        <select id='highestSchoolYearCompleted' name='highestSchoolYearCompleted'>
                             <option value=''>Please select...</option>
-                            <option th:each = 'year : ${schoolYears}' th:text = '${year}' th:value = '${year}'></option>
+                            <option th:each='year : ${schoolYears}' th:text='${year}' th:value='${year}'></option>
                         </select>
 
                         <h4>Income Bracket</h4>
 
-                        <select id = 'incomeBracket' name = 'incomeBracket'>
+                        <select id='incomeBracket' name='incomeBracket'>
                             <option value=''>Please select...</option>
-                            <option th:each = 'bracket : ${incomeBrackets}' th:text = '${bracket}' th:value = '${bracket}'></option>
+                            <option th:each='bracket : ${incomeBrackets}' th:text='${bracket}' th:value='${bracket}'>
+                            </option>
+                        </select>
+
+                        <h4>Household Indigenous Status</h4>
+
+                        <select id='householdStatus' name='householdStatus'>
+                            <option value=''>Please select...</option>
+                            <option th:each='status : ${householdStatuses}' th:text='${status}' th:value='${status}'>
+                            </option>
                         </select>
 
                     </fieldset>
@@ -210,38 +179,111 @@
             </form>
         </div>
 
+        <p th:text='${locationType}'></p>
+        <p th:text='${location}'></p>
+        <p th:text='${valueType}'></p>
+        <p th:text='${indigenousStatus}'></p>
+        <p th:text='${sex}'></p>
+        <p th:text='${age}'></p>
+
+        <h1 th:text='${titleEducationResults}'></h1>
+
         <div class='results-table'>
             <table>
                 <tr>
-                    <th>LGA Code</th>
-                    <th>2016 LGA Name</th>
-                    <th>2016 LGA State</th>
-                    <th>2016 LGA Type</th>
-                    <th>2021 LGA Name</th>
-                    <th>2021 LGA State</th>
-                    <th>2021 LGA Type</th>
-                    <th>2016 Result</th>
-                    <th>2021 Result</th>
-                    <th>2016 Rank</th>
-                    <th>2021 Rank</th>
+                    <th>Year</th>
+                    <th>LGA Name</th>
+                    <th>LGA State</th>
+                    <th>LGA Type</th>
+                    <th>Result</th>
+                    <th>Rank</th>
                 </tr>
                 <tr>
-                    <td th:text='${lgaCode}'></td>
-                    <td th:text='${lgaName2016}'></td>
-                    <td th:text='${lgaState2016}'></td>
-                    <td th:text='${lgaType2016}'></td>
-                    <td th:text='${lgaName2021}'></td>
-                    <td th:text='${lgaState2021}'></td>
-                    <td th:text='${lgaType2021}'></td>
-                    <td th:text='${results2016}'></td>
-                    <td th:text='${results2021}'></td>
-                    <td th:text='${ranking2016}'></td>
-                    <td th:text='${ranking2021}'></td>
+                    <td>2016</td>
+                    <td th:text='${lgaName2016Education}'></td>
+                    <td th:text='${lgaState2016Education}'></td>
+                    <td th:text='${lgaType2016Education}'></td>                    
+                    <td th:text='${results2016Education}'></td> 
+                    <td th:text='${ranking2016Education}'></td>
+                </tr>
+                <tr>
+                    <td>2021</td>
+                    <td th:text='${lgaName2021Education}'></td>
+                    <td th:text='${lgaState2021Education}'></td>
+                    <td th:text='${lgaType2021Education}'></td>
+                    <td th:text='${results2021Education}'></td>
+                    <td th:text='${ranking2021Education}'></td>
                 </tr>
             </table>
-        </div>
 
-    </div>
+            <h1 th:text='${titlePopulationResults}'></h1>
+
+            <div class='results-table'>
+                <table>
+                    <tr>
+                        <th>LGA Code</th>
+                        <th>2016 LGA Name</th>
+                        <th>2016 LGA State</th>
+                        <th>2016 LGA Type</th>
+                        <th>2021 LGA Name</th>
+                        <th>2021 LGA State</th>
+                        <th>2021 LGA Type</th>
+                        <th>2016 Result</th>
+                        <th>2021 Result</th>
+                        <th>2016 Rank</th>
+                        <th>2021 Rank</th>
+                    </tr>
+                    <tr>
+                        <td th:text='${lgaCodePopulation}'></td>
+                        <td th:text='${lgaName2016Population}'></td>
+                        <td th:text='${lgaState2016Population}'></td>
+                        <td th:text='${lgaType2016Population}'></td>
+                        <td th:text='${lgaName2021Population}'></td>
+                        <td th:text='${lgaState2021Population}'></td>
+                        <td th:text='${lgaType2021Population}'></td>
+                        <td th:text='${results2016Population}'></td>
+                        <td th:text='${results2021Population}'></td>
+                        <td th:text='${ranking2016Population}'></td>
+                        <td th:text='${ranking2021Population}'></td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <h1 th:text='${titleIncomeResults}'></h1>
+
+            <div class='results-table'>
+                <table>
+                    <tr>
+                        <th>LGA Code</th>
+                        <th>2016 LGA Name</th>
+                        <th>2016 LGA State</th>
+                        <th>2016 LGA Type</th>
+                        <th>2021 LGA Name</th>
+                        <th>2021 LGA State</th>
+                        <th>2021 LGA Type</th>
+                        <th>2016 Result</th>
+                        <th>2021 Result</th>
+                        <th>2016 Rank</th>
+                        <th>2021 Rank</th>
+                    </tr>
+                    <tr>
+                        <td th:text='${lgaCodeIncome}'></td>
+                        <td th:text='${lgaName2016Income}'></td>
+                        <td th:text='${lgaState2016Income}'></td>
+                        <td th:text='${lgaType2016Income}'></td>
+                        <td th:text='${lgaName2021Income}'></td>
+                        <td th:text='${lgaState2021Income}'></td>
+                        <td th:text='${lgaType2021Income}'></td>
+                        <td th:text='${results2016Income}'></td>
+                        <td th:text='${results2021Income}'></td>
+                        <td th:text='${ranking2016Income}'></td>
+                        <td th:text='${ranking2021Income}'></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
     </div>
 
     <div class='footer'>

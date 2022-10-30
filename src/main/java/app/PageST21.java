@@ -346,6 +346,7 @@ public class PageST21 implements Handler {
                     */
                     String condition_drop = context.formParam("condition_drop");
                     String sort_drop = context.formParam("sort_drop");
+                    
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -427,6 +428,7 @@ public class PageST21 implements Handler {
             html = html + "<h2><i>Please select from dropbox</i></h2>";
             } else {
             html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+            html = html + "<h2> Sort type used: " + sort + "</h2>";
         }
 
         // Look up movies from JDBC

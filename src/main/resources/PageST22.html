@@ -185,6 +185,10 @@
         <p th:text='${indigenousStatus}'></p>
         <p th:text='${sex}'></p>
         <p th:text='${age}'></p>
+        
+        <ul>
+            <li th:each = 'proportion : ${proportions}' th:text = '${proportion}'></li>
+        </ul>
 
         <h1 th:text='${titleEducationResults}'></h1>
 

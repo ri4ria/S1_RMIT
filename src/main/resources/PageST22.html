@@ -146,6 +146,8 @@
                             </li>
                         </ul>
 
+                        <br>
+
                         <h4>Sex</h4>
 
                         <ul>
@@ -159,6 +161,8 @@
                             </li>
                         </ul>
 
+                        <br>
+
                         <h4>Age</h4>
 
                         <!-- <datalist id='ageSuggestions'> -->
@@ -170,12 +174,16 @@
                         <!-- </datalist> -->
                         <!-- <input autoComplete='on' list='ageSuggestions'> -->
 
+                        <br>
+
                         <h4>Highest Year of School Completed</h4>
 
                         <select id='highestSchoolYearCompleted' name='highestSchoolYearCompleted'>
                             <option value=''>Please select...</option>
                             <option th:each='year : ${schoolYears}' th:text='${year}' th:value='${year}'></option>
                         </select>
+
+                        <br>
 
                         <h4>Income Bracket</h4>
 
@@ -184,6 +192,8 @@
                             <option th:each='bracket : ${incomeBrackets}' th:text='${bracket}' th:value='${bracket}'>
                             </option>
                         </select>
+
+                        <br>
 
                         <h4>Household Indigenous Status</h4>
 

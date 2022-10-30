@@ -103,6 +103,8 @@ public class PageST21 implements Handler {
         // Add instructions on how to use the filters
         html = html + """
                 <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
+                <h2>Select a dataset and then sort the column of your choice in ASC (ascending) or DESC (descending) order using the dropdowns below</h2>
+
         """;
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class

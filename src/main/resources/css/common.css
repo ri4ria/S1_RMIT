@@ -245,7 +245,7 @@ img {
 .persona {
    display: inline-block;
    background-color: #F0E7D4;
-   border: 1px #BFBFBF; /* TODO: not working at the moment */
+   border: 1px #BFBFBF; 
    border-style: solid;
    border-radius: 15px;
    width: 600px;
@@ -267,7 +267,7 @@ img {
 }
 
 .filter-sidebar {
-   /* display: flex; */
+   display: inline-block; 
    width: 250px;
 }
 
@@ -288,6 +288,52 @@ img {
 .results-table th, td {
    padding: 15px;
    flex: 1;
+}
+
+.results-section {
+   margin-top: 100px;
+}
+
+.introduction {
+   margin-bottom: 75px;
+}
+
+.filter-button {
+   background-color: #2B8A9E;
+   border-style: solid;
+   border-color: #BFBFBF;
+   border: 1px;
+   border-radius: 10px;
+   color: white;
+   font-family: Karla;
+   font-weight: bold;
+   text-align: center;
+   font-size: 20px;
+   width: 250px;
+   height: 60px;
+   margin-top: 20px;
+   margin-bottom: 100px;
+   transition-duration: 0.4s;
+}
+
+.filter-button:hover {
+   background-color: #5ABED2;
+}
+
+/* styling filter options */
+.filter-selections-wrapper {
+   display: inline-block;
+}
+
+.filter-selections p {
+   display: inline-block;
+   background-color: #F0E7D4;
+   padding: 10px;
+   border: 1px;
+   border-color: #BFBFBF;
+   border-style: solid;
+   border-radius: 10px;
+   width: 250px;
 }
 
 /* Make data tables scrollable */

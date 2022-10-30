@@ -69,11 +69,17 @@ public class PageMission implements Handler {
         ArrayList<PersonaAttribute> persona2goals = jdbc.getPersonaAttribute("Lara King the Lawyer", "Goals");
         ArrayList<PersonaAttribute> persona2skills = jdbc.getPersonaAttribute("Lara King the Lawyer", "Skills");
 
-        String persona1name; String persona2name;
-        String persona1imagepath; String persona2imagepath;
-        int persona1age; int persona2age;
-        String persona1ethnicity; String persona2ethnicity;
-        String persona1quote; String persona2quote;
+        ArrayList<Persona> persona3 = jdbc.getPersonas("Oscar Smith the High Schooler");
+        ArrayList<PersonaAttribute> persona3background = jdbc.getPersonaAttribute("Oscar Smith the High Schooler", "Background");
+        ArrayList<PersonaAttribute> persona3needs = jdbc.getPersonaAttribute("Oscar Smith the High Schooler", "Needs");
+        ArrayList<PersonaAttribute> persona3goals = jdbc.getPersonaAttribute("Oscar Smith the High Schooler", "Goals");
+        ArrayList<PersonaAttribute> persona3skills = jdbc.getPersonaAttribute("Oscar Smith the High Schooler", "Skills");
+
+        String persona1name; String persona2name; String persona3name; 
+        String persona1imagepath; String persona2imagepath; String persona3imagepath;
+        int persona1age; int persona2age; int persona3age;
+        String persona1ethnicity; String persona2ethnicity; String persona3ethnicity;
+        String persona1quote; String persona2quote; String persona3quote;
         
         // Put persona1 details into the model
         for (Persona persona : persona1) {
@@ -140,6 +146,39 @@ public class PageMission implements Handler {
             persona2skillslist.add(skill.getDescription());
         }
         model.put("persona2skillslist", persona2skillslist);
+
+        // Put persona3 details into the model
+        for (Persona persona : persona3) {
+            model.put("persona3name", persona3name = persona.getName());
+            model.put("persona3imagepath", persona3imagepath = persona.getImageFilePath());
+            model.put("persona3age", persona3age = persona.getAge());
+            model.put("persona3ethnicity", persona3ethnicity = persona.getEthnicity());
+            model.put("persona3quote", persona3quote = persona.getQuote());
+        }
+
+        ArrayList<String> persona3backgroundlist = new ArrayList<String>();
+        for (PersonaAttribute background : persona3background) {
+            persona3backgroundlist.add(background.getDescription());
+        }
+        model.put("persona3backgroundlist", persona3backgroundlist);
+
+        ArrayList<String> persona3needslist = new ArrayList<String>();
+        for (PersonaAttribute need : persona3needs) {
+            persona3needslist.add(need.getDescription());
+        }
+        model.put("persona3needslist", persona3needslist);
+
+        ArrayList<String> persona3goalslist = new ArrayList<String>();
+        for (PersonaAttribute goal : persona3goals) {
+            persona3goalslist.add(goal.getDescription());
+        }
+        model.put("persona3goalslist", persona3goalslist);
+
+        ArrayList<String> persona3skillslist = new ArrayList<String>();
+        for (PersonaAttribute skill : persona3skills) {
+            persona3skillslist.add(skill.getDescription());
+        }
+        model.put("persona3skillslist", persona3skillslist);
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf

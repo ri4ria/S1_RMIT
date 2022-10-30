@@ -132,6 +132,31 @@
                         <li th:each='skill : ${persona2skillslist}' th:text='${skill}'></li>
                     </ul>
                 </div>
+                <div class = 'persona'>
+                    <h2 th:text = '${persona3name}'></h2>
+                    <img class = 'persona-details' th:src = '${persona3imagepath}' alt = 'Oscar Smith' height = 100>
+                    <ul class = 'persona-details'>
+                        <li th:text = '${persona3age}'></li>
+                        <li th:text = '${persona3ethnicity}'></li>
+                        <li>"<i th:text = '${persona3quote}'></i>"</li>
+                    </ul>
+                    <h3>Background</h3>
+                    <ul>
+                        <li th:each = 'background : ${persona3backgroundlist}' th:text = '${background}'></li>
+                    </ul>
+                    <h3>Needs</h3>
+                    <ul>
+                        <li th:each='need : ${persona3needslist}' th:text='${need}'></li>
+                    </ul>
+                    <h3>Goals</h3>
+                    <ul>
+                        <li th:each='goal : ${persona3goalslist}' th:text='${goal}'></li>
+                    </ul>
+                    <h3>Skills and Experience</h3>
+                    <ul>
+                        <li th:each='skill : ${persona3skillslist}' th:text='${skill}'></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -481,6 +481,7 @@ public class PageST21 implements Handler {
         }
         html = html + "</ul>";
         */
+        html = html + "<div class='results-table2'>";
         html = html + "<table>";
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
@@ -506,6 +507,7 @@ public class PageST21 implements Handler {
             html = html + "</tr>";
         }
         html = html + "</table>";
+        html = html + "</div>";
 
         return html;
     }
@@ -529,6 +531,7 @@ public class PageST21 implements Handler {
         */
 
         // Add HTML for the health conditions list
+        html = html + "<div class='results-table2'>";
         html = html + "<table>";
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
@@ -578,7 +581,7 @@ public class PageST21 implements Handler {
         */
             //html = html + "</tr";
         html = html + "</table>";
-        
+        html = html + "</div>";
 
         return html;
     }
@@ -593,7 +596,7 @@ public class PageST21 implements Handler {
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
         ArrayList<Table> income21 = jdbc.getDataByHouse(selectedIncome, sort);
-        
+        html = html + "<div class='results-table2'>";
         html = html + "<table>";
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
@@ -619,6 +622,7 @@ public class PageST21 implements Handler {
             html = html + "</tr>";
         }
         html = html + "</table>";
+        html = html + "</div>";
 
         return html;
     }

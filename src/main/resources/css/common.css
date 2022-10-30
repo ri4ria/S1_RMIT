@@ -289,3 +289,25 @@ img {
    padding: 15px;
    flex: 1;
 }
+
+/* Make data tables scrollable */
+.results-table2 {
+   height: 550px;
+   overflow-y: scroll;
+}
+
+.results-table2 th {
+   background-color: #BBA89F;
+   position: sticky;
+   z-index: 2;
+   top: 0;
+}
+
+.results-table2 td {
+   background-color: #F0E7D4;
+}
+
+.results-table2 th, td {
+   padding: 15px;
+   flex: 1;
+}

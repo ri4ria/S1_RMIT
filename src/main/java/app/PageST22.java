@@ -69,7 +69,7 @@ public class PageST22 implements Handler {
         String age = context.formParam("age");
         String highestSchoolYearCompleted = context.formParam("highestSchoolYearCompleted");
         String incomeBracket = context.formParam("incomeBracket");
-        String householdIndigenousStatus = context.formParam("householdIndigenousStatus");
+        String householdIndigenousStatus = context.formParam("householdStatus");
 
         // System.out.println(dataset);
 
@@ -79,7 +79,13 @@ public class PageST22 implements Handler {
         model.put("indigenousStatus", indigenousStatus);
         model.put("sex", sex);
         model.put("age", age);
+        model.put("highestSchoolYearCompleted", highestSchoolYearCompleted);
+        model.put("incomeBracket", incomeBracket);
+        model.put("householdIndigenousStatus", householdIndigenousStatus);
 
+        // TODO: add another if-else statement to add 'Error' messages for missing input
+
+        /*
         if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null & highestSchoolYearCompleted != null) {
             model.put("titleEducationResults", new String("2016 vs. 2021 Highest Year of School Completed Data for " + location));
             ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
@@ -113,8 +119,8 @@ public class PageST22 implements Handler {
         }
 
         if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null) {
-            model.put("titlePopulationResults", new String("2016 vs. 2021 Indigenous Status Data"));
-            ST22Results results = jdbc.getST22PopulationResultsRAW(locationType, location, indigenousStatus, sex, age);
+            model.put("titlePopulationResults", new String("2016 vs. 2021 Indigenous Status Data for " + location));
+            ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
             model.put("lgaCodePopulation", results.getLGACode());
             model.put("lgaName2016Population", results.getLGAName2016());
             model.put("lgaState2016Population", results.getLGAState2016());
@@ -122,17 +128,33 @@ public class PageST22 implements Handler {
             model.put("lgaName2021Population", results.getLGAName2021());
             model.put("lgaState2021Population", results.getLGAState2021());
             model.put("lgaType2021Population", results.getLGAType2021());
-            model.put("results2016Population", results.getResult2016());
-            model.put("results2021Population", results.getResult2021());
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            float result2016 = results.getResult2016();
+            float result2021 = results.getResult2021();
+            if (result2016 > 1.0) {
+                model.put("results2016Population", results.getResult2016());
+                model.put("results2021Population", results.getResult2021());
+            } else if (result2016 < 1.0) {
+                result2016 = result2016 * 100;
+                result2021 = result2021 * 100;
+                String result2016P = df.format(result2016);
+                String result2021P = df.format(result2021);
+                model.put("results2016Population", result2016P + "%");
+                model.put("results2021Population", result2021P + "%");
+            }
+
             model.put("ranking2016Population", results.getRank2016());
             model.put("ranking2021Population", results.getRank2021());
         } else {
             model.put("titlePopulationResults", new String("No Results for Indigenous Status Data"));
         }
 
+        */
+
         if (locationType != null & location != null & valueType != null & householdIndigenousStatus != null & incomeBracket != null) {
-            model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data"));
-            ST22Results results = jdbc.getST22IncomeResultsRAW(locationType, location, householdIndigenousStatus, incomeBracket);
+            model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data for " + location));
+            ST22Results results = jdbc.getST22IncomeResults(locationType, location, valueType, householdIndigenousStatus, incomeBracket);
             model.put("lgaCode", results.getLGACode());
             model.put("lgaName2016Income", results.getLGAName2016());
             model.put("lgaState2016Income", results.getLGAState2016());
@@ -140,97 +162,27 @@ public class PageST22 implements Handler {
             model.put("lgaName2021Income", results.getLGAName2021());
             model.put("lgaState2021Income", results.getLGAState2021());
             model.put("lgaType2021Income", results.getLGAType2021());
-            model.put("results2016Income", results.getResult2016());
-            model.put("results2021Income", results.getResult2021());
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            float result2016 = results.getResult2016();
+            float result2021 = results.getResult2021();
+            if (result2016 > 1.0) {
+                model.put("results2016Income", results.getResult2016());
+                model.put("results2021Income", results.getResult2021());
+            } else if (result2016 < 1.0) {
+                result2016 = result2016 * 100;
+                result2021 = result2021 * 100;
+                String result2016P = df.format(result2016);
+                String result2021P = df.format(result2021);
+                model.put("results2016Income", result2016P + "%");
+                model.put("results2021Income", result2021P + "%");
+            }
+
             model.put("ranking2016Income", results.getRank2016());
             model.put("ranking2021Income", results.getRank2021());
         } else {
             model.put("titleIncomeResults", new String("No Results for Total Weekly Household Income Data"));
         }
-
-        /*
-        if (dataset == null || dataset == "") {
-            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
-        } else if (dataset == "EducationStatistics") {
-
-            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
-
-            ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex,
-                    highestSchoolYearCompleted);
-            model.put("lgaCode", results.getLGACode());
-            model.put("lgaName2016", results.getLGAName2016());
-            model.put("lgaState2016", results.getLGAState2016());
-            model.put("lgaType2016", results.getLGAType2016());
-            model.put("lgaName2021", results.getLGAName2021());
-            model.put("lgaState2021", results.getLGAState2021());
-            model.put("lgaType2021", results.getLGAType2021());
-            model.put("results2016", results.getResult2016());
-            model.put("results2021", results.getResult2021());
-            model.put("ranking2016", results.getRank2016());
-            model.put("ranking2021", results.getRank2021());
-        }
-        */
-        
-        /*( if (dataset == "EducationStatistics") {
-            System.out.println("Results for " + dataset + " being retrieved...");
-
-            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
-
-            ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
-            model.put("lgaCode", results.getLGACode());
-            model.put("lgaName2016", results.getLGAName2016());
-            model.put("lgaState2016", results.getLGAState2016());
-            model.put("lgaType2016", results.getLGAType2016());
-            model.put("lgaName2021", results.getLGAName2021());
-            model.put("lgaState2021", results.getLGAState2021());
-            model.put("lgaType2021", results.getLGAType2021());
-            model.put("results2016", results.getResult2016());
-            model.put("results2021", results.getResult2021());
-            model.put("ranking2016", results.getRank2016());
-            model.put("ranking2021", results.getRank2021());
-        } else if (dataset == null || dataset == "") {
-            model.put("titleResults", new String("No Results to Show"));
-        }
-
-        */
-
-        /*/
-        if (dataset == null || dataset == "" || locationType == null || locationType == "" || location == null || location == "" || valueType == null || valueType == "") {
-            // If NULL, show nothing, therefore we make "No Results" HTML
-            // TODO: add another if-else statement to add 'Error' messages for missing input
-
-            model.put("titleResults", new String("No results to show."));
-            ArrayList<String> results = new ArrayList<String>(); // store empty ArrayList for completeness
-            model.put("results", results);
-
-            // If NOT NULL, then look up the specified dataset
-        } else if (dataset == "PopulationStatistics") {
-            model.put("titleResults", new String ("2016 vs 2021 Indigenous Status Results"));
-            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
-            model.put("results", results);
-        }
-        */
-        
-        /*
-        if (dataset == "PopulationStatistics") {
-            model.put("titleResults", new String("2016 vs. 2021 Indigenous Status Results"));
-            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType,
-                            indigenousStatus, sex, age);
-            model.put("results", results);
-        }
-        */
-
-        /*
-        if (dataset == null || locationType == null || location == null || valueType == null) {
-            model.put("titleResults", new String("No results to show."));
-        }
-        else if (dataset == "PopulationStatistics") {
-            ArrayList<String> results = jdbc.getST22PopulationResults(locationType, location, valueType,
-                            indigenousStatus, sex, age);
-            model.put("results", results);
-        }
-        */
-        
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf

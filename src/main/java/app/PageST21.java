@@ -355,25 +355,25 @@ public class PageST21 implements Handler {
 
                     String sort_drop = context.formParam("sort_drop");
 
-                    if (condition_drop != null) {
+                    if (condition_drop != null && !condition_drop.equalsIgnoreCase("select")) {
                         html = html + outputDataByHealthCond(condition_drop, sort_drop);
                         } else {
                         html = html + "<h2><i>No results to show for Outcome 1: Health conditions</i></h2>";
                         }
-                    
-                        if (age_drop != null) {
+
+                        if (age_drop != null && !age_drop.equalsIgnoreCase("select")) {
                             html = html + outputDataByAge(age_drop, sort_drop);
                             } else {
                             html = html + "<h2><i>No results to show for Outcome 1: Population by age</i></h2>";
                             }
 
-                            if (school_drop != null) {
+                            if (school_drop != null && !school_drop.equalsIgnoreCase("select")) {
                                 html = html + outputDataBySchool(school_drop, sort_drop);
                                 } else {
                                 html = html + "<h2><i>No results to show for Outcome 5: Highest year of shcooling</i></h2>";
                                 }
 
-                                if (income_drop != null) {
+                                if (income_drop != null && !income_drop.equalsIgnoreCase("select")) {
                                     html = html + outputDataByIncome(income_drop, sort_drop) ;
                                     } else {
                                     html = html + "<h2><i>No results to show for Outcome 8: Weekely household income</i></h2>";

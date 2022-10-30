@@ -266,9 +266,41 @@ img {
    display: flex;
 }
 
-.filter-sidebar {
+/* .filter-sidebar {
    display: inline-block; 
    width: 250px;
+} */
+
+.filter-sidebar fieldset {
+   background-color: #F0E7D4;
+   width: 250px;
+   border-radius: 10px;
+   border: 1px;
+   border-style: solid;
+   border-color: #BFBFBF;
+   margin-bottom: 20px;
+}
+
+.filter-sidebar legend {
+   font-style: italic;
+}
+
+.filter-sidebar h4 {
+   margin: 10px;
+}
+
+.filter-sidebar select {
+   font-family: Karla;
+   font-size: 15px;
+   background-color: white;
+   border: 1px;
+   border-style: solid;
+   border-color: #BFBFBF;
+   border-radius: 5px;
+   width: 200px;
+   height: 30px;
+   margin-bottom: 15px;
+   margin-left: 10px;
 }
 
 .filter-sidebar ul {

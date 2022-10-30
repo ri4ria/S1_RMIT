@@ -629,7 +629,11 @@ public class PageST21 implements Handler {
     public String outputDataByIncome(String selectedIncome, String sort) {
         String html = "";
         html = html + "<h2>Population of households with a weekly household income of: $" + selectedIncome + "</h2>";
-        html = html + "<h2> Sort type used: " + sort + "</h2>";
+        html = html + "<h3> Sort type used: " + sort + "</h3>";
+        html = html + "<h5>A '+' gap score indicates: portion of indigenous population >  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
+        html = html + "<h5>A '-' gap score indicates: portion of indigenous population <  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
+        html = html + "<h5>A '0' gap score indicates the gap between the communities earning weekly household income of $" + selectedIncome + " is small for a given LGA</h5>";
+
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();

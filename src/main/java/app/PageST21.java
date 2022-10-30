@@ -339,18 +339,18 @@ public class PageST21 implements Handler {
                     *  If the form is not filled in, then the form will return null!
                     */
                     String condition_drop = context.formParam("condition_drop");
+                    String sort_drop = context.formParam("sort_drop");
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
                     html = html + "<h2><i>No Results to show for Outcome 1: Health Conditions</i></h2>";
                     } else {
                     // If NOT NULL, then lookup the movie by type!
-                    html = html + outputDataByHealthCond(condition_drop);
+                    html = html + outputDataByHealthCond(condition_drop, sort_drop);
                     }
 
                     //age_drop
                     String age_drop = context.formParam("age_drop");
-                    String sort_drop = context.formParam("sort_drop");
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (age_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -415,7 +415,7 @@ public class PageST21 implements Handler {
 
     
     //get data for first query
-    public String outputDataByHealthCond(String selectedCondition) {
+    public String outputDataByHealthCond(String selectedCondition, String sort) {
         String html = "";
         if (selectedCondition == null) {
             html = html + "<h2><i>Please select from dropbox</i></h2>";
@@ -425,15 +425,34 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<String> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition);
+        ArrayList<Table> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition, sort);
         
         // Add HTML for the health conditions list
-        html = html + "<ul>";
-        for (String result : healthConditions21) {
-            html = html + "<li>" + result + "</li>";
+        html = html + "<table>";
+        html = html + "<tr>";
+                html = html + "<th>Code </th>";
+                html = html + "<th>Name </th>";
+                html = html + "<th>Indigenous </th>";
+                html = html + "<th>Non-indigenous </th>";
+                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Proportion of total indigenous </th>";
+                html = html + "<th>Proportion of total non-indigenous </th>";
+                html = html + "<th>Gap </th>";
+            html = html + "</tr>";
+        for (Table table : healthConditions21) {
+            html = html + "<tr>";
+            html = html + "<td>" + table.getCode() + "</td>";
+            html = html + "<td>" + table.getName() + "</td>";
+            html = html + "<td>" + table.getIndig() + "</td>";
+            html = html + "<td>" + table.getNonindig() + "</td>";
+            html = html + "<td>" + table.getTotal() + "</td>";
+            html = html + "<td>" + table.getPropIndig() + "</td>";
+            html = html + "<td>" + table.getPropNon() + "</td>";
+            html = html + "<td>" + table.getGap() + "</td>";
+            html = html + "</tr>";
         }
-        html = html + "</ul>";
 
+        html = html + "</table>";
         return html;
     }
 

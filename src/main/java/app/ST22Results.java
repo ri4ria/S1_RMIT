@@ -12,6 +12,7 @@ public class ST22Results {
     float result2021;
     int rank2016;
     int rank2021;
+    float[] proportions;
 
     // constructor method
     public ST22Results () {
@@ -62,6 +63,10 @@ public class ST22Results {
         this.rank2021 = rank2021;
     }
 
+    public void setProportions (float[] proportions) {
+        this.proportions = proportions;
+    }
+
     // getter methods
     public String getLGACode () {
         return this.lgaCode;
@@ -105,5 +110,9 @@ public class ST22Results {
 
     public int getRank2021 () {
         return this.rank2021;
+    }
+
+    public float[] getProportions () {
+        return this.proportions;
     }
 }

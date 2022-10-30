@@ -1134,7 +1134,7 @@ public class JDBCConnection {
             query += "WHERE health.indigenous_status = 'indig' ";
             query += "AND health.condition = '" + selectedCondition + "' ";
             query += "AND LGAnum.lga_year = '2021' "; 
-            query += "GROUP BY health.LGA_CODE;"; */
+            query += "GROUP BY health.LGA_CODE;"; 
             "SELECT hc.lga_code AS 'code', lga.lga_name AS 'name', printf('%,d', hc.indig) AS 'indig', printf('%,d', hc.nonindig) AS 'nonindig', "; 
             query += "printf('%,d', hc.nonstated) AS 'nonstated', printf('%,d', hc.total) AS 'total', printf('%,d', hc.gap) as 'gap', printf('%d%%', hc.pro) AS 'pro', printf('%d%%', hc.proInd) AS 'proInd' ";
             query += "FROM LGA JOIN (SELECT health.lga_code, cond.indig AS indig, cond.nonindig AS nonindig, cond.nonstated, cond.total, cond.gap AS gap, cond.proportional AS pro, (cond.indig * 100 /SUM(health.count)) AS proInd ";
@@ -1154,8 +1154,31 @@ public class JDBCConnection {
                     + "' AND C1.indigenous_status = 'indig_stat_notstated' AND C2.indigenous_status = 'indig_stat_notstated' ";
             query += "AND C1.sex = 'f' AND C2.sex = 'm' AND C1.lga_code = C2.lga_code) AS heal) AS cond ";
             query += "ON cond.code = health.lga_code WHERE health.indigenous_status = 'indig' GROUP BY health.lGA_Code) AS hc ON hc.lga_code = lga.lga_code GROUP BY hc.lga_code;";
+            */
+            "SELECT sort.code AS 'code', sort.name AS 'name', printf('%,d', sort.indig) AS 'indig', printf('%,d', sort.nonindig) AS 'nonindig', printf('%,d', sort.total) AS 'total', printf('%d%%', sort.propIndig) AS 'propIndig', printf('%d%%', sort.propNon) AS 'propNon', sort.gap AS 'gap' ";
+            query += "FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, ";
+            query += "(Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, ";
+            query += "(((Ef1.count + Ef2.count)*100)/ed.tindig) AS propIndig, (s.nonindig*100/s.tnon) AS propNon,((((Ef1.count + Ef2.count)*100)/ed.tindig)-(s.nonindig*100/s.tnon)) AS gap ";
+            query += "FROM LTHCStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name FROM LGA ";
+            query += "WHERE LGA.lga_year = '2021') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated ";
+            query += "FROM LTHCStatistics AS Ef1 OUTER LEFT JOIN LTHCStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnotstated ";
+            query += "FROM LTHCStatistics AS E WHERE E.indigenous_status = 'indig_stat_notstated' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ";
+            query += "ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.condition = '" + selectedCondition + "' AND Ef2.condition = '" + selectedCondition + "' ";
+            query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+            query += "AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code ";
+            query += "OUTER LEFT JOIN LTHCStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon ";
+            query += "FROM LTHCStatistics AS Ef1 OUTER LEFT JOIN LTHCStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnon ";
+            query += "FROM LTHCStatistics AS E WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2021' ";
+            query += "GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+            query += "AND Ef1.condition = '" + selectedCondition + "' AND Ef2.condition = '" + selectedCondition + "' AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+            query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code ";
+            query += "JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tindig FROM LTHCStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code ";
+            query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.condition = '" + selectedCondition + "' AND Ef2.condition = '" + selectedCondition +"' ";
+            query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+            query += "ORDER BY " + sort + ";";
 
-            //System.out.println(query);
+            System.out.println(query);
 
             // Get Result
             ResultSet results = statement.executeQuery(query);
@@ -1184,8 +1207,10 @@ public class JDBCConnection {
                   String propNon =  results.getString("propNon");
                   String gap =  String.valueOf(results.getString("gap"));
 
+                  Table tableCondition = new Table(code, name, indig, nonindig, total, propIndig, propNon, gap);
 
-                healthCondData.add(result);
+
+                healthCondData.add(tableCondition);
             }
 
             // Close the statement because we are done with it

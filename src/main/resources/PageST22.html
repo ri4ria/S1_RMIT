@@ -185,6 +185,9 @@
         <p th:text='${indigenousStatus}'></p>
         <p th:text='${sex}'></p>
         <p th:text='${age}'></p>
+        <p th:text='${highestSchoolYearCompleted}'></p>
+        <p th:text='${incomeBracket}'></p>
+        <p th:text='${householdIndigenousStatus}'></p>
         
         <ul>
             <li th:each = 'proportion : ${proportions}' th:text = '${proportion}'></li>
@@ -225,29 +228,27 @@
             <div class='results-table'>
                 <table>
                     <tr>
-                        <th>LGA Code</th>
-                        <th>2016 LGA Name</th>
-                        <th>2016 LGA State</th>
-                        <th>2016 LGA Type</th>
-                        <th>2021 LGA Name</th>
-                        <th>2021 LGA State</th>
-                        <th>2021 LGA Type</th>
-                        <th>2016 Result</th>
-                        <th>2021 Result</th>
-                        <th>2016 Rank</th>
-                        <th>2021 Rank</th>
+                        <th>Year</th>
+                        <th>LGA Name</th>
+                        <th>LGA State</th>
+                        <th>LGA Type</th>
+                        <th>Result</th>
+                        <th>Rank</th>
                     </tr>
                     <tr>
-                        <td th:text='${lgaCodePopulation}'></td>
+                        <td>2016</td>
                         <td th:text='${lgaName2016Population}'></td>
                         <td th:text='${lgaState2016Population}'></td>
-                        <td th:text='${lgaType2016Population}'></td>
+                        <td th:text='${lgaType2016Population}'></td>                    
+                        <td th:text='${results2016Population}'></td> 
+                        <td th:text='${ranking2016Population}'></td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
                         <td th:text='${lgaName2021Population}'></td>
                         <td th:text='${lgaState2021Population}'></td>
                         <td th:text='${lgaType2021Population}'></td>
-                        <td th:text='${results2016Population}'></td>
                         <td th:text='${results2021Population}'></td>
-                        <td th:text='${ranking2016Population}'></td>
                         <td th:text='${ranking2021Population}'></td>
                     </tr>
                 </table>
@@ -259,29 +260,27 @@
             <div class='results-table'>
                 <table>
                     <tr>
-                        <th>LGA Code</th>
-                        <th>2016 LGA Name</th>
-                        <th>2016 LGA State</th>
-                        <th>2016 LGA Type</th>
-                        <th>2021 LGA Name</th>
-                        <th>2021 LGA State</th>
-                        <th>2021 LGA Type</th>
-                        <th>2016 Result</th>
-                        <th>2021 Result</th>
-                        <th>2016 Rank</th>
-                        <th>2021 Rank</th>
+                        <th>Year</th>
+                        <th>LGA Name</th>
+                        <th>LGA State</th>
+                        <th>LGA Type</th>
+                        <th>Result</th>
+                        <th>Rank</th>
                     </tr>
                     <tr>
-                        <td th:text='${lgaCodeIncome}'></td>
+                        <td>2016</td>
                         <td th:text='${lgaName2016Income}'></td>
                         <td th:text='${lgaState2016Income}'></td>
-                        <td th:text='${lgaType2016Income}'></td>
+                        <td th:text='${lgaType2016Income}'></td>                    
+                        <td th:text='${results2016Income}'></td> 
+                        <td th:text='${ranking2016Income}'></td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
                         <td th:text='${lgaName2021Income}'></td>
                         <td th:text='${lgaState2021Income}'></td>
                         <td th:text='${lgaType2021Income}'></td>
-                        <td th:text='${results2016Income}'></td>
                         <td th:text='${results2021Income}'></td>
-                        <td th:text='${ranking2016Income}'></td>
                         <td th:text='${ranking2021Income}'></td>
                     </tr>
                 </table>

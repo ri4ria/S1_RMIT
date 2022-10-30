@@ -1,5 +1,6 @@
 package app;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,10 @@ public class PageST22 implements Handler {
         ArrayList<String> lgaCodes = jdbc.getLGACodes();
         model.put("lgaCodes", lgaCodes);
 
+        // Retrieving states for dropdown list
+        ArrayList<String> states = jdbc.getStates();
+        model.put("states", states);
+
         // Retrieving age groups for dropdown list
         ArrayList<String> ageGroups = jdbc.getAgeGroups();
         model.put("ageGroups", ageGroups);
@@ -48,11 +53,14 @@ public class PageST22 implements Handler {
         ArrayList<String> years = jdbc.getHighSchoolYears();
         model.put("schoolYears", years);
 
-        // Retrieving highest school year brackets for dropdown list
+        // Retrieving income brackets for dropdown list
         ArrayList<String> brackets = jdbc.getIncomeBrackets();
         model.put("incomeBrackets", brackets);
 
-        String dataset = context.formParam("dataset"); // name of the dataset
+        // Retrieving household indigenous statuses for dropdown list
+        ArrayList<String> householdStatuses = jdbc.getHouseholdIndigenousStatuses();
+        model.put("householdStatuses", householdStatuses);
+
         String locationType = context.formParam("locationType"); // LGA or state
         String location = context.formParam("location"); // location filter
         String valueType = context.formParam("valueType"); // raw or proportional
@@ -60,10 +68,11 @@ public class PageST22 implements Handler {
         String sex = context.formParam("sex");
         String age = context.formParam("age");
         String highestSchoolYearCompleted = context.formParam("highestSchoolYearCompleted");
+        String incomeBracket = context.formParam("incomeBracket");
+        String householdIndigenousStatus = context.formParam("householdIndigenousStatus");
 
-        System.out.println(dataset);
+        // System.out.println(dataset);
 
-        model.put("dataset", dataset);
         model.put("locationType", locationType);
         model.put("location", location);
         model.put("valueType", valueType);
@@ -71,9 +80,83 @@ public class PageST22 implements Handler {
         model.put("sex", sex);
         model.put("age", age);
 
-        model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
-
+        if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null & highestSchoolYearCompleted != null) {
+            model.put("titleEducationResults", new String("2016 vs. 2021 Highest Year of School Completed Data for " + location));
             ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
+            model.put("lgaCodeEducation", results.getLGACode());
+            model.put("lgaName2016Education", results.getLGAName2016());
+            model.put("lgaState2016Education", results.getLGAState2016());
+            model.put("lgaType2016Education", results.getLGAType2016());
+            model.put("lgaName2021Education", results.getLGAName2021());
+            model.put("lgaState2021Education", results.getLGAState2021());
+            model.put("lgaType2021Education", results.getLGAType2021());
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            float result2016 = results.getResult2016();
+            float result2021 = results.getResult2021();
+            if (result2016 > 1.0) {
+                model.put("results2016Education", results.getResult2016());
+                model.put("results2021Education", results.getResult2021());
+            } else if (result2016 < 1.0) {
+                result2016 = result2016 * 100;
+                result2021 = result2021 * 100;
+                String result2016P = df.format(result2016);
+                String result2021P = df.format(result2021);
+                model.put("results2016Education", result2016P + "%");
+                model.put("results2021Education", result2021P + "%");
+            }
+                
+            model.put("ranking2016Education", results.getRank2016());
+            model.put("ranking2021Education", results.getRank2021());
+        } else {
+            model.put("titleEducationResults", new String("No Results for Highest Year of School Completed Data"));
+        }
+
+        if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null) {
+            model.put("titlePopulationResults", new String("2016 vs. 2021 Indigenous Status Data"));
+            ST22Results results = jdbc.getST22PopulationResultsRAW(locationType, location, indigenousStatus, sex, age);
+            model.put("lgaCodePopulation", results.getLGACode());
+            model.put("lgaName2016Population", results.getLGAName2016());
+            model.put("lgaState2016Population", results.getLGAState2016());
+            model.put("lgaType2016Population", results.getLGAType2016());
+            model.put("lgaName2021Population", results.getLGAName2021());
+            model.put("lgaState2021Population", results.getLGAState2021());
+            model.put("lgaType2021Population", results.getLGAType2021());
+            model.put("results2016Population", results.getResult2016());
+            model.put("results2021Population", results.getResult2021());
+            model.put("ranking2016Population", results.getRank2016());
+            model.put("ranking2021Population", results.getRank2021());
+        } else {
+            model.put("titlePopulationResults", new String("No Results for Indigenous Status Data"));
+        }
+
+        if (locationType != null & location != null & valueType != null & householdIndigenousStatus != null & incomeBracket != null) {
+            model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data"));
+            ST22Results results = jdbc.getST22IncomeResultsRAW(locationType, location, householdIndigenousStatus, incomeBracket);
+            model.put("lgaCode", results.getLGACode());
+            model.put("lgaName2016Income", results.getLGAName2016());
+            model.put("lgaState2016Income", results.getLGAState2016());
+            model.put("lgaType2016Income", results.getLGAType2016());
+            model.put("lgaName2021Income", results.getLGAName2021());
+            model.put("lgaState2021Income", results.getLGAState2021());
+            model.put("lgaType2021Income", results.getLGAType2021());
+            model.put("results2016Income", results.getResult2016());
+            model.put("results2021Income", results.getResult2021());
+            model.put("ranking2016Income", results.getRank2016());
+            model.put("ranking2021Income", results.getRank2021());
+        } else {
+            model.put("titleIncomeResults", new String("No Results for Total Weekly Household Income Data"));
+        }
+
+        /*
+        if (dataset == null || dataset == "") {
+            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
+        } else if (dataset == "EducationStatistics") {
+
+            model.put("titleResults", new String("2016 vs. 2021 Highest Year of School Completed Results"));
+
+            ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex,
+                    highestSchoolYearCompleted);
             model.put("lgaCode", results.getLGACode());
             model.put("lgaName2016", results.getLGAName2016());
             model.put("lgaState2016", results.getLGAState2016());
@@ -85,6 +168,8 @@ public class PageST22 implements Handler {
             model.put("results2021", results.getResult2021());
             model.put("ranking2016", results.getRank2016());
             model.put("ranking2021", results.getRank2021());
+        }
+        */
         
         /*( if (dataset == "EducationStatistics") {
             System.out.println("Results for " + dataset + " being retrieved...");

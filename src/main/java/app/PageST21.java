@@ -428,7 +428,7 @@ public class PageST21 implements Handler {
         ArrayList<Table> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition, sort);
         
         // Add HTML for the health conditions list
-        html = html + "<div class='results-table'>";
+        html = html + "<div class='results-table2'>";
         html = html + "<table>";
         html = html + "<tr>";
                 html = html + "<th>Code </th>";

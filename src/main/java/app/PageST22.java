@@ -61,6 +61,7 @@ public class PageST22 implements Handler {
         ArrayList<String> householdStatuses = jdbc.getHouseholdIndigenousStatuses();
         model.put("householdStatuses", householdStatuses);
 
+        String dataset = context.formParam("dataset"); // dataset
         String locationType = context.formParam("locationType"); // LGA or state
         String location = context.formParam("location"); // location filter
         String valueType = context.formParam("valueType"); // raw or proportional
@@ -73,6 +74,7 @@ public class PageST22 implements Handler {
 
         // System.out.println(dataset);
 
+        model.put("dataset", dataset);
         model.put("locationType", locationType);
         model.put("location", location);
         model.put("valueType", valueType);
@@ -85,9 +87,11 @@ public class PageST22 implements Handler {
 
         // TODO: add another if-else statement to add 'Error' messages for missing input
 
-        /*
+        
         if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null & highestSchoolYearCompleted != null) {
             model.put("titleEducationResults", new String("2016 vs. 2021 Highest Year of School Completed Data for " + location));
+            model.put("titleFilterSelections", new String("Filter Selections"));
+
             ST22Results results = jdbc.getST22EducationResults(locationType, location, valueType, indigenousStatus, sex, highestSchoolYearCompleted);
             model.put("lgaCodeEducation", results.getLGACode());
             model.put("lgaName2016Education", results.getLGAName2016());
@@ -116,10 +120,13 @@ public class PageST22 implements Handler {
             model.put("ranking2021Education", results.getRank2021());
         } else {
             model.put("titleEducationResults", new String("No Results for Highest Year of School Completed Data"));
+            model.put("titleFilterSelections", new String("No Filter Options Selected"));
         }
 
         if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null) {
             model.put("titlePopulationResults", new String("2016 vs. 2021 Indigenous Status Data for " + location));
+            model.put("titleFilterSelections", new String("Filter Selections"));
+
             ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
             model.put("lgaCodePopulation", results.getLGACode());
             model.put("lgaName2016Population", results.getLGAName2016());
@@ -148,12 +155,12 @@ public class PageST22 implements Handler {
             model.put("ranking2021Population", results.getRank2021());
         } else {
             model.put("titlePopulationResults", new String("No Results for Indigenous Status Data"));
+            model.put("titleFilterSelections", new String("No Filter Options Selected"));
         }
-
-        */
 
         if (locationType != null & location != null & valueType != null & householdIndigenousStatus != null & incomeBracket != null) {
             model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data for " + location));
+            model.put("titleFilterSelections", new String("Filter Selections"));
             ST22Results results = jdbc.getST22IncomeResults(locationType, location, valueType, householdIndigenousStatus, incomeBracket);
             model.put("lgaCode", results.getLGACode());
             model.put("lgaName2016Income", results.getLGAName2016());
@@ -182,6 +189,7 @@ public class PageST22 implements Handler {
             model.put("ranking2021Income", results.getRank2021());
         } else {
             model.put("titleIncomeResults", new String("No Results for Total Weekly Household Income Data"));
+            model.put("titleFilterSelections", new String("No Filter Options Selected"));
         }
 
         // DO NOT MODIFY THIS

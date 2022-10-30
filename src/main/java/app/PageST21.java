@@ -230,10 +230,12 @@ public class PageST21 implements Handler {
             <fieldset>
             <legend>Sort the dataset</legend>
             <div class='form-group'> 
-                <label for='sort_drop'>*** Select data order ***:</label></br>
+                <label for='sort_drop'>Per table heading:</label></br>
                     <select id='sort_drop' name='sort_drop'>
                         <option>sort.code ASC</option>
                         <option>sort.code DESC</option>
+                        <option>sort.name ASC</option>
+                        <option>sort.name DESC</option>
                         <option>sort.indig ASC</option>
                         <option>sort.indig DESC</option>
                         <option>sort.nonindig ASC</option>
@@ -345,8 +347,38 @@ public class PageST21 implements Handler {
                     *  If the form is not filled in, then the form will return null!
                     */
                     String condition_drop = context.formParam("condition_drop");
+                    String age_drop = context.formParam("age_drop");
+                    String school_drop = context.formParam("school_drop");
+                    String income_drop = context.formParam("income_drop");
+
                     String sort_drop = context.formParam("sort_drop");
+
+                    if (condition_drop != null) {
+                        html = html + outputDataByHealthCond(condition_drop, sort_drop);
+                        } else {
+                        html = html + "<h2><i>No results to show for Outcome 1: Health conditions</i></h2>";
+                        }
                     
+                        if (age_drop != null) {
+                            html = html + outputDataByAge(age_drop, sort_drop);
+                            } else {
+                            html = html + "<h2><i>No results to show for Outcome 1: Population by age</i></h2>";
+                            }
+
+                            if (school_drop != null) {
+                                html = html + outputDataBySchool(school_drop, sort_drop);
+                                } else {
+                                html = html + "<h2><i>No results to show for Outcome 5: Highest year of shcooling</i></h2>";
+                                }
+
+                                if (income_drop != null) {
+                                    html = html + outputDataByIncome(income_drop, sort_drop) ;
+                                    } else {
+                                    html = html + "<h2><i>No results to show for Outcome 8: Weekely household income</i></h2>";
+                                    }
+
+
+                        /* 
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (condition_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -357,7 +389,7 @@ public class PageST21 implements Handler {
                     }
 
                     //age_drop
-                    String age_drop = context.formParam("age_drop");
+                    //String age_drop = context.formParam("age_drop");
                     // String movietype_drop = context.queryParam("movietype_drop");
                     if (age_drop == null) {
                     // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -368,7 +400,7 @@ public class PageST21 implements Handler {
                     }
 
                      //school_drop
-                     String school_drop = context.formParam("school_drop");
+                     //String school_drop = context.formParam("school_drop");
                      //String sort_drop = context.formParam("sort_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (school_drop == null) {
@@ -380,7 +412,7 @@ public class PageST21 implements Handler {
                      }
 
                      //income_drop
-                     String income_drop = context.formParam("income_drop");
+                     //String income_drop = context.formParam("income_drop");
                      // String movietype_drop = context.queryParam("movietype_drop");
                      if (income_drop == null) {
                      // If NULL, nothing to show, therefore we make some "no results" HTML
@@ -389,6 +421,7 @@ public class PageST21 implements Handler {
                      // If NOT NULL, then lookup the movie by type!
                      html = html + outputDataByIncome(income_drop, sort_drop) ;
                      }
+                     */
 
                      html = html + " </div>";
 
@@ -427,7 +460,7 @@ public class PageST21 implements Handler {
         if (selectedCondition == null) {
             html = html + "<h2><i>Please select from dropbox</i></h2>";
             } else {
-            html = html + "<h2> Population of indigenous people with " + selectedCondition + "</h2>";
+            html = html + "<h2> Population of people with " + selectedCondition + "</h2>";
             html = html + "<h2> Sort type used: " + sort + "</h2>";
         }
 
@@ -441,12 +474,12 @@ public class PageST21 implements Handler {
         html = html + "<tr>";
                 html = html + "<th>Code </th>";
                 html = html + "<th>Name </th>";
-                html = html + "<th>Indigenous </th>";
-                html = html + "<th>Non-indigenous </th>";
-                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Indigenous (I) </th>";
+                html = html + "<th>Non-indigenous (N) </th>";
+                html = html + "<th>Total (including non-stated) </th>";
                 html = html + "<th>Proportion of total indigenous </th>";
                 html = html + "<th>Proportion of total non-indigenous </th>";
-                html = html + "<th>Gap </th>";
+                html = html + "<th>Gap (I - N) </th>";
             html = html + "</tr>";
         for (Table table : healthConditions21) {
             html = html + "<tr>";
@@ -469,7 +502,8 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByAge(String selectedAge, String sort) {
         String html = "";
-        html = html + "<h2> Population of indigenous people that are " + selectedAge + " years old</h2>";
+        html = html + "<h2> Population of people that are " + selectedAge + " years old</h2>";
+        html = html + "<h2> Sort type used: " + sort + "</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -488,12 +522,12 @@ public class PageST21 implements Handler {
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
                 html = html + "<th>Name </th>";
-                html = html + "<th>Indigenous </th>";
-                html = html + "<th>Non-indigenous </th>";
-                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Indigenous (I) </th>";
+                html = html + "<th>Non-indigenous (N) </th>";
+                html = html + "<th>Total (including non-stated) </th>";
                 html = html + "<th>Proportion of total indigenous </th>";
                 html = html + "<th>Proportion of total non-indigenous </th>";
-                html = html + "<th>Gap </th>";
+                html = html + "<th>Gap (I - N) </th>";
             html = html + "</tr>";
             //html = html + "<tr>";
         for (Table table : age21) {
@@ -517,7 +551,8 @@ public class PageST21 implements Handler {
      //get data for first query
      public String outputDataBySchool(String selectedSchool, String sort) {
         String html = "";
-        html = html + "<h2> Population of indigenous people with highest schooling: " + selectedSchool + " " + sort + "</h2>";
+        html = html + "<h2> Population of people with highest schooling being: " + selectedSchool + "</h2>";
+        html = html + "<h2> Sort type used: " + sort + "</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -538,12 +573,12 @@ public class PageST21 implements Handler {
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
                 html = html + "<th>Name </th>";
-                html = html + "<th>Indigenous </th>";
-                html = html + "<th>Non-indigenous </th>";
-                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Indigenous (I) </th>";
+                html = html + "<th>Non-indigenous (N) </th>";
+                html = html + "<th>Total (including non-stated) </th>";
                 html = html + "<th>Proportion of total indigenous </th>";
                 html = html + "<th>Proportion of total non-indigenous </th>";
-                html = html + "<th>Gap </th>";
+                html = html + "<th>Gap (I - N) </th>";
             html = html + "</tr>";
             //html = html + "<tr>";
         for (Table table : school21) {
@@ -591,9 +626,8 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByIncome(String selectedIncome, String sort) {
         String html = "";
-        html = html + "<h2> Table showing: population of indigenous household, non-indigenous household, total population, </br>";
-        html = html + "the gap and percent of indigenous population proportional to total for the </br>"; 
-        html = html + " selected household income bracket: $" + selectedIncome + " for all the LGAs.</h2>";
+        html = html + "<h2>Population of households with a weekly household income of: $" + selectedIncome + "</h2>";
+        html = html + "<h2> Sort type used: " + sort + "</h2>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -603,12 +637,12 @@ public class PageST21 implements Handler {
             html = html + "<tr>";
                 html = html + "<th>Code </th>";
                 html = html + "<th>Name </th>";
-                html = html + "<th>Indigenous </th>";
-                html = html + "<th>Non-indigenous </th>";
-                html = html + "<th>Total population of the LGA </th>";
+                html = html + "<th>Indigenous (I) </th>";
+                html = html + "<th>Non-indigenous (N) </th>";
+                html = html + "<th>Total (including non-stated) </th>";
                 html = html + "<th>Proportion of total indigenous </th>";
                 html = html + "<th>Proportion of total non-indigenous </th>";
-                html = html + "<th>Gap </th>";
+                html = html + "<th>Gap (I - N) </th>";
             html = html + "</tr>";
             //html = html + "<tr>";
         for (Table table : income21) {

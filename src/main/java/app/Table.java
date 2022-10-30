@@ -6,24 +6,23 @@ public class Table {
     public String name;
     public String indig;
     public String nonindig; 
-    public String nonstated; 
+    public String propIndig; 
+    public String propNon;
     public String total;
     public String gap;
-    public String proportional;
 
     public Table() {
     }
 
-    public Table(String code, String name, String indig, String nonindig, String nonstated, String total, String gap,
-            String proportional) {
+    public Table(String code, String name, String indig, String nonindig, String total, String propIndig, String propNon, String gap) {
         this.code = code; 
         this.name = name; 
         this.indig = indig; 
         this.nonindig = nonindig; 
-        this.nonstated = nonstated; 
+        this.propIndig = propIndig; 
+        this.propNon = propNon; 
         this.total = total; 
         this.gap = gap; 
-        this.proportional = proportional; 
     }
 
     public String getCode() {
@@ -42,21 +41,22 @@ public class Table {
         return nonindig;
     }
 
-    public String getNonstated() {
-        return nonstated;
-    }
-
     public String getTotal() {
         return total;
+    }
+
+    public String getPropIndig() {
+        return propIndig;
+    }
+
+    public String getPropNon() {
+        return propNon;
     }
     
     public String getGap() {
         return gap;
     }
 
-    public String getProportional() {
-        return proportional;
-    }
 
 
 

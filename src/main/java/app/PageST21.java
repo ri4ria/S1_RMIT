@@ -236,10 +236,16 @@ public class PageST21 implements Handler {
                         <option>sort.code DESC</option>
                         <option>sort.indig ASC</option>
                         <option>sort.indig DESC</option>
+                        <option>sort.nonindig ASC</option>
+                        <option>sort.nonindig DESC</option>
+                        <option>sort.total ASC</option>
+                        <option>sort.total DESC</option>
+                        <option>sort.propIndig ASC</option>
+                        <option>sort.propIndig DESC</option>
+                        <option>sort.propNon ASC</option>
+                        <option>sort.propNon DESC</option>
                         <option>sort.gap ASC</option>
                         <option>sort.gap DESC</option>
-                        <option>sort.proportional ASC</option>
-                        <option>sort.proportional DESC</option>
                     </select>
             </div>
             </fieldset> 

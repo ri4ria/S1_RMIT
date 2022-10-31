@@ -174,28 +174,6 @@
                                 <option th:each='year : ${schoolYears}' th:text='${year}' th:value='${year}'></option>
                             </select>
 
-                            <br>
-
-                            <h4>Income Bracket</h4>
-
-                            <select id='incomeBracket' name='incomeBracket'>
-                                <option value=''>Please select...</option>
-                                <option th:each='bracket : ${incomeBrackets}' th:text='${bracket}'
-                                    th:value='${bracket}'>
-                                </option>
-                            </select>
-
-                            <br>
-
-                            <h4>Household Indigenous Status</h4>
-
-                            <select id='householdStatus' name='householdStatus'>
-                                <option value=''>Please select...</option>
-                                <option th:each='status : ${householdStatuses}' th:text='${status}'
-                                    th:value='${status}'>
-                                </option>
-                            </select>
-
                         </fieldset>
 
                     </div>
@@ -206,41 +184,6 @@
             </div>
 
             <div class='introduction-results-wrapper'>
-
-                <div class='introduction'>
-
-                    <h1>Changes between 2016 and 2021 Censuses</h1>
-                    <p>In this section, you can find the difference between 2016 and 2021 datasets. Three datasets are
-                        used:</p>
-                    <div class='listed-dataset-wrapper'>
-                        <div class='listed-dataset'>
-                            <h4>Highest Year of School Completed</h4>
-                            <p>Contains data for the highest year of school completed by Indigenous status and sex.
-                                Tracks persons age 15 years and older who are no longer attending secondary school (by
-                                year level).</p>
-                        </div>
-                        <div class='listed-dataset'>
-                            <h4>Indigenous Status</h4>
-                            <p>Tracks the number of people in the following categories: self-identified as Aboriginal 
-                                and/or Torres Strait Islander; self-identified as non-Indigenous; or, did not state their 
-                                Indigenous status.</p>
-                        </div>
-                        <div class='listed-dataset'>
-                            <h4>Total Weekly Household Income</h4>
-                            <p>Contains data based on total household weekly income by Indigenous status of the household.</p>
-                        </div>
-                    </div>
-                    <p>These datasets are from the 2016 census and 2021 census, from the Australian Bureau of Statistics. For more 
-                        information, visit the <a href = 'http://www.abs.gov.au/census'>data source.</a></p>
-                    <p><b>Disclaimer:</b> This page is not an accurate representation of the final product.</p>
-
-                </div>
-
-                <h1>Results</h1>
-                <p><b>Note: </b>Ranks are based on a 'best to worst' scenario by proportion within the category (e.g., 
-                        the state with the highest proportion of Indigenous people aged over 65 is given rank 1).</p>
-
-                <br>
 
                 <div class='result-section'>
 
@@ -291,113 +234,6 @@
                                 <td th:text='${ranking2021Education}'></td>
                             </tr>
                         </table>
-
-                    </div>
-
-                    <div class='results-section'>
-
-                        <h2 th:text='${titlePopulationResults}'></h2>
-
-                        <h3 th:text='${titleFilterSelections}'></h3>
-
-                        <div class='filter-selections-wrapper'>
-
-                            <div class='filter-selections'>
-                                <!-- <p th:text = '${dataset}'></p> -->
-                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
-                                <p><b>Location</b><br><i th:text='${location}'></i></p>
-                                <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
-                                <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
-                                <p><b>Sex</b><br><i th:text='${sex}'></i></p>
-                                <p><b>Age Group</b><br><i th:text='${age}'></i></p>
-
-                            </div>
-
-                        </div>
-
-                        <div class='results-table'>
-                            <table>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>LGA Name</th>
-                                    <th>State</th>
-                                    <th>LGA Type</th>
-                                    <th>Result</th>
-                                    <th>Rank</th>
-                                </tr>
-                                <tr>
-                                    <td>2016</td>
-                                    <td th:text='${lgaName2016Population}'></td>
-                                    <td th:text='${lgaState2016Population}'></td>
-                                    <td th:text='${lgaType2016Population}'></td>
-                                    <td th:text='${results2016Population}'></td>
-                                    <td th:text='${ranking2016Population}'></td>
-                                </tr>
-                                <tr>
-                                    <td>2021</td>
-                                    <td th:text='${lgaName2021Population}'></td>
-                                    <td th:text='${lgaState2021Population}'></td>
-                                    <td th:text='${lgaType2021Population}'></td>
-                                    <td th:text='${results2021Population}'></td>
-                                    <td th:text='${ranking2021Population}'></td>
-                                </tr>
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                    <div class='results-section'>
-
-                        <h2 th:text='${titleIncomeResults}'></h2>
-
-                        <h3 th:text='${titleFilterSelections}'></h3>
-
-                        <div class='filter-selections-wrapper'>
-
-                            <div class='filter-selections'>
-                                <!-- <p th:text = '${dataset}'></p> -->
-                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
-                                <p><b>Location</b><br><i th:text='${location}'></i></p>
-                                <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
-                                <!-- <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p> -->
-                                <p><b>Income Bracket</b><br><i th:text='${incomeBracket}'></i></p>
-                                <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i>
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div class='results-table'>
-                            <table>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>LGA Name</th>
-                                    <th>State</th>
-                                    <th>LGA Type</th>
-                                    <th>Result</th>
-                                    <th>Rank</th>
-                                </tr>
-                                <tr>
-                                    <td>2016</td>
-                                    <td th:text='${lgaName2016Income}'></td>
-                                    <td th:text='${lgaState2016Income}'></td>
-                                    <td th:text='${lgaType2016Income}'></td>
-                                    <td th:text='${results2016Income}'></td>
-                                    <td th:text='${ranking2016Income}'></td>
-                                </tr>
-                                <tr>
-                                    <td>2021</td>
-                                    <td th:text='${lgaName2021Income}'></td>
-                                    <td th:text='${lgaState2021Income}'></td>
-                                    <td th:text='${lgaType2021Income}'></td>
-                                    <td th:text='${results2021Income}'></td>
-                                    <td th:text='${ranking2021Income}'></td>
-                                </tr>
-                            </table>
-
-                        </div>
 
                     </div>
 

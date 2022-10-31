@@ -53,15 +53,7 @@ public class PageST22Education implements Handler {
         ArrayList<String> years = jdbc.getHighSchoolYears();
         model.put("schoolYears", years);
 
-        // Retrieving income brackets for dropdown list
-        ArrayList<String> brackets = jdbc.getIncomeBrackets();
-        model.put("incomeBrackets", brackets);
-
-        // Retrieving household indigenous statuses for dropdown list
-        ArrayList<String> householdStatuses = jdbc.getHouseholdIndigenousStatuses();
-        model.put("householdStatuses", householdStatuses);
-
-        String dataset = context.formParam("dataset"); // dataset
+        // Retrieving user's filter selections
         String locationType = context.formParam("locationType"); // LGA or state
         String location = context.formParam("location"); // location filter
         String valueType = context.formParam("valueType"); // raw or proportional
@@ -69,12 +61,8 @@ public class PageST22Education implements Handler {
         String sex = context.formParam("sex");
         String age = context.formParam("age");
         String highestSchoolYearCompleted = context.formParam("highestSchoolYearCompleted");
-        String incomeBracket = context.formParam("incomeBracket");
-        String householdIndigenousStatus = context.formParam("householdStatus");
 
-        // System.out.println(dataset);
-
-        model.put("dataset", dataset);
+        // Printing back the user's selections
         model.put("locationType", locationType);
         model.put("location", location);
         model.put("valueType", valueType);
@@ -82,8 +70,6 @@ public class PageST22Education implements Handler {
         model.put("sex", sex);
         model.put("age", age);
         model.put("highestSchoolYearCompleted", highestSchoolYearCompleted);
-        model.put("incomeBracket", incomeBracket);
-        model.put("householdIndigenousStatus", householdIndigenousStatus);
 
         // TODO: add another if-else statement to add 'Error' messages for missing input
 
@@ -120,75 +106,6 @@ public class PageST22Education implements Handler {
             model.put("ranking2021Education", results.getRank2021());
         } else {
             model.put("titleEducationResults", new String("No Results for Highest Year of School Completed Data"));
-            model.put("titleFilterSelections", new String("No Filter Options Selected"));
-        }
-
-        if (locationType != null & location != null & valueType != null & indigenousStatus != null & sex != null & age != null) {
-            model.put("titlePopulationResults", new String("2016 vs. 2021 Indigenous Status Data for " + location));
-            model.put("titleFilterSelections", new String("Filter Selections"));
-
-            ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
-            model.put("lgaCodePopulation", results.getLGACode());
-            model.put("lgaName2016Population", results.getLGAName2016());
-            model.put("lgaState2016Population", results.getLGAState2016());
-            model.put("lgaType2016Population", results.getLGAType2016());
-            model.put("lgaName2021Population", results.getLGAName2021());
-            model.put("lgaState2021Population", results.getLGAState2021());
-            model.put("lgaType2021Population", results.getLGAType2021());
-
-            DecimalFormat df = new DecimalFormat("#.##");
-            float result2016 = results.getResult2016();
-            float result2021 = results.getResult2021();
-            if (result2016 > 1.0) {
-                model.put("results2016Population", results.getResult2016());
-                model.put("results2021Population", results.getResult2021());
-            } else if (result2016 < 1.0) {
-                result2016 = result2016 * 100;
-                result2021 = result2021 * 100;
-                String result2016P = df.format(result2016);
-                String result2021P = df.format(result2021);
-                model.put("results2016Population", result2016P + "%");
-                model.put("results2021Population", result2021P + "%");
-            }
-
-            model.put("ranking2016Population", results.getRank2016());
-            model.put("ranking2021Population", results.getRank2021());
-        } else {
-            model.put("titlePopulationResults", new String("No Results for Indigenous Status Data"));
-            model.put("titleFilterSelections", new String("No Filter Options Selected"));
-        }
-
-        if (locationType != null & location != null & valueType != null & householdIndigenousStatus != null & incomeBracket != null) {
-            model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data for " + location));
-            model.put("titleFilterSelections", new String("Filter Selections"));
-            ST22Results results = jdbc.getST22IncomeResults(locationType, location, valueType, householdIndigenousStatus, incomeBracket);
-            model.put("lgaCode", results.getLGACode());
-            model.put("lgaName2016Income", results.getLGAName2016());
-            model.put("lgaState2016Income", results.getLGAState2016());
-            model.put("lgaType2016Income", results.getLGAType2016());
-            model.put("lgaName2021Income", results.getLGAName2021());
-            model.put("lgaState2021Income", results.getLGAState2021());
-            model.put("lgaType2021Income", results.getLGAType2021());
-
-            DecimalFormat df = new DecimalFormat("#.##");
-            float result2016 = results.getResult2016();
-            float result2021 = results.getResult2021();
-            if (result2016 > 1.0) {
-                model.put("results2016Income", results.getResult2016());
-                model.put("results2021Income", results.getResult2021());
-            } else if (result2016 < 1.0) {
-                result2016 = result2016 * 100;
-                result2021 = result2021 * 100;
-                String result2016P = df.format(result2016);
-                String result2021P = df.format(result2021);
-                model.put("results2016Income", result2016P + "%");
-                model.put("results2021Income", result2021P + "%");
-            }
-
-            model.put("ranking2016Income", results.getRank2016());
-            model.put("ranking2021Income", results.getRank2021());
-        } else {
-            model.put("titleIncomeResults", new String("No Results for Total Weekly Household Income Data"));
             model.put("titleFilterSelections", new String("No Filter Options Selected"));
         }
 

@@ -355,25 +355,25 @@ public class PageST21 implements Handler {
 
                     String sort_drop = context.formParam("sort_drop");
 
-                    if (condition_drop != null) {
+                    if (condition_drop != null && !condition_drop.equalsIgnoreCase("select")) {
                         html = html + outputDataByHealthCond(condition_drop, sort_drop);
                         } else {
                         html = html + "<h2><i>No results to show for Outcome 1: Health conditions</i></h2>";
                         }
-                    
-                        if (age_drop != null) {
+
+                        if (age_drop != null && !age_drop.equalsIgnoreCase("select")) {
                             html = html + outputDataByAge(age_drop, sort_drop);
                             } else {
                             html = html + "<h2><i>No results to show for Outcome 1: Population by age</i></h2>";
                             }
 
-                            if (school_drop != null) {
+                            if (school_drop != null && !school_drop.equalsIgnoreCase("select")) {
                                 html = html + outputDataBySchool(school_drop, sort_drop);
                                 } else {
                                 html = html + "<h2><i>No results to show for Outcome 5: Highest year of shcooling</i></h2>";
                                 }
 
-                                if (income_drop != null) {
+                                if (income_drop != null && !income_drop.equalsIgnoreCase("select")) {
                                     html = html + outputDataByIncome(income_drop, sort_drop) ;
                                     } else {
                                     html = html + "<h2><i>No results to show for Outcome 8: Weekely household income</i></h2>";
@@ -629,7 +629,11 @@ public class PageST21 implements Handler {
     public String outputDataByIncome(String selectedIncome, String sort) {
         String html = "";
         html = html + "<h2>Population of households with a weekly household income of: $" + selectedIncome + "</h2>";
-        html = html + "<h2> Sort type used: " + sort + "</h2>";
+        html = html + "<h3> Sort type used: " + sort + "</h3>";
+        html = html + "<h5>A '+' gap score indicates: portion of indigenous population >  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
+        html = html + "<h5>A '-' gap score indicates: portion of indigenous population <  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
+        html = html + "<h5>A '0' gap score indicates the gap between the communities earning weekly household income of $" + selectedIncome + " is small for a given LGA</h5>";
+
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();

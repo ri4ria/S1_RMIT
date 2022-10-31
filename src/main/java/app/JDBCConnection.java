@@ -2835,52 +2835,69 @@ public class JDBCConnection {
             // The Query
             String query =
 
-                    /*
-                     * "SELECT EducationStatistics.lga_code AS 'LGA', SUM(EducationStatistics.Count) AS 'raw values' "
-                     * ;
-                     * query += "FROM EducationStatistics ";
-                     * query +=
-                     * "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig' "
-                     * ;
-                     * query += "AND EducationStatistics.highest_school_year = '" + selectedSchool +
-                     * "' AND EducationStatistics.count > 0 ";
-                     * query += "GROUP BY EducationStatistics.lga_code;";
-                     */
+            /* 
+                "SELECT EducationStatistics.lga_code AS 'LGA', SUM(EducationStatistics.Count) AS 'raw values' ";
+                query += "FROM EducationStatistics "; 
+                query += "WHERE EducationStatistics.lga_year = '2021'AND EducationStatistics.indigenous_status = 'indig' ";
+                query += "AND EducationStatistics.highest_school_year = '" + selectedSchool + "' AND EducationStatistics.count > 0 ";
+                query += "GROUP BY EducationStatistics.lga_code;";
+            
 
-                    "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.nonstated AS 'nonstated', sort.total AS 'total', sort.gap AS 'gap', sort.proportional AS 'proportional' ";
-            query += "FROM (SELECT Ef1.lga_code AS 'code', L.name AS 'name',  (Ef1.count + Ef2.count) AS 'indig', sc.nonindig AS 'nonindig', sc1.nonstated AS 'nonstated', ";
-            query += "(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated) AS 'total', ";
-            query += "(Ef1.count + Ef2.count - sc.nonindig) AS 'gap', ";
-            query += "((Ef1.count + Ef2.count) *100/(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated)) AS 'proportional' ";
-            query += "FROM EducationStatistics AS Ef1 ";
-            query += "OUTER LEFT JOIN EducationStatistics AS Ef2 ";
-            query += "JOIN (SELECT lga.lga_code AS code, lga.lga_name AS name ";
-            query += "FROM Lga WHERE LGA.lga_year = '2021') AS L ";
-            query += "ON L.code = Ef1.lga_code ";
-            query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonstated ";
-            query += "FROM EducationStatistics AS Ef1 ";
-            query += "OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
-            query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
-            query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '"
-                    + selectedSchool + "' ";
-            query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' ";
-            query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
-            query += "AND Ef1.lga_code = Ef2.lga_code ";
-            query += "GROUP BY Ef1.lga_code) AS sc1 ON sc1.code = Ef1.lga_code ";
-            query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig ";
-            query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
-            query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
-            query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '"
-                    + selectedSchool + "' ";
-            query += "AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
-            query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code ";
-            query += "GROUP BY Ef1.lga_code) as sc on sc.code = Ef1.lga_code ";
-            query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
-            query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '"
-                    + selectedSchool + "' ";
-            query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' ";
-            query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
-            query += "ORDER BY " + sort + ";";
+                "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.nonstated AS 'nonstated', sort.total AS 'total', sort.gap AS 'gap', sort.proportional AS 'proportional' ";
+                query += "FROM (SELECT Ef1.lga_code AS 'code', L.name AS 'name',  (Ef1.count + Ef2.count) AS 'indig', sc.nonindig AS 'nonindig', sc1.nonstated AS 'nonstated', ";
+                query += "(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated) AS 'total', ";
+                query += "(Ef1.count + Ef2.count - sc.nonindig) AS 'gap', ";
+                query += "((Ef1.count + Ef2.count) *100/(Ef1.count + Ef2.count + sc.nonindig + sc1.nonstated)) AS 'proportional' ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 ";
+                query += "JOIN (SELECT lga.lga_code AS code, lga.lga_name AS name ";
+                query += "FROM Lga WHERE LGA.lga_year = '2021') AS L ";
+                query += "ON L.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonstated ";
+                query += "FROM EducationStatistics AS Ef1 ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+                query += "AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) AS sc1 ON sc1.code = Ef1.lga_code ";
+                query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig ";
+                query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 WHERE ";
+                query += "Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code ";
+                query += "GROUP BY Ef1.lga_code) as sc on sc.code = Ef1.lga_code ";
+                query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+                query += "ORDER BY " + sort + ";";
+                */
+
+                "SELECT sort.code AS 'code', sort.name AS 'name', printf('%,d', sort.indig) AS 'indig', printf('%,d', sort.nonindig) AS 'nonindig', printf('%,d', sort.total) AS 'total', printf('%d%%', sort.propIndig) AS 'propIndig', printf('%d%%', sort.propNon) AS 'propNon', sort.gap AS 'gap' ";
+                query += "FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, ";
+                query += "(Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, ";
+                query += "(((Ef1.count + Ef2.count)*100)/ed.tindig) AS propIndig, (s.nonindig*100/s.tnon) AS propNon,((((Ef1.count + Ef2.count)*100)/ed.tindig)-(s.nonindig*100/s.tnon)) AS gap ";
+                query += "FROM EducationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name FROM LGA ";
+                query += "WHERE LGA.lga_year = '2021') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated ";
+                query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnotstated ";
+                query += "FROM EducationStatistics AS E WHERE E.indigenous_status = 'indig_stat_notstated' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ";
+                query += "ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' ";
+                query += "AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' AND Ef1.sex = 'f' AND Ef2.sex = 'm' ";
+                query += "AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code ";
+                query += "OUTER LEFT JOIN EducationStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon ";
+                query += "FROM EducationStatistics AS Ef1 OUTER LEFT JOIN EducationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tnon ";
+                query += "FROM EducationStatistics AS E WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2021' ";
+                query += "GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' ";
+                query += "AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool + "' AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' ";
+                query += "AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code ";
+                query += "JOIN (SELECT E.lga_code AS code,  SUM(E.count) AS tindig FROM EducationStatistics AS E ";
+                query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code ";
+                query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool +"' ";
+                query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
+                query += "ORDER BY " + sort + ";";
 
             System.out.println(query);
 
@@ -2904,21 +2921,22 @@ public class JDBCConnection {
                  * schoolData.add(result);
                  */
 
-                // QUERY FOR TABLE - look up the columns we need
-                String code = String.valueOf(results.getString("code"));
-                String name = results.getString("name");
-                String indig = results.getString("indig");
-                String nonindig = results.getString("nonindig");
-                String nonstated = results.getString("nonstated");
-                String total = results.getString("total");
-                String gap = results.getString("gap");
-                String proportional = String.valueOf(results.getString("proportional"));
+                  //QUERY FOR TABLE - look up the columns we need 
+                  String code =  String.valueOf(results.getString("code"));
+                  String name =  results.getString("name");
+                  String indig =  results.getString("indig");
+                  String nonindig =  results.getString("nonindig");
+                  String total =  results.getString("total");
+                  String propIndig =  results.getString("propIndig");
+                  String propNon =  results.getString("propNon");
+                  String gap =  results.getString("gap");
+                  
 
-                // create object for table class
-                Table tableSchool = new Table(code, name, indig, nonindig, nonstated, total, gap, proportional);
-
-                // add object to the array
-                schoolData.add(tableSchool);
+                  //create object for table class
+                  Table tableSchool = new Table(code, name, indig, nonindig, total, propIndig, propNon, gap);
+                  
+                  //add object to the array 
+                  schoolData.add(tableSchool);
 
             }
 
@@ -3010,59 +3028,46 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-
-            String query =
-                    /*
-                     * "SELECT incomedata.code AS 'cod', LGA.lga_name AS 'nam', incomedata.indig AS 'indi', incomedata.nonindig AS 'nonindi', incomedata.gap AS 'gap', incomedata.total AS 'total', incomedata.proportional AS 'prop' "
-                     * ;
-                     * query += "FROM LGA ";
-                     * query +=
-                     * "JOIN (SELECT H1.lga_code AS code, H1.count AS 'indig', HIgap.nonindig AS 'nonindig', H2.count AS 'total', HIgap.gap AS 'gap', printf('%d%%', H1.count*100/H2.count) AS 'proportional' "
-                     * ;
-                     * query += "FROM HouseholdStatistics H1 ";
-                     * query += "OUTER LEFT JOIN HouseholdStatistics H2 ";
-                     * query +=
-                     * "JOIN (SELECT *, SUM(H1.count), SUM(H2.count) AS 'nonindig', (H1.count - H2.count) AS gap "
-                     * ;
-                     * query += "FROM HouseholdStatistics H1 ";
-                     * query += "OUTER LEFT JOIN HouseholdStatistics H2 ";
-                     * query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
-                     * query += "AND H1.income_bracket = '" + selectedIncome +
-                     * "' AND H2.income_bracket ='" + selectedIncome
-                     * + "' ";
-                     * query +=
-                     * "AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%other%' "
-                     * ;
-                     * query += "AND H1.lga_code = H2.lga_code ";
-                     * query += "GROUP BY H1.lga_Code) AS HIgap ";
-                     * query += "ON HIgap.lga_code = H2.lga_code ";
-                     * query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
-                     * query += "AND H1.income_bracket = '" + selectedIncome +
-                     * "' AND H2.income_bracket ='" + selectedIncome
-                     * + "' ";
-                     * query +=
-                     * "AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%total%' "
-                     * ;
-                     * query += "AND H1.lga_code = H2.lga_code ";
-                     * query += "GROUP BY H1.lga_Code) AS incomedata ";
-                     * query += "WHERE incomedata.code = LGA.lga_code ";
-                     * query += "AND LGA.lga_year = '2021' ";
-                     * query += "AND incomedata.indig > 0 ";
-                     * query += "AND incomedata.indig <= incomedata.total;";
-                     */
-                    "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.total AS 'total', ";
-            query += "printf('%d%%', sort.propIndig) AS 'propIndig', printf('%d%%', sort.propNonindig) AS 'propNon', sort.gap AS 'gap' ";
+            
+            String query = 
+            /* "SELECT incomedata.code AS 'cod', LGA.lga_name AS 'nam', incomedata.indig AS 'indi', incomedata.nonindig AS 'nonindi', incomedata.gap AS 'gap', incomedata.total AS 'total', incomedata.proportional AS 'prop' ";
+            query += "FROM LGA ";
+            query += "JOIN (SELECT H1.lga_code AS code, H1.count AS 'indig', HIgap.nonindig AS 'nonindig', H2.count AS 'total', HIgap.gap AS 'gap', printf('%d%%', H1.count*100/H2.count) AS 'proportional' ";
+            query += "FROM HouseholdStatistics H1 ";
+            query += "OUTER LEFT JOIN HouseholdStatistics H2 ";
+            query += "JOIN (SELECT *, SUM(H1.count), SUM(H2.count) AS 'nonindig', (H1.count - H2.count) AS gap ";
+            query += "FROM HouseholdStatistics H1 ";
+            query += "OUTER LEFT JOIN HouseholdStatistics H2 ";
+            query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
+            query += "AND H1.income_bracket = '" + selectedIncome + "' AND H2.income_bracket ='" + selectedIncome
+                    + "' ";
+            query += "AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%other%' ";
+            query += "AND H1.lga_code = H2.lga_code ";
+            query += "GROUP BY H1.lga_Code) AS HIgap ";
+            query += "ON HIgap.lga_code = H2.lga_code ";
+            query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' ";
+            query += "AND H1.income_bracket = '" + selectedIncome + "' AND H2.income_bracket ='" + selectedIncome
+                    + "' ";
+            query += "AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%total%' ";
+            query += "AND H1.lga_code = H2.lga_code ";
+            query += "GROUP BY H1.lga_Code) AS incomedata ";
+            query += "WHERE incomedata.code = LGA.lga_code ";
+            query += "AND LGA.lga_year = '2021' ";
+            query += "AND incomedata.indig > 0 ";
+            query += "AND incomedata.indig <= incomedata.total;";
+            */
+            "SELECT sort.code AS 'code', sort.name AS 'name', sort.indig AS 'indig', sort.nonindig AS 'nonindig', sort.total AS 'total', ";
+            query += "printf('%.2f%', sort.propIndig) AS 'propIndig', printf('%.2f%', sort.propNonindig) AS 'propNon', (printf('%.0f', sort.gap)* 100) AS 'gap' ";
             query += "FROM (SELECT H1.lga_code AS code, L.name AS name, H1.count AS indig, ho.unstatedTotal AS total, hh.nonindig AS nonindig, ";
-            query += "SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, (H1.count * 100/ H2.count) AS propIndig, hh.proNon AS propNonindig, ";
-            query += "((H1.count * 100/ H2.count)-hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name ";
+            query += "SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, ((H1.count * 1.0/ SUM(H2.count))*100) AS propIndig, hh.proNon AS propNonindig, ";
+            query += "(((H1.count * 1.0/ SUM(H2.count))*100)-hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name ";
             query += "FROM LGA WHERE LGA.lga_year = '2021') AS L ON L.lga_code = H1.lga_code JOIN (SELECT H1.lga_code AS code, H1.count AS unstatedTotal, ";
             query += "SUM(H2.count) AS tunstatedLGA, (H1.count * 100/ H2.count) AS proUn FROM HouseholdStatistics H1 LEFT OUTER JOIN HouseholdStatistics H2 ";
             query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome
                     + "' AND H1.indigenous_status LIKE '%total%' AND ";
             query += "H2.indigenous_status LIKE '%total%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) AS ho ON ho.code = H1.lga_code ";
-            query += "JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, (H1.count * 100/ H2.count) AS proNon FROM HouseholdStatistics H1 ";
-            query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '"
-                    + selectedIncome + "' AND H1.indigenous_status LIKE '%other%' AND ";
+            query += "JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, ((H1.count * 1.0/ SUM(H2.count))*100) AS proNon FROM HouseholdStatistics H1 ";
+            query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome + "' AND H1.indigenous_status LIKE '%other%' AND ";
             query += "H2.indigenous_status LIKE '%other%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) AS hh ON hh.lga_code = H1.lga_code ";
             query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '"
                     + selectedIncome + "' AND ";

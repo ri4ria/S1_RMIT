@@ -13,6 +13,7 @@ body {
    background: #fff;
    width: 1750px; /* width of webpage fixed to 1750px */
    margin: 0 auto; /* keeps webpage centred in browser window */
+   font-size: 20px;
 }
 
 /* Round the edges of the image https://www.w3schools.com/howto/howto_css_rounded_images.asp */
@@ -23,6 +24,7 @@ img {
 }
 
 /* Header (div) formatting */
+/* background image source: https://as2.ftcdn.net/v2/jpg/00/57/82/37/1000_F_57823751_4tIbjZhzCQDlw69XmatOIEHdFpUsOHTI.jpg */
 .header {
    padding: 10px;
    background-color: #cccccc;
@@ -32,6 +34,7 @@ img {
    justify-content: center;
    text-align: center;
    background-image: url('https://as2.ftcdn.net/v2/jpg/00/57/82/37/1000_F_57823751_4tIbjZhzCQDlw69XmatOIEHdFpUsOHTI.jpg');
+
 }
 
 .header h1 {
@@ -377,7 +380,7 @@ img.top-image {
    margin-top: 10px;
    margin-left: 0px;
    margin-right: 0px;
-   font-size: 15px;
+   font-size: 16px;
 }
 
 /* https://www.w3schools.com/css/css3_buttons.asp */
@@ -387,7 +390,7 @@ img.top-image {
    border: none;
    color: #FFFFFF;
    text-align: center;
-   font-size: 15px;
+   font-size: 18px;
    font-family: Karla;
    font-weight: bold;
    transition: 0.4s;

@@ -42,6 +42,9 @@ public class App {
         app.get(PageMission.URL, new PageMission());
         app.get(PageST21.URL, new PageST21());
         app.get(PageST22.URL, new PageST22());
+        app.get(PageST22Education.URL, new PageST22Education());
+        app.get(PageST22Status.URL, new PageST22Status());
+        app.get(PageST22Income.URL, new PageST22Income());
         app.get(PageST31.URL, new PageST31());
         app.get(PageST32.URL, new PageST32());
         app.get(PageResources.URL, new PageResources());
@@ -51,6 +54,9 @@ public class App {
         // app.post(PageMission.URL, new PageMission());
         app.post(PageST21.URL, new PageST21());
         app.post(PageST22.URL, new PageST22());
+        app.post(PageST22Education.URL, new PageST22Education());
+        app.post(PageST22Status.URL, new PageST22Status());
+        app.post(PageST22Income.URL, new PageST22Income());
         app.post(PageST31.URL, new PageST31());
         // app.post(PageST32.URL, new PageST32());
         // app.post(PageResources.URL, new PageResources());

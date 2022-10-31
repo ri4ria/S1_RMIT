@@ -236,9 +236,13 @@
 
                 </div>
 
+                <h1>Results</h1>
+                <p><b>Note: </b>Ranks are based on a 'best to worst' scenario by proportion within the category (e.g., 
+                        the state with the highest proportion of Indigenous people aged over 65 is given rank 1.</p>
+
                 <div class='result-section'>
 
-                    <h1 th:text='${titleEducationResults}'></h1>
+                    <h2 th:text='${titleEducationResults}'></h2>
 
                     <h3 th:text='${titleFilterSelections}'></h3>
 
@@ -246,12 +250,12 @@
 
                         <div class='filter-selections'>
                             <!-- <p th:text = '${dataset}'></p> -->
-                            <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
+                            <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
                             <p><b>Location</b><br><i th:text='${location}'></i></p>
                             <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
                             <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
                             <p><b>Sex</b><br><i th:text='${sex}'></i></p>
-                            <p><b>Age Group</b><br><i th:text='${age}'></i></p>
+                            <!-- <p><b>Age Group</b><br><i th:text='${age}'></i></p> -->
                             <p><b>School Year Completion</b><br><i th:text='${highestSchoolYearCompleted}'></i></p>
 
                         </div>
@@ -263,7 +267,7 @@
                             <tr>
                                 <th>Year</th>
                                 <th>LGA Name</th>
-                                <th>LGA State</th>
+                                <th>State</th>
                                 <th>LGA Type</th>
                                 <th>Result</th>
                                 <th>Rank</th>
@@ -290,7 +294,7 @@
 
                     <div class='results-section'>
 
-                        <h1 th:text='${titlePopulationResults}'></h1>
+                        <h2 th:text='${titlePopulationResults}'></h2>
 
                         <h3 th:text='${titleFilterSelections}'></h3>
 
@@ -298,7 +302,7 @@
 
                             <div class='filter-selections'>
                                 <!-- <p th:text = '${dataset}'></p> -->
-                                <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
+                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
                                 <p><b>Location</b><br><i th:text='${location}'></i></p>
                                 <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
                                 <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
@@ -314,7 +318,7 @@
                                 <tr>
                                     <th>Year</th>
                                     <th>LGA Name</th>
-                                    <th>LGA State</th>
+                                    <th>State</th>
                                     <th>LGA Type</th>
                                     <th>Result</th>
                                     <th>Rank</th>
@@ -343,7 +347,7 @@
 
                     <div class='results-section'>
 
-                        <h1 th:text='${titleIncomeResults}'></h1>
+                        <h2 th:text='${titleIncomeResults}'></h2>
 
                         <h3 th:text='${titleFilterSelections}'></h3>
 
@@ -351,10 +355,10 @@
 
                             <div class='filter-selections'>
                                 <!-- <p th:text = '${dataset}'></p> -->
-                                <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
+                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
                                 <p><b>Location</b><br><i th:text='${location}'></i></p>
                                 <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
-                                <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
+                                <!-- <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p> -->
                                 <p><b>Income Bracket</b><br><i th:text='${incomeBracket}'></i></p>
                                 <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i>
                                 </p>
@@ -368,7 +372,7 @@
                                 <tr>
                                     <th>Year</th>
                                     <th>LGA Name</th>
-                                    <th>LGA State</th>
+                                    <th>State</th>
                                     <th>LGA Type</th>
                                     <th>Result</th>
                                     <th>Rank</th>

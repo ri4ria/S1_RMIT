@@ -380,6 +380,28 @@ img.top-image {
    font-size: 15px;
 }
 
+/* https://www.w3schools.com/css/css3_buttons.asp */
+.dataset-button {
+   border-radius: 10px;
+   background-color: #2B8A9E;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   font-size: 15px;
+   font-family: Karla;
+   font-weight: bold;
+   transition: 0.4s;
+   cursor: pointer;
+   margin-top: 10px;
+   margin-bottom: 15px;
+   width: 350px;
+   height: 60px;
+}
+
+.dataset-button:hover {
+   background-color: #5ABED2;
+}
+
 .filter-button {
    background-color: #2B8A9E;
    border-style: solid;

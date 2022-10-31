@@ -73,7 +73,9 @@ public class PageST22Status implements Handler {
             html = html + "<p>Please make a selection for <b>each</b> filter option.</p>";
             html = html + "</div>"; // 'results-section' closing tag
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
+
             model.put("htmlToInject", html);
+
        } else if (locationType == null || location == null & valueType == null || indigenousStatus == null || sex == null || age == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
@@ -81,7 +83,9 @@ public class PageST22Status implements Handler {
             html = html + "<p style = 'color: #CA3732'><b>Not all required filter selections were made.</b></p>";
             html = html + "</div>"; // 'results-section' closing tag
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
+
             model.put("htmlToInject", html);
+
        } else if (locationType != null && location != null && valueType != null && indigenousStatus != null && sex != null && age != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<h1>2016 vs 2021 Data for Indigenous Status Data</h1>";
@@ -98,6 +102,7 @@ public class PageST22Status implements Handler {
 
             ST22Results results = jdbc.getST22PopulationResults(locationType, location, valueType, indigenousStatus, sex, age);
 
+            // Processing proportional values
             DecimalFormat df = new DecimalFormat("#.##");
             float result2016 = results.getResult2016();
             float result2021 = results.getResult2021();
@@ -151,8 +156,5 @@ public class PageST22Status implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);
-
-    }
-
-    
+    }    
 }

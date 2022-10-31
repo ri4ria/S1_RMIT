@@ -319,7 +319,7 @@ public class PageST21 implements Handler {
 
         html = html + """  
         <!-- Submit Button-->
-            <button type='submit' class='btn'>Compare LGAs</button>
+            <button type='submit' class='filter-button'>Compare LGAs</button>
         </form>
     </div>
                 """;

@@ -53,6 +53,7 @@ public class PageST22Status implements Handler {
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Indigenous Status Data</h1>";
             html = html + "<p>Please make a selection for <b>each</b> filter option.</p>";
+            html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'results-section' closing tag
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
@@ -63,6 +64,7 @@ public class PageST22Status implements Handler {
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Indigenous Status Data</h1>";
             html = html + "<p style = 'color: #CA3732'><b>Not all required filter selections were made.</b></p>";
+            html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'results-section' closing tag
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
@@ -130,6 +132,7 @@ public class PageST22Status implements Handler {
             html = html + "</table>";
             html = html + "</div>"; // 'results-table' closing tag
             html = html + "<a href = '/page4_Status.html'><button class = 'reset-button'>Reset Filters</button></a>";
+            html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
             model.put("htmlToInject", html);

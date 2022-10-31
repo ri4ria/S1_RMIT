@@ -54,7 +54,7 @@ public class PageST22Income implements Handler {
                 && householdIndigenousStatus == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
-            html = html + "<h1>No Results for Total Weekly Household Income</h1>";
+            html = html + "<h1>No Results for Total Weekly Household Income Data</h1>";
             html = html + "<p>Please make a selection for <b>each</b> filter option.</p>";
             html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'results-section' closing tag
@@ -66,7 +66,7 @@ public class PageST22Income implements Handler {
                 || householdIndigenousStatus == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
-            html = html + "<h1>No Results for Total Weekly Household Income</h1>";
+            html = html + "<h1>No Results for Total Weekly Household Income Data</h1>";
             html = html + "<p style = 'color: #CA3732'><b>Not all required filter selections were made.</b></p>";
             html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'results-section' closing tag

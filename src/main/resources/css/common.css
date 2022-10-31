@@ -331,6 +331,10 @@ img.top-image {
    margin-top: 50px;
 }
 
+.results-section h3 {
+   margin-bottom: 0px;
+}
+
 .introduction {
    display: inline-block;
    margin-bottom: 75px;

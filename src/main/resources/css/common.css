@@ -268,14 +268,10 @@ img.top-image {
 }
 
 /* filter sidebar and table styling */
-.sidebar-results-wrapper {
-   display: flex;
-}
 
-/* .filter-sidebar {
+.filter-sidebar {
    display: inline-block; 
-   width: 250px;
-} */
+} 
 
 .filter-sidebar fieldset {
    background-color: #F0E7D4;
@@ -331,11 +327,22 @@ img.top-image {
 }
 
 .results-section {
+   display: inline-block;
    margin-top: 100px;
 }
 
 .introduction {
+   display: inline-block;
    margin-bottom: 75px;
+}
+
+.flex-tester {
+   display: flex;
+   align-items: flex-start;
+}
+
+.introduction-results-wrapper {
+   margin-left: 50px;
 }
 
 .filter-button {

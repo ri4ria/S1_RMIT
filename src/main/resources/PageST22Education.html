@@ -1,0 +1,437 @@
+<html>
+
+<head>
+    <title>Subtask 2.2 Education</title>
+    <link rel='stylesheet' type='text/css' href='common.css' />
+</head>
+
+<body>
+    <div class='topnav'>
+        <img class='topnav-logo' src='whitelogo-cropped.png' alt='logo'>
+        <ul>
+            <a href='/'>Home</a>
+            <a href='mission.html'>Mission Statement</a>
+            <div class='dropdown'>
+                <button class='dropbtn'>Data Analyses
+                    <i class='fa fa-caret-down'></i>
+                </button>
+                <div class='dropdown-content'>
+                    <a href='page3.html'>2021 Census Results</a>
+                    <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                    <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                    <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
+                </div>
+            </div>
+            <a href='page7.html'>Resources</a>
+        </ul>
+        <input type='text' placeholder='Search...'>
+    </div>
+    <div class='header'>
+        <h1 th:text='${title}'></h1>
+    </div>
+
+    <div class='content'>
+
+        <!--
+        <form action='/page4.html' method='post'>
+
+            <div class = 'form-group'>
+
+                <fieldset>
+
+                    <button type = 'submit' class = 'btn btn-primary' id = 'EducationStatistics' name = 'dataset' value = 'EducationStatistics'>Highest Year of School Completed</button>
+                    <button type = 'submit' class = 'btn btn-primary' id = 'PopulationStatistics' name = 'dataset' value = 'PopulationStatistics'>Indigenous Status</button>
+                    <button type = 'submit' class = 'btn btn-primary' id = 'HouseholdStatistics' name = 'dataset' value = 'HouseholdStatistics'>Total Weekly Household Income</button>
+
+                </fieldset>
+
+            </div>
+
+        </form>
+        -->
+
+        <div class='flex-tester'>
+
+            <div class='filter-sidebar'>
+
+                <form action='/page4_Education.html' method='post'>
+
+                    <div class='form-group'>
+
+                        <fieldset>
+
+                            <legend>LGA/State</legend>
+
+                            <ul style='list-style-type: none;'>
+                                <!--TODO: find a way to implement this in external CSS stylesheet-->
+                                <li>
+                                    <input id='LGA' name='locationType' type='radio' value='LGA'>
+                                    <label for='locatioNType'>LGA</label>
+                                </li>
+                                <li>
+                                    <input id='state' name='locationType' type='radio' value='State'>
+                                    <label for='locationType'>State</label>
+                                </li>
+                            </ul>
+
+                            <br>
+
+                            <!-- <datalist id='locationSuggestions'> -->
+                            <!--TODO: retrieve options from database-->
+                            <!-- <select id ='location' name = 'location'> -->
+                            <select class='form-control' id='location' name='location'>
+                                <option value=''>Please select...</option>
+                                <option th:each='state : ${states}' th:text='${state}' th:value='${state}'></option>
+                                <option th:each='code : ${lgaCodes}' th:text='${code}' th:value='${code}'></option>
+                            </select>
+                            <!-- </datalist> -->
+                            <!-- <input autoComplete='on' list='locationSuggestions'> -->
+
+                        </fieldset>
+
+                    </div>
+
+                    <div class='form-group'>
+
+                        <fieldset>
+
+                            <legend>Value Type</legend>
+
+                            <ul style='list-style-type: none;'>
+                                <!--TODO: find a way to implement this in external CSS stylesheet-->
+                                <li>
+                                    <input id='raw' name='valueType' type='radio' value='Raw'>
+                                    <label for='valueType'>Raw</label>
+                                </li>
+                                <li>
+                                    <input id='proportional' name='valueType' type='radio' value='Proportional'>
+                                    <label for='valueType'>Proportional</label>
+                                </li>
+                            </ul>
+
+                        </fieldset>
+
+                    </div>
+
+                    <div class='form-group'>
+
+                        <fieldset>
+
+                            <legend>Other</legend>
+
+                            <h4>Indigenous Status</h4>
+
+                            <ul style='list-style-type: none;'>
+                                <!--TODO: find a way to implement this in external CSS stylesheet-->
+                                <li>
+                                    <input id='nonIndigenous' name='indigenousStatus' type='radio' value='non_indig'>
+                                    <label for='indigenousStatus'>Non-Indigenous</label>
+                                </li>
+                                <li>
+                                    <input id='indigenous' name='indigenousStatus' type='radio' value='indig'>
+                                    <label for='indigenousStatus'>Indigenous</label>
+                                </li>
+                                <li>
+                                    <input id='notStated' name='indigenousStatus' type='radio' value='indig_ns'>
+                                    <label for='indigenousStatus'>Not Stated</label>
+                                </li>
+                            </ul>
+
+                            <br>
+
+                            <h4>Sex</h4>
+
+                            <ul>
+                                <li>
+                                    <input id='notStated' name='sex' type='radio' value='m'>
+                                    <label for='sex'>Male</label>
+                                </li>
+                                <li>
+                                    <input id='notStated' name='sex' type='radio' value='f'>
+                                    <label for='sex'>Female</label>
+                                </li>
+                            </ul>
+
+                            <br>
+
+                            <h4>Age</h4>
+
+                            <!-- <datalist id='ageSuggestions'> -->
+                            <!--TODO: retrieve options from database-->
+                            <select id='age' name='age'>
+                                <option value=''>Please select...</option>
+                                <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
+                            </select>
+                            <!-- </datalist> -->
+                            <!-- <input autoComplete='on' list='ageSuggestions'> -->
+
+                            <br>
+
+                            <h4>Highest Year of School Completed</h4>
+
+                            <select id='highestSchoolYearCompleted' name='highestSchoolYearCompleted'>
+                                <option value=''>Please select...</option>
+                                <option th:each='year : ${schoolYears}' th:text='${year}' th:value='${year}'></option>
+                            </select>
+
+                            <br>
+
+                            <h4>Income Bracket</h4>
+
+                            <select id='incomeBracket' name='incomeBracket'>
+                                <option value=''>Please select...</option>
+                                <option th:each='bracket : ${incomeBrackets}' th:text='${bracket}'
+                                    th:value='${bracket}'>
+                                </option>
+                            </select>
+
+                            <br>
+
+                            <h4>Household Indigenous Status</h4>
+
+                            <select id='householdStatus' name='householdStatus'>
+                                <option value=''>Please select...</option>
+                                <option th:each='status : ${householdStatuses}' th:text='${status}'
+                                    th:value='${status}'>
+                                </option>
+                            </select>
+
+                        </fieldset>
+
+                    </div>
+
+                    <button type='submit' class='filter-button'>Apply Filters</button>
+
+                </form>
+            </div>
+
+            <div class='introduction-results-wrapper'>
+
+                <div class='introduction'>
+
+                    <h1>Changes between 2016 and 2021 Censuses</h1>
+                    <p>In this section, you can find the difference between 2016 and 2021 datasets. Three datasets are
+                        used:</p>
+                    <div class='listed-dataset-wrapper'>
+                        <div class='listed-dataset'>
+                            <h4>Highest Year of School Completed</h4>
+                            <p>Contains data for the highest year of school completed by Indigenous status and sex.
+                                Tracks persons age 15 years and older who are no longer attending secondary school (by
+                                year level).</p>
+                        </div>
+                        <div class='listed-dataset'>
+                            <h4>Indigenous Status</h4>
+                            <p>Tracks the number of people in the following categories: self-identified as Aboriginal 
+                                and/or Torres Strait Islander; self-identified as non-Indigenous; or, did not state their 
+                                Indigenous status.</p>
+                        </div>
+                        <div class='listed-dataset'>
+                            <h4>Total Weekly Household Income</h4>
+                            <p>Contains data based on total household weekly income by Indigenous status of the household.</p>
+                        </div>
+                    </div>
+                    <p>These datasets are from the 2016 census and 2021 census, from the Australian Bureau of Statistics. For more 
+                        information, visit the <a href = 'http://www.abs.gov.au/census'>data source.</a></p>
+                    <p><b>Disclaimer:</b> This page is not an accurate representation of the final product.</p>
+
+                </div>
+
+                <h1>Results</h1>
+                <p><b>Note: </b>Ranks are based on a 'best to worst' scenario by proportion within the category (e.g., 
+                        the state with the highest proportion of Indigenous people aged over 65 is given rank 1).</p>
+
+                <br>
+
+                <div class='result-section'>
+
+                    <h2 th:text='${titleEducationResults}'></h2>
+
+                    <h3 th:text='${titleFilterSelections}'></h3>
+
+                    <div class='filter-selections-wrapper'>
+
+                        <div class='filter-selections'>
+                            <!-- <p th:text = '${dataset}'></p> -->
+                            <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
+                            <p><b>Location</b><br><i th:text='${location}'></i></p>
+                            <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
+                            <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
+                            <p><b>Sex</b><br><i th:text='${sex}'></i></p>
+                            <!-- <p><b>Age Group</b><br><i th:text='${age}'></i></p> -->
+                            <p><b>School Year Completion</b><br><i th:text='${highestSchoolYearCompleted}'></i></p>
+
+                        </div>
+
+                    </div>
+
+                    <div class='results-table'>
+                        <table>
+                            <tr>
+                                <th>Year</th>
+                                <th>LGA Name</th>
+                                <th>State</th>
+                                <th>LGA Type</th>
+                                <th>Result</th>
+                                <th>Rank</th>
+                            </tr>
+                            <tr>
+                                <td>2016</td>
+                                <td th:text='${lgaName2016Education}'></td>
+                                <td th:text='${lgaState2016Education}'></td>
+                                <td th:text='${lgaType2016Education}'></td>
+                                <td th:text='${results2016Education}'></td>
+                                <td th:text='${ranking2016Education}'></td>
+                            </tr>
+                            <tr>
+                                <td>2021</td>
+                                <td th:text='${lgaName2021Education}'></td>
+                                <td th:text='${lgaState2021Education}'></td>
+                                <td th:text='${lgaType2021Education}'></td>
+                                <td th:text='${results2021Education}'></td>
+                                <td th:text='${ranking2021Education}'></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div class='results-section'>
+
+                        <h2 th:text='${titlePopulationResults}'></h2>
+
+                        <h3 th:text='${titleFilterSelections}'></h3>
+
+                        <div class='filter-selections-wrapper'>
+
+                            <div class='filter-selections'>
+                                <!-- <p th:text = '${dataset}'></p> -->
+                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
+                                <p><b>Location</b><br><i th:text='${location}'></i></p>
+                                <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
+                                <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
+                                <p><b>Sex</b><br><i th:text='${sex}'></i></p>
+                                <p><b>Age Group</b><br><i th:text='${age}'></i></p>
+
+                            </div>
+
+                        </div>
+
+                        <div class='results-table'>
+                            <table>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>LGA Name</th>
+                                    <th>State</th>
+                                    <th>LGA Type</th>
+                                    <th>Result</th>
+                                    <th>Rank</th>
+                                </tr>
+                                <tr>
+                                    <td>2016</td>
+                                    <td th:text='${lgaName2016Population}'></td>
+                                    <td th:text='${lgaState2016Population}'></td>
+                                    <td th:text='${lgaType2016Population}'></td>
+                                    <td th:text='${results2016Population}'></td>
+                                    <td th:text='${ranking2016Population}'></td>
+                                </tr>
+                                <tr>
+                                    <td>2021</td>
+                                    <td th:text='${lgaName2021Population}'></td>
+                                    <td th:text='${lgaState2021Population}'></td>
+                                    <td th:text='${lgaType2021Population}'></td>
+                                    <td th:text='${results2021Population}'></td>
+                                    <td th:text='${ranking2021Population}'></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class='results-section'>
+
+                        <h2 th:text='${titleIncomeResults}'></h2>
+
+                        <h3 th:text='${titleFilterSelections}'></h3>
+
+                        <div class='filter-selections-wrapper'>
+
+                            <div class='filter-selections'>
+                                <!-- <p th:text = '${dataset}'></p> -->
+                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
+                                <p><b>Location</b><br><i th:text='${location}'></i></p>
+                                <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
+                                <!-- <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p> -->
+                                <p><b>Income Bracket</b><br><i th:text='${incomeBracket}'></i></p>
+                                <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class='results-table'>
+                            <table>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>LGA Name</th>
+                                    <th>State</th>
+                                    <th>LGA Type</th>
+                                    <th>Result</th>
+                                    <th>Rank</th>
+                                </tr>
+                                <tr>
+                                    <td>2016</td>
+                                    <td th:text='${lgaName2016Income}'></td>
+                                    <td th:text='${lgaState2016Income}'></td>
+                                    <td th:text='${lgaType2016Income}'></td>
+                                    <td th:text='${results2016Income}'></td>
+                                    <td th:text='${ranking2016Income}'></td>
+                                </tr>
+                                <tr>
+                                    <td>2021</td>
+                                    <td th:text='${lgaName2021Income}'></td>
+                                    <td th:text='${lgaState2021Income}'></td>
+                                    <td th:text='${lgaType2021Income}'></td>
+                                    <td th:text='${results2021Income}'></td>
+                                    <td th:text='${ranking2021Income}'></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div> <!-- introduction-results-wrapper ending tag -->
+
+            </div> <!-- flex-tester ending tag -->
+
+            <!--
+        <ul>
+            <li th:each = 'proportion : ${proportions}' th:text = '${proportion}'></li>
+        </ul>
+        -->
+
+
+        </div>
+    </div>
+
+
+    <div class='footer'>
+        <h3>
+            Acknowledgement of Country
+        </h3>
+        <p id='acknowledgementText'>
+            Group 11 acknowledge and pay respect to Elders, both past and present, and all
+            generations of Aboriginal and Torres Strait <br> Islander People now and into the
+            future as the Traditional Owners of this land.
+        </p>
+        <p id='teamMemberCredit'>
+            COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez
+            (s3922406).
+        </p>
+    </div>
+
+</body>
+
+</html>
+<html>

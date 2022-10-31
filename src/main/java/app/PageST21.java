@@ -103,7 +103,7 @@ public class PageST21 implements Handler {
         // Add instructions on how to use the filters
         html = html + """
                 <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
-                <h2>Select a dataset and then sort the column of your choice in ASC (ascending) or DESC (descending) order using the dropdowns below</h2>
+                <p>Select a dataset and then sort the column of your choice in ASC (ascending) or DESC (descending) order using the dropdowns below</p>
 
         """;
         // Look up some information from JDBC
@@ -162,9 +162,8 @@ public class PageST21 implements Handler {
         */
 
         html = html + """
-        <!-- Dropdown that will only be available if the relevant dataset is selected-->
         <fieldset>
-            <legend>Select and filter one dataset</legend>
+            <legend>Select one dataset</legend>
             <div class='form-group'> 
                 <label for='condition_drop'>Select the Health Condition:</label></br>
                     <select id='condition_drop' name='condition_drop'>
@@ -462,8 +461,9 @@ public class PageST21 implements Handler {
         if (selectedCondition == null) {
             html = html + "<h2><i>Please select from dropbox</i></h2>";
             } else {
-            html = html + "<h2> Population of people with " + selectedCondition + "</h2>";
-            html = html + "<h2> Sort type used: " + sort + "</h2>";
+            html = html + "<h2><i class='selectionBlue'>Outcome 1: Health conditions</i></h2>";
+            html = html + "<h3> Population of people with <i class='selectionBlue'>" + selectedCondition + "</i></h3>";
+            html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
         }
 
         // Look up movies from JDBC
@@ -504,8 +504,9 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByAge(String selectedAge, String sort) {
         String html = "";
-        html = html + "<h2> Population of people that are " + selectedAge + " years old</h2>";
-        html = html + "<h2> Sort type used: " + sort + "</h2>";
+        html = html + "<h2><i class='selectionBlue'>Outcome 1: Population by age</i></h2>";
+        html = html + "<h3> Population of people that are <i class='selectionBlue'>" + selectedAge + "</i> years old</h3>";
+        html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();

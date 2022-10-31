@@ -336,6 +336,7 @@ img.top-image {
    margin-bottom: 75px;
 }
 
+
 .flex-tester {
    display: flex;
    align-items: flex-start;
@@ -343,6 +344,36 @@ img.top-image {
 
 .introduction-results-wrapper {
    margin-left: 50px;
+}
+
+.listed-dataset-wrapper {
+   display: flex;
+   align-content: center;
+   justify-content: center;
+}
+
+.listed-dataset {
+   display: inline-block;
+   text-align: center;
+   background-color: #F0E7D4;
+   border-radius: 15px;
+   border: 1px #BFBFBF;
+   border-style: solid;
+   width: 400px;
+   padding-top: 15px; padding-left: 15px; padding-right: 15px; padding-bottom: 5px;
+   margin: 15px;
+}
+
+.listed-dataset h4 {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+.listed-dataset p {
+   margin-top: 10px;
+   margin-left: 0px;
+   margin-right: 0px;
+   font-size: 15px;
 }
 
 .filter-button {

@@ -210,10 +210,28 @@
                 <div class='introduction'>
 
                     <h1>Changes between 2016 and 2021 Censuses</h1>
-                    <p>On this page, you can find the difference between 2016 and 2021 data on local government areas
-                        (LGAs) or
-                        states.</p>
-                    <p>Just apply your filter options in the sidebar and click 'Apply Filters'.</p>
+                    <p>On this page, you can find the difference between 2016 and 2021 datasets. Three datasets are
+                        used:</p>
+                    <div class='listed-dataset-wrapper'>
+                        <div class='listed-dataset'>
+                            <h4>Highest Year of School Completed</h4>
+                            <p>Contains data for the highest year of school completed by Indigenous status and sex.
+                                Tracks persons age 15 years and older who are no longer attending secondary school (by
+                                year level).</p>
+                        </div>
+                        <div class='listed-dataset'>
+                            <h4>Indigenous Status</h4>
+                            <p>Tracks the number of people in the following categories: self-identified as Aboriginal 
+                                and/or Torres Strait Islander; self-identified as non-Indigenous; or, did not state their 
+                                Indigenous status.</p>
+                        </div>
+                        <div class='listed-dataset'>
+                            <h4>Total Weekly Household Income</h4>
+                            <p>Contains data based on total household weekly income by Indigenous status of the household.</p>
+                        </div>
+                    </div>
+                    <p>These datasets are from the 2016 census and 2021 census, from the Australian Bureau of Statistics. For more 
+                        information, visit the <a href = 'http://www.abs.gov.au/census'>data source.</a></p>
                     <p><b>Disclaimer:</b> This page is not representative of the final product.</p>
 
                 </div>
@@ -221,11 +239,11 @@
                 <div class='result-section'>
 
                     <h1 th:text='${titleEducationResults}'></h1>
-        
+
                     <h3 th:text='${titleFilterSelections}'></h3>
-        
+
                     <div class='filter-selections-wrapper'>
-        
+
                         <div class='filter-selections'>
                             <!-- <p th:text = '${dataset}'></p> -->
                             <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
@@ -235,11 +253,11 @@
                             <p><b>Sex</b><br><i th:text='${sex}'></i></p>
                             <p><b>Age Group</b><br><i th:text='${age}'></i></p>
                             <p><b>School Year Completion</b><br><i th:text='${highestSchoolYearCompleted}'></i></p>
-        
+
                         </div>
-        
+
                     </div>
-        
+
                     <div class='results-table'>
                         <table>
                             <tr>
@@ -267,17 +285,17 @@
                                 <td th:text='${ranking2021Education}'></td>
                             </tr>
                         </table>
-        
+
                     </div>
-        
+
                     <div class='results-section'>
-        
+
                         <h1 th:text='${titlePopulationResults}'></h1>
-        
+
                         <h3 th:text='${titleFilterSelections}'></h3>
-        
+
                         <div class='filter-selections-wrapper'>
-        
+
                             <div class='filter-selections'>
                                 <!-- <p th:text = '${dataset}'></p> -->
                                 <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
@@ -286,11 +304,11 @@
                                 <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
                                 <p><b>Sex</b><br><i th:text='${sex}'></i></p>
                                 <p><b>Age Group</b><br><i th:text='${age}'></i></p>
-        
+
                             </div>
-        
+
                         </div>
-        
+
                         <div class='results-table'>
                             <table>
                                 <tr>
@@ -318,19 +336,19 @@
                                     <td th:text='${ranking2021Population}'></td>
                                 </tr>
                             </table>
-        
+
                         </div>
-        
+
                     </div>
-        
+
                     <div class='results-section'>
-        
+
                         <h1 th:text='${titleIncomeResults}'></h1>
-        
+
                         <h3 th:text='${titleFilterSelections}'></h3>
-        
+
                         <div class='filter-selections-wrapper'>
-        
+
                             <div class='filter-selections'>
                                 <!-- <p th:text = '${dataset}'></p> -->
                                 <p><b>Location Type</b><br><i th:text='${locationType}'></i></p>
@@ -338,12 +356,13 @@
                                 <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
                                 <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
                                 <p><b>Income Bracket</b><br><i th:text='${incomeBracket}'></i></p>
-                                <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i></p>
-        
+                                <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i>
+                                </p>
+
                             </div>
-        
+
                         </div>
-        
+
                         <div class='results-table'>
                             <table>
                                 <tr>
@@ -371,40 +390,40 @@
                                     <td th:text='${ranking2021Income}'></td>
                                 </tr>
                             </table>
-        
+
                         </div>
-        
+
                     </div>
 
-            </div> <!-- introduction-results-wrapper ending tag -->
+                </div> <!-- introduction-results-wrapper ending tag -->
 
-        </div> <!-- flex-tester ending tag -->
+            </div> <!-- flex-tester ending tag -->
 
-        <!--
+            <!--
         <ul>
             <li th:each = 'proportion : ${proportions}' th:text = '${proportion}'></li>
         </ul>
         -->
 
-        
+
         </div>
-</div>
+    </div>
 
 
-        <div class='footer'>
-            <h3>
-                Acknowledgement of Country
-            </h3>
-            <p id='acknowledgementText'>
-                Group 11 acknowledge and pay respect to Elders, both past and present, and all
-                generations of Aboriginal and Torres Strait <br> Islander People now and into the
-                future as the Traditional Owners of this land.
-            </p>
-            <p id='teamMemberCredit'>
-                COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez
-                (s3922406).
-            </p>
-        </div>
+    <div class='footer'>
+        <h3>
+            Acknowledgement of Country
+        </h3>
+        <p id='acknowledgementText'>
+            Group 11 acknowledge and pay respect to Elders, both past and present, and all
+            generations of Aboriginal and Torres Strait <br> Islander People now and into the
+            future as the Traditional Owners of this land.
+        </p>
+        <p id='teamMemberCredit'>
+            COSC2803 - Milestone 2 - This website was made by Ria Kapoor (s3973093) and Marielle Louisse Lopez
+            (s3922406).
+        </p>
+    </div>
 
 </body>
 

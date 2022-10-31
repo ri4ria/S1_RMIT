@@ -405,6 +405,14 @@ img.top-image {
    background-color: #5ABED2;
 }
 
+.selectionBlue {
+   color: #2B8A9E;
+}
+
+.selectionBrown {
+   color: #BBA89F;
+}
+
 .filter-button {
    background-color: #2B8A9E;
    border-style: solid;

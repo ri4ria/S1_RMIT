@@ -8,16 +8,6 @@ import java.util.Map;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
-/**
- * Example Index HTML class using Javalin
- * <p>
- * Generate a static HTML page using Javalin
- * by writing the raw HTML into a Java String object
- *
- * @author Timothy Wiley, 2021. email: timothy.wiley@rmit.edu.au
- * @author Santha Sumanasekara, 2021. email: santha.sumanasekara@rmit.edu.au
- */
-
 public class PageST22Income implements Handler {
 
     // URL of this page relative to http://localhost:7001/
@@ -59,49 +49,96 @@ public class PageST22Income implements Handler {
         String incomeBracket = context.formParam("incomeBracket");
         String householdIndigenousStatus = context.formParam("householdStatus");
 
-        model.put("locationType", locationType);
-        model.put("location", location);
-        model.put("valueType", valueType);
-        model.put("incomeBracket", incomeBracket);
-        model.put("householdIndigenousStatus", householdIndigenousStatus);
+        // Inserting HTML
+        if (locationType == null && location == null && valueType == null && incomeBracket == null
+                && householdIndigenousStatus == null) {
+            String html = "<div class = 'introduction-results-wrapper'>";
+            html = html + "<div class = 'results-section'>";
+            html = html + "<h1>No Results for Total Weekly Household Income</h1>";
+            html = html + "<p>Please make a selection for <b>each</b> filter option.</p>";
+            html = html + "</div>"; // 'results-section' closing tag
+            html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
-        // TODO: add another if-else statement to add 'Error' messages for missing input
+            model.put("htmlToInject", html);
 
+        } else if (locationType == null || location == null & valueType == null || incomeBracket == null
+                || householdIndigenousStatus == null) {
+            String html = "<div class = 'introduction-results-wrapper'>";
+            html = html + "<div class = 'results-section'>";
+            html = html + "<h1>No Results for Total Weekly Household Income</h1>";
+            html = html + "<p style = 'color: #CA3732'><b>Not all required filter selections were made.</b></p>";
+            html = html + "</div>"; // 'results-section' closing tag
+            html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
-        if (locationType != null & location != null & valueType != null & householdIndigenousStatus != null & incomeBracket != null) {
-            model.put("titleIncomeResults", new String("2016 vs. 2021 Total Weekly Household Income Data for " + location));
-            model.put("titleFilterSelections", new String("Filter Selections"));
-            ST22Results results = jdbc.getST22IncomeResults(locationType, location, valueType, householdIndigenousStatus, incomeBracket);
-            model.put("lgaCode", results.getLGACode());
-            model.put("lgaName2016Income", results.getLGAName2016());
-            model.put("lgaState2016Income", results.getLGAState2016());
-            model.put("lgaType2016Income", results.getLGAType2016());
-            model.put("lgaName2021Income", results.getLGAName2021());
-            model.put("lgaState2021Income", results.getLGAState2021());
-            model.put("lgaType2021Income", results.getLGAType2021());
+            model.put("htmlToInject", html);
 
+        } else if (locationType != null && location != null && valueType != null && incomeBracket != null
+                && householdIndigenousStatus != null) {
+            String html = "<div class = 'introduction-results-wrapper'>";
+            html = html + "<h1>2016 vs 2021 Data for Indigenous Status Data</h1>";
+            html = html + "<h3>Filter Option Selections</h3>";
+            html = html + "<div class = 'filter-selections-wrapper'>";
+            html = html + "<div class = 'filter-selections'>";
+            html = html + "<p><b>Location</b><br><i>" + location + "</i></p>";
+            html = html + "<p><b>Value Type</b><br><i>" + valueType + "</i></p>";
+            html = html + "<p><b>Income Bracket</b><br><i>" + incomeBracket + "</i></p>";
+            html = html + "<p><b>Household Indigenous Status</b><br><i>" + householdIndigenousStatus + "</i></p>";
+            html = html + "</div>"; // 'filter-selection' closing tag
+            html = html + "</div>"; // 'filter-selection-wrapper' closing tag
+
+            ST22Results results = jdbc.getST22IncomeResults(locationType, location, valueType, householdIndigenousStatus,
+                    incomeBracket);
+
+            // Processing proportional values
             DecimalFormat df = new DecimalFormat("#.##");
             float result2016 = results.getResult2016();
             float result2021 = results.getResult2021();
-            if (result2016 > 1.0) {
-                model.put("results2016Income", results.getResult2016());
-                model.put("results2021Income", results.getResult2021());
-            } else if (result2016 < 1.0) {
+            String result2016F = df.format(result2016);
+            String result2021F = df.format(result2021);
+
+            if (result2016 < 1.0) {
                 result2016 = result2016 * 100;
                 result2021 = result2021 * 100;
-                String result2016P = df.format(result2016);
-                String result2021P = df.format(result2021);
-                model.put("results2016Income", result2016P + "%");
-                model.put("results2021Income", result2021P + "%");
+                result2016F = df.format(result2016) + "%";
+                result2021F = df.format(result2021) + "%";
+            } else if (result2016 < 1.0) {
+                result2016F = String.valueOf(result2016);
+                result2021F = String.valueOf(result2021);
             }
 
-            model.put("ranking2016Income", results.getRank2016());
-            model.put("ranking2021Income", results.getRank2021());
-        } else {
-            model.put("titleIncomeResults", new String("No Results for Total Weekly Household Income Data"));
-            model.put("titleFilterSelections", new String("No Filter Options Selected"));
-        }
+            html = html + "<div class = 'results-table'>";
+            html = html + "<table>";
+            html = html + "<tr>";
+            html = html + "<th>Year</th>";
+            html = html + "<th>LGA Name</th>";
+            html = html + "<th>State</th>";
+            html = html + "<th>LGA Type</th>";
+            html = html + "<th>Result</th>";
+            html = html + "<th>Rank</th>";
+            html = html + "</tr>";
+            html = html + "<tr>";
+            html = html + "<td>2016</td>";
+            html = html + "<td>" + results.getLGAName2016() + "</td>";
+            html = html + "<td>" + results.getLGAState2016() + "</td>";
+            html = html + "<td>" + results.getLGAType2016() + "</td>";
+            html = html + "<td>" + result2016F + "</td>";
+            html = html + "<td>" + results.getRank2016() + "</td>";
+            html = html + "</tr>";
+            html = html + "<tr>";
+            html = html + "<td>2021</td>";
+            html = html + "<td>" + results.getLGAName2021() + "</td>";
+            html = html + "<td>" + results.getLGAState2021() + "</td>";
+            html = html + "<td>" + results.getLGAType2021() + "</td>";
+            html = html + "<td>" + result2021F + "</td>";
+            html = html + "<td>" + results.getRank2021() + "</td>";
+            html = html + "</tr>";
+            html = html + "</table>";
+            html = html + "</div>"; // 'results-table' closing tag
+            html = html + "<a href = '/page4_Income.html'><button class = 'reset-button'>Reset Filters</button></a>";
+            html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
+            model.put("htmlToInject", html);
+        }
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
         context.render(TEMPLATE, model);

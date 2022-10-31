@@ -148,63 +148,7 @@
                 </form>
             </div>
 
-            <div class='introduction-results-wrapper'>
-
-                    <div class='results-section'>
-
-                        <h2 th:text='${titleIncomeResults}'></h2>
-
-                        <h3 th:text='${titleFilterSelections}'></h3>
-
-                        <div class='filter-selections-wrapper'>
-
-                            <div class='filter-selections'>
-                                <!-- <p th:text = '${dataset}'></p> -->
-                                <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
-                                <p><b>Location</b><br><i th:text='${location}'></i></p>
-                                <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
-                                <!-- <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p> -->
-                                <p><b>Income Bracket</b><br><i th:text='${incomeBracket}'></i></p>
-                                <p><b>Household Indigenous Status</b><br><i th:text='${householdIndigenousStatus}'></i>
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div class='results-table'>
-                            <table>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>LGA Name</th>
-                                    <th>State</th>
-                                    <th>LGA Type</th>
-                                    <th>Result</th>
-                                    <th>Rank</th>
-                                </tr>
-                                <tr>
-                                    <td>2016</td>
-                                    <td th:text='${lgaName2016Income}'></td>
-                                    <td th:text='${lgaState2016Income}'></td>
-                                    <td th:text='${lgaType2016Income}'></td>
-                                    <td th:text='${results2016Income}'></td>
-                                    <td th:text='${ranking2016Income}'></td>
-                                </tr>
-                                <tr>
-                                    <td>2021</td>
-                                    <td th:text='${lgaName2021Income}'></td>
-                                    <td th:text='${lgaState2021Income}'></td>
-                                    <td th:text='${lgaType2021Income}'></td>
-                                    <td th:text='${results2021Income}'></td>
-                                    <td th:text='${ranking2021Income}'></td>
-                                </tr>
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                </div> <!-- introduction-results-wrapper ending tag -->
+            <div th:utext = '${htmlToInject}'></div>
 
             </div> <!-- flex-tester ending tag -->
 

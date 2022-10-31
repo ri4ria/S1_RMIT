@@ -358,25 +358,25 @@ public class PageST21 implements Handler {
                     if (condition_drop != null && !condition_drop.equalsIgnoreCase("select")) {
                         html = html + outputDataByHealthCond(condition_drop, sort_drop);
                         } else {
-                        html = html + "<h2><i>No results to show for Outcome 1: Health conditions</i></h2>";
+                        html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 1: Health conditions</i></h3>";
                         }
 
                         if (age_drop != null && !age_drop.equalsIgnoreCase("select")) {
                             html = html + outputDataByAge(age_drop, sort_drop);
                             } else {
-                            html = html + "<h2><i>No results to show for Outcome 1: Population by age</i></h2>";
+                            html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 1: Population by age</i></h3>";
                             }
 
                             if (school_drop != null && !school_drop.equalsIgnoreCase("select")) {
                                 html = html + outputDataBySchool(school_drop, sort_drop);
                                 } else {
-                                html = html + "<h2><i>No results to show for Outcome 5: Highest year of shcooling</i></h2>";
+                                html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 5: Highest year of shcooling</i></h3>";
                                 }
 
                                 if (income_drop != null && !income_drop.equalsIgnoreCase("select")) {
                                     html = html + outputDataByIncome(income_drop, sort_drop) ;
                                     } else {
-                                    html = html + "<h2><i>No results to show for Outcome 8: Weekely household income</i></h2>";
+                                    html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 8: Weekely household income</i></h3>";
                                     }
 
 
@@ -553,8 +553,13 @@ public class PageST21 implements Handler {
      //get data for first query
      public String outputDataBySchool(String selectedSchool, String sort) {
         String html = "";
-        html = html + "<h2> Population of people with highest schooling being: " + selectedSchool + "</h2>";
-        html = html + "<h2> Sort type used: " + sort + "</h2>";
+        html = html + "<h2><i class='selectionBlue'>Outcome 5: Highest year of shcooling</i></h2>";
+        html = html + "<h3> Population of people with highest schooling being: <i class='selectionBlue'>" + selectedSchool + "</i></h3>";
+        html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
+        html = html + "<h5>A '+' gap score indicates: portion of indigenous population is greater than the portion of nonindigenous population with the highest schooling being: " + selectedSchool + " for a given LGA</h5>";
+        html = html + "<h5>A '-' gap score indicates: portion of indigenous population is less than the portion of nonindigenous population with the highest schooling being: " + selectedSchool + " for a given LGA</h5>";
+        html = html + "<h5>A '0' gap score indicates the gap between the communities with highest schooling being: " + selectedSchool + " is small for a given LGA</h5>";
+
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
@@ -628,8 +633,9 @@ public class PageST21 implements Handler {
     //get data for first query
     public String outputDataByIncome(String selectedIncome, String sort) {
         String html = "";
-        html = html + "<h2>Population of households with a weekly household income of: $" + selectedIncome + "</h2>";
-        html = html + "<h3> Sort type used: " + sort + "</h3>";
+        html = html + "<h2><i class='selectionBlue'>Outcome 8: Weekely household income</i></h2>";
+        html = html + "<h3>Population of households with a weekly household income of: <i class='selectionBlue'>$" + selectedIncome + "</i></h3>";
+        html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
         html = html + "<h5>A '+' gap score indicates: portion of indigenous population >  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
         html = html + "<h5>A '-' gap score indicates: portion of indigenous population <  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
         html = html + "<h5>A '0' gap score indicates the gap between the communities earning weekly household income of $" + selectedIncome + " is small for a given LGA</h5>";

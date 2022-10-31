@@ -57,15 +57,7 @@ public class PageST22Status implements Handler {
         String sex = context.formParam("sex");
         String age = context.formParam("age");
 
-        model.put("locationType", locationType);
-        model.put("location", location);
-        model.put("valueType", valueType);
-        model.put("indigenousStatus", indigenousStatus);
-        model.put("sex", sex);
-        model.put("age", age);
-
         // Inserting HTML 
-
        if (locationType == null && location == null && valueType == null && indigenousStatus == null && sex == null && age == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
@@ -106,8 +98,8 @@ public class PageST22Status implements Handler {
             DecimalFormat df = new DecimalFormat("#.##");
             float result2016 = results.getResult2016();
             float result2021 = results.getResult2021();
-            String result2016F = df.format(result2016) + "%";
-            String result2021F = df.format(result2021) + "%";
+            String result2016F = df.format(result2016);
+            String result2021F = df.format(result2021);
 
             if (result2016 < 1.0) {
                 result2016 = result2016 * 100;

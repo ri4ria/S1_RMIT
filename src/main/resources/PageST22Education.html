@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Subtask 2.2 Education</title>
+    <title>Subtask 2.2 Status</title>
     <link rel='stylesheet' type='text/css' href='common.css' />
 </head>
 
@@ -31,24 +31,6 @@
     </div>
 
     <div class='content'>
-
-        <!--
-        <form action='/page4.html' method='post'>
-
-            <div class = 'form-group'>
-
-                <fieldset>
-
-                    <button type = 'submit' class = 'btn btn-primary' id = 'EducationStatistics' name = 'dataset' value = 'EducationStatistics'>Highest Year of School Completed</button>
-                    <button type = 'submit' class = 'btn btn-primary' id = 'PopulationStatistics' name = 'dataset' value = 'PopulationStatistics'>Indigenous Status</button>
-                    <button type = 'submit' class = 'btn btn-primary' id = 'HouseholdStatistics' name = 'dataset' value = 'HouseholdStatistics'>Total Weekly Household Income</button>
-
-                </fieldset>
-
-            </div>
-
-        </form>
-        -->
 
         <div class='flex-tester'>
 
@@ -154,25 +136,13 @@
 
                             <br>
 
-                            <h4>Age</h4>
-
-                            <!-- <datalist id='ageSuggestions'> -->
-                            <!--TODO: retrieve options from database-->
-                            <select id='age' name='age'>
-                                <option value=''>Please select...</option>
-                                <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
-                            </select>
-                            <!-- </datalist> -->
-                            <!-- <input autoComplete='on' list='ageSuggestions'> -->
-
-                            <br>
-
                             <h4>Highest Year of School Completed</h4>
 
                             <select id='highestSchoolYearCompleted' name='highestSchoolYearCompleted'>
                                 <option value=''>Please select...</option>
                                 <option th:each='year : ${schoolYears}' th:text='${year}' th:value='${year}'></option>
                             </select>
+
 
                         </fieldset>
 
@@ -183,74 +153,13 @@
                 </form>
             </div>
 
-            <div class='introduction-results-wrapper'>
+            <div th:utext='${htmlToInject}'></div>
 
-                <div class='result-section'>
+        </div> <!-- flex-tester ending tag -->
 
-                    <h2 th:text='${titleEducationResults}'></h2>
-
-                    <h3 th:text='${titleFilterSelections}'></h3>
-
-                    <div class='filter-selections-wrapper'>
-
-                        <div class='filter-selections'>
-                            <!-- <p th:text = '${dataset}'></p> -->
-                            <!-- <p><b>Location Type</b><br><i th:text='${locationType}'></i></p> -->
-                            <p><b>Location</b><br><i th:text='${location}'></i></p>
-                            <p><b>Value Type</b><br><i th:text='${valueType}'></i></p>
-                            <p><b>Indigenous Status</b><br><i th:text='${indigenousStatus}'></i></p>
-                            <p><b>Sex</b><br><i th:text='${sex}'></i></p>
-                            <!-- <p><b>Age Group</b><br><i th:text='${age}'></i></p> -->
-                            <p><b>School Year Completion</b><br><i th:text='${highestSchoolYearCompleted}'></i></p>
-
-                        </div>
-
-                    </div>
-
-                    <div class='results-table'>
-                        <table>
-                            <tr>
-                                <th>Year</th>
-                                <th>LGA Name</th>
-                                <th>State</th>
-                                <th>LGA Type</th>
-                                <th>Result</th>
-                                <th>Rank</th>
-                            </tr>
-                            <tr>
-                                <td>2016</td>
-                                <td th:text='${lgaName2016Education}'></td>
-                                <td th:text='${lgaState2016Education}'></td>
-                                <td th:text='${lgaType2016Education}'></td>
-                                <td th:text='${results2016Education}'></td>
-                                <td th:text='${ranking2016Education}'></td>
-                            </tr>
-                            <tr>
-                                <td>2021</td>
-                                <td th:text='${lgaName2021Education}'></td>
-                                <td th:text='${lgaState2021Education}'></td>
-                                <td th:text='${lgaType2021Education}'></td>
-                                <td th:text='${results2021Education}'></td>
-                                <td th:text='${ranking2021Education}'></td>
-                            </tr>
-                        </table>
-
-                    </div>
-
-                </div> <!-- introduction-results-wrapper ending tag -->
-
-            </div> <!-- flex-tester ending tag -->
-
-            <!--
-        <ul>
-            <li th:each = 'proportion : ${proportions}' th:text = '${proportion}'></li>
-        </ul>
-        -->
-
-
-        </div>
     </div>
 
+    </div> <!-- content ending tag -->
 
     <div class='footer'>
         <h3>

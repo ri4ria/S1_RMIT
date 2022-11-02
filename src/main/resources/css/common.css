@@ -343,7 +343,6 @@ img.top-image {
    margin-bottom: 75px;
 }
 
-
 .flex-tester {
    display: flex;
    align-items: flex-start;
@@ -516,4 +515,28 @@ img.top-image {
 .results-table2 th, td {
    padding: 15px;
    flex: 1;
+}
+
+.outcome-and-dataset {
+   display: flex;
+   align-items: flex-start;
+}
+
+.st32-dataset {
+   background-color: #F0E7D4;
+   border-style: solid;
+   border-width: 1px;
+   border-color: #BFBFBF;
+   border-radius: 15px 0px 0px 15px;
+   text-align: center;
+}
+
+.outcome-introduction {
+   text-align: right;
+}
+
+.introduction {
+   width: 100%;
+   font-size: 25px;
+   text-align: center;
 }

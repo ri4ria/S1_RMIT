@@ -27,60 +27,45 @@
         <input type='text' placeholder='Search...'>
     </div>
     <div class='header'>
-        <h1>Subtask 3.2</h1>
+        <h1 th:text='${title}'></h1>
     </div>
+
     <div class='content'>
-        <fieldset>
 
-            <legend>Dataset</legend>
+        <div class='introduction'>
 
-            <input id='highestSchoolYearRadio' name='datasetList' type='radio' value='highestSchoolYear'>
-            <label for='highestSchoolYearRadio'>Highest Year of High School Completed</label>
+            <h1>Compare LGAs with Similar Characteristics</h1>
+            <p>In this section, you can find LGAs that are similar to an LGA you specify based on a certain target outcome you choose:</p>
+            <div class='listed-dataset-wrapper'>
+                <div class='listed-dataset'>
+                    <h4>Outcome 1</h4>
+                    <p>Enter description of Outcome 1</p>
+                    <a href='/page4_Education.html'><button class='dataset-button'>Find results from this
+                            target outcome</button></a>
+                </div>
+                <div class='listed-dataset'>
+                    <h4>Outcome 5</h4>
+                    <p>Enter description of Outcome 5</p>
+                    <a href='/page4_Status.html'><button class='dataset-button'>Find results from this
+                        target outcome</button></a>
+                </div>
+                <div class='listed-dataset'>
+                    <h4>Outcome 8</h4>
+                    <p>Enter description of Outcome 8</p>
+                    <a href='/page4_Income.html'><button class='dataset-button'>Find results from this
+                        target outcome</button></a>
+                </div>
+            </div>
+            <p>These datasets are from the 2016 census and 2021 census, from the Australian Bureau of Statistics. For
+                more
+                information, visit the <a href='http://www.abs.gov.au/census'>data source.</a></p>
+            <p><b>Disclaimer:</b> This page is not an accurate representation of the final product.</p>
 
-            <input id='indigenousStatusRadio' name='datasetList' type='radio' value='indigenousStatus'>
-            <label for='indigenousStatusRadio'>Indigenous Status</label>
+        </div>
 
-            <input id='householdIncomeRadio' name='datasetList' type='radio' value='householdIncome'>
-            <label for='householdIncomeRadio'>Total Weekly Household Income</label>
-
-        </fieldset>
-
-        <fieldset>
-
-            <legend>LGA/State</legend>
-
-            <input id='LGARadio' name='LGAStateList' type='radio' value='LGA'>
-            <label for='LGARadio'>LGA</label>
-
-            <input id='stateRadio' name='LGAStateList' type='radio' value='State'>
-            <label for='stateRadio'>State</label>
-
-            <br>
-            <br>
-
-            <datalist id='suggestions'>
-                <option>First option</option>
-                <option>Second option</option>
-            </datalist>
-            <input autoComplete='on' list='suggestions' />
-
-        </fieldset>
-
-        <fieldset>
-
-            <legend>Value Type</legend>
-
-            <input id='rawRadio' name='valueTypeList' type='radio' value='Raw'>
-            <label for='rawRadio'>Raw</label>
-
-            <input id='proportionalRadio' name='valueTypeList' type='radio' value='Proportional'>
-            <label for='proportionalRadio'>Proportional</label>
-
-        </fieldset>
-
-        <h1>All LGAs</h1>
-        <ul></ul>
     </div>
+
+
     <div class='footer'>
         <h3>
             Acknowledgement of Country
@@ -95,6 +80,8 @@
             (s3922406).
         </p>
     </div>
+
 </body>
 
 </html>
+<html>

@@ -150,8 +150,6 @@ public class CTGProcessCSV {
          e.printStackTrace();
       }
 
-      /*
-
       // Implementing incomeBracket CSV file
 
       // Like JDBCConnection, we need some error handling.
@@ -1237,8 +1235,6 @@ public class CTGProcessCSV {
    } catch (Exception e) {
       e.printStackTrace();
    }
-
-   */
 
    } //keep second to last
 } //keep last

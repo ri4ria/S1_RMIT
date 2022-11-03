@@ -42,14 +42,14 @@ CREATE TABLE Outcomes (
 CREATE TABLE AgeBracket (
    age_bracket           TEXT NOT NULL,
    min_age               INTEGER NOT NULL,
-   max_age               INTEGER NOT NULL,
+   max_age               INTEGER,
    PRIMARY KEY (age_bracket)
 );
 
 CREATE TABLE IncomeBracket (
    income_bracket        TEXT NOT NULL,
    min_income            INTEGER NOT NULL,
-   max_income            INTEGER NOT NULL,
+   max_income            INTEGER,
    PRIMARY KEY (income_bracket)
 );
 

@@ -49,11 +49,222 @@ public class CTGProcessCSV {
    private static final String CSV_FILE_persona = "database/persona.csv";
    private static final String CSV_FILE_personaAttribute = "database/personaAttribute.csv";
    private static final String CSV_FILE_states = "database/state.csv";
+   private static final String CSV_FILE_ageBracket = "database/ageBracket.csv";
+   private static final String CSV_FILE_incomeBracket = "database/incomeBracket.csv";
 
    public static void main (String[] args) {
 
       // JDBC Database Object
       Connection connection = null;
+
+      // Implementing the householdInc2021.csv file
+      // Original CSV file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2021
+      
+      String category_householdInc_2021[] = {
+         "1_149",
+         "150_299",
+         "300_399",
+         "400_499",
+         "500_649",
+         "650_799",
+         "800_999",
+         "1000_1249",
+         "1250_1499",
+         "1500_1749",
+         "1750_1999",
+         "2000_2499",
+         "2500_2999",
+         "3000_3499",
+         "3500_more"
+      };
+
+      String status_householdInc_2021[] = {
+         "hhds_with_indig_persons",
+         "other_hhds",
+         "total_hhds"
+      };
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_householdIncome_2021));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            // These indicies track which column we are up to
+            int indexStatus = 0;
+            int indexCategory = 0;
+
+            // Save the lga_code as we need it for the foreign key
+            String lgaCode = rowScanner.next();
+
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext() && indexCategory < category_householdInc_2021.length) {
+               String count = rowScanner.next();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into HouseholdStatistics VALUES ("
+                              + lgaCode + ","
+                              + "2021" + ","
+                              + "'" + status_householdInc_2021[indexStatus] + "',"
+                              + "'" + category_householdInc_2021[indexCategory] + "',"
+                              + count + ")";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               // Update indices - go to next status
+               indexStatus++;
+               if (indexStatus >= status_householdInc_2021.length) {
+                  // Go to next Category
+                  indexStatus = 0;
+                  indexCategory++;
+               }
+               row++;
+         }
+      }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      /*
+
+      // Implementing incomeBracket CSV file
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_incomeBracket));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext()) {
+
+               // Save the lga_code as we need it for the foreign key
+               String bracket = rowScanner.next();
+               int min = rowScanner.nextInt();
+               int max = rowScanner.nextInt();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into IncomeBracket VALUES ("
+                              + "'" + bracket + "',"
+                              + min + ","
+                              + max + ");";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      // Implementing ageBracket CSV file
+
+      // Like JDBCConnection, we need some error handling.
+      try {
+         // Open A CSV File to process, one line at a time
+         // CHANGE THIS to process a different file
+         Scanner lineScanner = new Scanner(new File(CSV_FILE_ageBracket));
+
+         // Read the first line of "headings"
+         String header = lineScanner.nextLine();
+         System.out.println("Heading row" + header + "\n");
+
+         // Setup JDBC
+         // Connect to JDBC data base
+         connection = DriverManager.getConnection(DATABASE);
+
+         // Read each line of the CSV
+         int row = 1;
+         while (lineScanner.hasNext()) {
+            // Always get scan by line
+            String line = lineScanner.nextLine();
+            
+            // Create a new scanner for this line to delimit by commas (,)
+            Scanner rowScanner = new Scanner(line);
+            rowScanner.useDelimiter(",");
+
+            
+            // Go through the data for the row
+            // If we run out of categories, stop for safety (so the code doesn't crash)
+            while (rowScanner.hasNext()) {
+
+               // Save the lga_code as we need it for the foreign key
+               String bracket = rowScanner.next();
+               int min = rowScanner.nextInt();
+               int max = rowScanner.nextInt();
+
+               // Prepare a new SQL Query & Set a timeout
+               Statement statement = connection.createStatement();
+
+               // Create Insert Statement
+               String query = "INSERT into AgeBracket VALUES ("
+                              + "'" + bracket + "',"
+                              + min + ","
+                              + max + ");";
+
+               // Execute the INSERT
+               System.out.println("Executing: " + query);
+               statement.execute(query);
+
+               row++;
+            }
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
       // Implementing LTHC_2021 CSV file
 
@@ -971,97 +1182,6 @@ public class CTGProcessCSV {
          e.printStackTrace();
       }
 
-      // Implementing the householdInc2021.csv file
-      // Original CSV file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2021
-      
-      String category_householdInc_2021[] = {
-         "1_149",
-         "150_299",
-         "300_399",
-         "400_499",
-         "500_649",
-         "650_799",
-         "800_999",
-         "1000_1249",
-         "1250_1499",
-         "1500_1999",
-         "2000_2499",
-         "2500_2999",
-         "3000_more"
-      };
-
-      String status_householdInc_2021[] = {
-         "hhds_with_indig_persons",
-         "other_hhds",
-         "total_hhds"
-      };
-
-      // Like JDBCConnection, we need some error handling.
-      try {
-         // Open A CSV File to process, one line at a time
-         // CHANGE THIS to process a different file
-         Scanner lineScanner = new Scanner(new File(CSV_FILE_householdIncome_2021));
-
-         // Read the first line of "headings"
-         String header = lineScanner.nextLine();
-         System.out.println("Heading row" + header + "\n");
-
-         // Setup JDBC
-         // Connect to JDBC data base
-         connection = DriverManager.getConnection(DATABASE);
-
-         // Read each line of the CSV
-         int row = 1;
-         while (lineScanner.hasNext()) {
-            // Always get scan by line
-            String line = lineScanner.nextLine();
-            
-            // Create a new scanner for this line to delimit by commas (,)
-            Scanner rowScanner = new Scanner(line);
-            rowScanner.useDelimiter(",");
-
-            // These indicies track which column we are up to
-            int indexStatus = 0;
-            int indexCategory = 0;
-
-            // Save the lga_code as we need it for the foreign key
-            String lgaCode = rowScanner.next();
-
-            // Go through the data for the row
-            // If we run out of categories, stop for safety (so the code doesn't crash)
-            while (rowScanner.hasNext() && indexCategory < category_householdInc_2021.length) {
-               String count = rowScanner.next();
-
-               // Prepare a new SQL Query & Set a timeout
-               Statement statement = connection.createStatement();
-
-               // Create Insert Statement
-               String query = "INSERT into HouseholdStatistics VALUES ("
-                              + lgaCode + ","
-                              + "2021" + ","
-                              + "'" + status_householdInc_2021[indexStatus] + "',"
-                              + "'" + category_householdInc_2021[indexCategory] + "',"
-                              + count + ")";
-
-               // Execute the INSERT
-               System.out.println("Executing: " + query);
-               statement.execute(query);
-
-               // Update indices - go to next status
-               indexStatus++;
-               if (indexStatus >= status_householdInc_2021.length) {
-                  // Go to next Category
-                  indexStatus = 0;
-                  indexCategory++;
-               }
-               row++;
-         }
-      }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-
    // OUTCOMES 
 
    // Like JDBCConnection, we need some error handling.
@@ -1117,6 +1237,8 @@ public class CTGProcessCSV {
    } catch (Exception e) {
       e.printStackTrace();
    }
+
+   */
 
    } //keep second to last
 } //keep last

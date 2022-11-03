@@ -519,7 +519,8 @@ img.top-image {
 
 .outcome-and-dataset {
    display: flex;
-   align-items: flex-start;
+   align-items: center;
+   width: 100%;
 }
 
 .st32-dataset {
@@ -527,16 +528,53 @@ img.top-image {
    border-style: solid;
    border-width: 1px;
    border-color: #BFBFBF;
-   border-radius: 15px 0px 0px 15px;
+   border-radius: 20px 0px 0px 20px;
    text-align: center;
+   width: 70%;
+   padding-left: 250px;
+   padding-right: 350px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   margin-bottom: 50px;
+}
+
+.st32-dataset-grid {
+   display: flex;
+   align-items: flex-start;
+   background-color: #F0E7D4;
+   border-style: solid;
+   border-width: 1px;
+   border-color: #BFBFBF;
+   border-radius: 20px 0px 0px 20px;
+   text-align: center;
+   width: 70%;
 }
 
 .outcome-introduction {
    text-align: right;
+   width: 30%;
+   padding-left: 100px;
+   padding-right: 50px;
 }
 
 .introduction {
    width: 100%;
    font-size: 25px;
    text-align: center;
+}
+
+.reference {
+   font-size: 15px;
+}
+
+.st32-dataset-listed {
+   padding-left: 50px;
+   padding-right: 50px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   width: 50%;
+}
+
+.st32-dataset-listed ul {
+   text-align: left;
 }

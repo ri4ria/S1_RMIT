@@ -2354,6 +2354,111 @@ public class JDBCConnection {
         return ST22IncomeResults;
     }
     
+    public ArrayList<String> getST32HealthResults (int code, String status, String sex, String condition, int limit) {
+
+        // Creating an ArrayList to store results
+        ArrayList<String> similarLGAs = new ArrayList<String>();
+
+        // Creating variable to store specified LGA results
+        String specifiedLGA;
+
+        // Variable to store proportion result of specified LGA for later comparison
+        ArrayList<Float> specifiedLGAProportion = new ArrayList<Float>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // Query to find results from specified LGA
+            String query1 = "SELECT * ";
+            query1 += "FROM LTHCST32 ";
+            query1 += "WHERE lga_code = " + code + " AND ";
+            query1 += "indigenous_status = '" + status + "' AND ";
+            query1 += "sex = '" + sex + "' AND ";
+            query1 += "condition = '" + condition + "';";
+
+            // Printing out the query
+            System.out.println(query1);
+
+            // Get Result
+            ResultSet results1 = statement.executeQuery(query1);
+
+            // Process all of the results
+            while (results1.next()) {
+                specifiedLGA = String.valueOf(code) + " ";
+                specifiedLGA += String.valueOf(results1.getInt("count")) + " ";
+                specifiedLGA += String.valueOf(results1.getFloat("proportion"));
+                
+                similarLGAs.add(specifiedLGA);
+                specifiedLGAProportion.add(results1.getFloat("proportion"));
+            }
+
+            // Query to find the other LGAs
+            String query2 = "SELECT * ";
+            query2 += "FROM LTHCST32 ";
+            query2 += "WHERE indigenous_status = '" + status + "' AND ";
+            query2 += "sex = '" + sex + "' AND ";
+            query2 += "condition = '" + condition + "' AND ";
+            query2 += "proportion <= " + specifiedLGAProportion + " ";
+            query2 += "ORDER BY proportion DESC ";
+            query2 += "LIMIT " + limit + ";";
+
+            // Printing out the query
+            System.out.println(query2);
+
+            // Get Result
+            ResultSet results2 = statement.executeQuery(query2);
+
+            // Process all of the results
+            while (results1.next()) {
+
+                int lgaCode = results2.getInt("lga_code");
+
+                if (lgaCode == code) {
+                    continue;
+                }
+
+                int lgaResult = results2.getInt("count");
+                float lgaProportion = results2.getFloat("proportion");
+
+                specifiedLGA = String.valueOf(lgaCode) + " ";
+                specifiedLGA += String.valueOf(lgaResult) + " ";
+                specifiedLGA += String.valueOf(lgaProportion);
+
+                similarLGAs.add(specifiedLGA);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+
+        } finally {
+
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // Connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Returning ArrayList of results
+        return similarLGAs;
+    }
+
     public ArrayList<String> getStates() {
         ArrayList<String> states = new ArrayList<String>();
 

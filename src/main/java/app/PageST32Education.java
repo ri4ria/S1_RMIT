@@ -120,7 +120,7 @@ public class PageST32Education implements Handler {
             
             html = html + "</table>";
             html = html + "</div>"; // 'results-table' closing tag
-            html = html + "<a href = '/page6_Health.html'><button class = 'reset-button'>Reset Filters</button></a>";
+            html = html + "<a href = '/page6_Education.html'><button class = 'reset-button'>Reset Filters</button></a>";
             html = html + "<a href = '/page6.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 

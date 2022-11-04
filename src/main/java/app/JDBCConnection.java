@@ -2670,7 +2670,133 @@ public class JDBCConnection {
                 query2 += "p.age = '" + age + "' AND ";
                 query2 += "p.proportion <= " + specifiedLGAProportion.get(0) + " ";
                 query2 += "ORDER BY p.proportion DESC ";
-                query2 += "LIMIT " + (Integer.parseInt(limit) + 1) + ";";
+                query2 += "LIMIT " + limit + ";";
+                // Printing out the query
+            System.out.println(query2);
+
+            // Get Result
+            ResultSet results2 = statement.executeQuery(query2);
+
+            // Process all of the results
+            while (results1.next()) {
+
+                int lgaCode = results2.getInt("lga_code");
+                String lgaName = results2.getString("lga_name");
+                int lgaResult = results2.getInt("count");
+                float lgaProportion = results2.getFloat("proportion");
+
+                if (lgaCode == Integer.parseInt(code)) {
+                    continue;
+                } else {
+
+                    // Creating variable to store specified LGA results
+                    ST32Results specifiedLGA = new ST32Results();
+
+                    specifiedLGA.setLGACode(lgaCode);
+                    specifiedLGA.setLGAName(lgaName);
+                    specifiedLGA.setResult(lgaResult);
+                
+                    // Processing proportional value
+                    DecimalFormat df = new DecimalFormat("#.###");
+                    String lgaProportionString = String.valueOf(lgaProportion);
+                    lgaProportionString = df.format(lgaProportion) + "%";
+
+                    specifiedLGA.setProportion(lgaProportionString);
+
+                    similarLGAs.add(specifiedLGA);
+                }
+            }
+
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+
+        } finally {
+
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // Connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Returning ArrayList of results
+        return similarLGAs;
+    }
+
+    public ArrayList<ST32Results> getST32IncomeResults (String code, String status, String incomeBracket, String limit) {
+
+        // Creating an ArrayList to store results
+        ArrayList<ST32Results> similarLGAs = new ArrayList<ST32Results>();
+
+        // Variable to store proportion result of specified LGA for later comparison
+        ArrayList<String> specifiedLGAProportion = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // Query to find results from specified LGA
+            String query1 = "SELECT * ";
+            query1 += "FROM HSST32 h JOIN LGA_State ls ON h.lga_code = ls.lga_code AND h.lga_year = ls.lga_year ";
+            query1 += "WHERE h.lga_code = " + code + " AND ";
+            query1 += "h.indigenous_status = '" + status + "' AND ";
+            query1 += "h.income_bracket = '" + incomeBracket + "';";
+
+            // Printing out the query
+            System.out.println(query1);
+
+            // Get Result
+            ResultSet results1 = statement.executeQuery(query1);
+
+            // Process all of the results
+            while (results1.next()) {
+
+                // Creating variable to store specified LGA results
+                ST32Results specifiedLGA = new ST32Results();
+
+                specifiedLGA.setLGACode(Integer.parseInt(code));
+                specifiedLGA.setLGAName(results1.getString("lga_name"));
+                specifiedLGA.setResult(results1.getInt("count"));
+
+                // Processing proportional value
+                float lgaProportion = results1.getFloat("proportion");
+                specifiedLGAProportion.add(String.valueOf(results1.getFloat("proportion")));
+                DecimalFormat df = new DecimalFormat("#.###");
+                String lgaProportionString = String.valueOf(lgaProportion);
+                lgaProportionString = df.format(lgaProportion) + "%";
+
+                specifiedLGA.setProportion(lgaProportionString);
+                
+                similarLGAs.add(specifiedLGA);
+            }
+
+            // Query to find the other LGAs
+            if (specifiedLGAProportion.size() > 0) {
+                String query2 = "SELECT h.lga_code, ls.lga_name, h.indigenous_status, h.income_bracket, ";
+                query2 += "h.count, h.population_count, h.proportion ";
+                query2 += "FROM HSST32 h JOIN LGA_State ls ON h.lga_code = ls.lga_code AND h.lga_year = ls.lga_year ";
+                query2 += "WHERE h.indigenous_status = '" + status + "' AND ";
+                query2 += "h.income_bracket = '" + incomeBracket + "' AND ";
+                query2 += "h.proportion <= " + specifiedLGAProportion.get(0) + " ";
+                query2 += "ORDER BY h.proportion DESC ";
+                query2 += "LIMIT " + limit + ";";
                 // Printing out the query
             System.out.println(query2);
 

@@ -42,28 +42,13 @@
 
                         <fieldset>
 
-                            <legend>LGA/State</legend>
-
-                            <ul style='list-style-type: none;'>
-                                <!--TODO: find a way to implement this in external CSS stylesheet-->
-                                <li>
-                                    <input id='LGA' name='locationType' type='radio' value='LGA'>
-                                    <label for='locatioNType'>LGA</label>
-                                </li>
-                                <li>
-                                    <input id='state' name='locationType' type='radio' value='State'>
-                                    <label for='locationType'>State</label>
-                                </li>
-                            </ul>
-
-                            <br>
+                            <h4>Select an LGA:</h4>
 
                             <!-- <datalist id='locationSuggestions'> -->
                             <!--TODO: retrieve options from database-->
                             <!-- <select id ='location' name = 'location'> -->
                             <select class='form-control' id='location' name='location'>
                                 <option value=''>Please select...</option>
-                                <option th:each='state : ${states}' th:text='${state}' th:value='${state}'></option>
                                 <option th:each='code : ${lgaCodes}' th:text='${code}' th:value='${code}'></option>
                             </select>
                             <!-- </datalist> -->
@@ -73,23 +58,11 @@
 
                     </div>
 
-                    <div class='form-group'>
+                    <div class = 'form-group'>
 
-                        <fieldset>
-
-                            <legend>Value Type</legend>
-
-                            <ul style='list-style-type: none;'>
-                                <!--TODO: find a way to implement this in external CSS stylesheet-->
-                                <li>
-                                    <input id='raw' name='valueType' type='radio' value='Raw'>
-                                    <label for='valueType'>Raw</label>
-                                </li>
-                                <li>
-                                    <input id='proportional' name='valueType' type='radio' value='Proportional'>
-                                    <label for='valueType'>Proportional</label>
-                                </li>
-                            </ul>
+                        <fieldset class = 'number-input-field'>
+                            <h4>Enter the number of similar LGAs to find:</h4>
+                            <input type = 'number' min = '1' name = 'limit' id = 'limit'>
 
                         </fieldset>
 
@@ -98,8 +71,8 @@
                     <div class='form-group'>
 
                         <fieldset>
-
-                            <legend>Other</legend>
+                            <h4>Select data-specific filters:</h4>
+                            <br>
 
                             <h4>Indigenous Status</h4>
 
@@ -136,13 +109,13 @@
 
                             <br>
 
-                            <h4>Age Group</h4>
+                            <h4>Condition</h4>
 
                             <!-- <datalist id='ageSuggestions'> -->
                             <!--TODO: retrieve options from database-->
-                            <select id='age' name='age'>
+                            <select id='condition' name='condition'>
                                 <option value=''>Please select...</option>
-                                <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
+                                <option th:each='cond : ${conditions}' th:text='${cond}' th:value='${cond}'></option>
                             </select>
                             <!-- </datalist> -->
                             <!-- <input autoComplete='on' list='ageSuggestions'> -->

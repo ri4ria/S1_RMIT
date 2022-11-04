@@ -63,7 +63,9 @@ public class PageST32Education implements Handler {
 
             model.put("htmlToInject", html);
 
-       } else if (location == null || indigenousStatus == null & sex == null || schoolYear == null || limit == null) {
+       } else if (location == null || indigenousStatus == null & sex == null || schoolYear == null || limit == null || 
+                  location.equalsIgnoreCase("") || indigenousStatus.equalsIgnoreCase("") || sex.equalsIgnoreCase("") || 
+                  schoolYear.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Highest School Year Completed Data</h1>";

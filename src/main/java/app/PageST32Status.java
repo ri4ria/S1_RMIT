@@ -53,7 +53,9 @@ public class PageST32Status implements Handler {
 
             model.put("htmlToInject", html);
 
-       } else if (location == null || indigenousStatus == null & sex == null || age == null || limit == null) {
+       } else if (location == null || indigenousStatus == null || sex == null || age == null || limit == null || 
+                  location.equalsIgnoreCase("") || indigenousStatus.equalsIgnoreCase("") || sex.equalsIgnoreCase("") || 
+                  age.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Indigenous Status Data</h1>";

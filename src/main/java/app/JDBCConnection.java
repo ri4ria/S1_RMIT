@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -2354,16 +2355,13 @@ public class JDBCConnection {
         return ST22IncomeResults;
     }
     
-    public ArrayList<String> getST32HealthResults (int code, String status, String sex, String condition, int limit) {
+    public ArrayList<ST32Results> getST32HealthResults (String code, String status, String sex, String condition, String limit) {
 
         // Creating an ArrayList to store results
-        ArrayList<String> similarLGAs = new ArrayList<String>();
-
-        // Creating variable to store specified LGA results
-        String specifiedLGA;
+        ArrayList<ST32Results> similarLGAs = new ArrayList<ST32Results>();
 
         // Variable to store proportion result of specified LGA for later comparison
-        ArrayList<Float> specifiedLGAProportion = new ArrayList<Float>();
+        ArrayList<String> specifiedLGAProportion = new ArrayList<String>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
@@ -2378,11 +2376,11 @@ public class JDBCConnection {
 
             // Query to find results from specified LGA
             String query1 = "SELECT * ";
-            query1 += "FROM LTHCST32 ";
-            query1 += "WHERE lga_code = " + code + " AND ";
-            query1 += "indigenous_status = '" + status + "' AND ";
-            query1 += "sex = '" + sex + "' AND ";
-            query1 += "condition = '" + condition + "';";
+            query1 += "FROM LTHCST32 l JOIN LGA_State ls ON l.lga_code = ls.lga_code AND l.lga_year = ls.lga_year ";
+            query1 += "WHERE l.lga_code = " + code + " AND ";
+            query1 += "l.indigenous_status = '" + status + "' AND ";
+            query1 += "l.sex = '" + sex + "' AND ";
+            query1 += "l.condition = '" + condition + "';";
 
             // Printing out the query
             System.out.println(query1);
@@ -2392,25 +2390,38 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results1.next()) {
-                specifiedLGA = String.valueOf(code) + " ";
-                specifiedLGA += String.valueOf(results1.getInt("count")) + " ";
-                specifiedLGA += String.valueOf(results1.getFloat("proportion"));
+
+                // Creating variable to store specified LGA results
+                ST32Results specifiedLGA = new ST32Results();
+
+                specifiedLGA.setLGACode(Integer.parseInt(code));
+                specifiedLGA.setLGAName(results1.getString("lga_name"));
+                specifiedLGA.setResult(results1.getInt("count"));
+
+                // Processing proportional value
+                float lgaProportion = results1.getFloat("proportion");
+                specifiedLGAProportion.add(String.valueOf(results1.getFloat("proportion")));
+                DecimalFormat df = new DecimalFormat("#.###");
+                String lgaProportionString = String.valueOf(lgaProportion);
+                lgaProportionString = df.format(lgaProportion) + "%";
+
+                specifiedLGA.setProportion(lgaProportionString);
                 
                 similarLGAs.add(specifiedLGA);
-                specifiedLGAProportion.add(results1.getFloat("proportion"));
             }
 
             // Query to find the other LGAs
-            String query2 = "SELECT * ";
-            query2 += "FROM LTHCST32 ";
-            query2 += "WHERE indigenous_status = '" + status + "' AND ";
-            query2 += "sex = '" + sex + "' AND ";
-            query2 += "condition = '" + condition + "' AND ";
-            query2 += "proportion <= " + specifiedLGAProportion + " ";
-            query2 += "ORDER BY proportion DESC ";
-            query2 += "LIMIT " + limit + ";";
-
-            // Printing out the query
+            if (specifiedLGAProportion.size() > 0) {
+                String query2 = "SELECT l.lga_code, ls.lga_name, l.indigenous_status, l.sex, l.condition, ";
+                query2 += "l.count, l.population_count, l.proportion ";
+                query2 += "FROM LTHCST32 l JOIN LGA_State ls ON l.lga_code = ls.lga_code AND l.lga_year = ls.lga_year ";
+                query2 += "WHERE l.indigenous_status = '" + status + "' AND ";
+                query2 += "l.sex = '" + sex + "' AND ";
+                query2 += "l.condition = '" + condition + "' AND ";
+                query2 += "l.proportion <= " + specifiedLGAProportion.get(0) + " ";
+                query2 += "ORDER BY l.proportion DESC ";
+                query2 += "LIMIT " + limit + ";";
+                // Printing out the query
             System.out.println(query2);
 
             // Get Result
@@ -2420,19 +2431,32 @@ public class JDBCConnection {
             while (results1.next()) {
 
                 int lgaCode = results2.getInt("lga_code");
-
-                if (lgaCode == code) {
-                    continue;
-                }
-
+                String lgaName = results2.getString("lga_name");
                 int lgaResult = results2.getInt("count");
                 float lgaProportion = results2.getFloat("proportion");
 
-                specifiedLGA = String.valueOf(lgaCode) + " ";
-                specifiedLGA += String.valueOf(lgaResult) + " ";
-                specifiedLGA += String.valueOf(lgaProportion);
+                if (lgaCode == Integer.parseInt(code)) {
+                    continue;
+                } else {
 
-                similarLGAs.add(specifiedLGA);
+                    // Creating variable to store specified LGA results
+                    ST32Results specifiedLGA = new ST32Results();
+
+                    specifiedLGA.setLGACode(lgaCode);
+                    specifiedLGA.setLGAName(lgaName);
+                    specifiedLGA.setResult(lgaResult);
+                
+                    // Processing proportional value
+                    DecimalFormat df = new DecimalFormat("#.###");
+                    String lgaProportionString = String.valueOf(lgaProportion);
+                    lgaProportionString = df.format(lgaProportion) + "%";
+
+                    specifiedLGA.setProportion(lgaProportionString);
+
+                    similarLGAs.add(specifiedLGA);
+                }
+            }
+
             }
 
             // Close the statement because we are done with it
@@ -2457,6 +2481,102 @@ public class JDBCConnection {
 
         // Returning ArrayList of results
         return similarLGAs;
+    }
+
+    public ArrayList<String> get2021LGAs() {
+        ArrayList<String> codes = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT lga_code FROM LGA WHERE lga_year = 2021;";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                codes.add(results.getString("lga_code"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return codes;
+    }
+
+    public ArrayList<String> getIndigenousStatuses() {
+        ArrayList<String> statuses = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT(indigenous_status) FROM LTHCStatistics;";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                statuses.add(results.getString("indigenous_status"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return statuses;
     }
 
     public ArrayList<String> getStates() {

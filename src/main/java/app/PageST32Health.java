@@ -46,7 +46,7 @@ public class PageST32Health implements Handler {
         String limit = context.formParam("limit");
 
         // Inserting HTML 
-       if (location == null && indigenousStatus == null && sex == null && condition == null) {
+       if (location == null && indigenousStatus == null && sex == null && condition == null && limit == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Long-Term Health Conditions Data</h1>";
@@ -57,18 +57,18 @@ public class PageST32Health implements Handler {
 
             model.put("htmlToInject", html);
 
-       } else if (location == null || indigenousStatus == null & sex == null || condition == null) {
+       } else if (location == null || indigenousStatus == null & sex == null || condition == null || limit == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Long-Term Health Conditions Data</h1>";
             html = html + "<p style = 'color: #CA3732'><b>Not all required filter selections were made.</b></p>";
-            html = html + "<a href = '/page4.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
+            html = html + "<a href = '/page6.html'><button class = 'go-back-button'>Go Back to Dataset List</button></a>";
             html = html + "</div>"; // 'results-section' closing tag
             html = html + "</div>"; // 'introduction-results-wrapper' closing tag
 
             model.put("htmlToInject", html);
 
-       } else if (location != null && indigenousStatus != null && sex != null && condition != null) {
+       } else if (location != null && indigenousStatus != null && sex != null && condition != null && limit != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + "</h1>";
             html = html + "<h3>Filter Option Selections</h3>";

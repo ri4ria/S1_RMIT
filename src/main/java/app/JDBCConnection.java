@@ -2670,7 +2670,7 @@ public class JDBCConnection {
                 query2 += "p.age = '" + age + "' AND ";
                 query2 += "p.proportion <= " + specifiedLGAProportion.get(0) + " ";
                 query2 += "ORDER BY p.proportion DESC ";
-                query2 += "LIMIT " + limit + ";";
+                query2 += "LIMIT " + (Integer.parseInt(limit) + 1) + ";";
                 // Printing out the query
             System.out.println(query2);
 

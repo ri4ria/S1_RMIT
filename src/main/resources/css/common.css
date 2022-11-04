@@ -308,6 +308,20 @@ img.top-image {
    margin-left: 10px;
 }
 
+.filter-sidebar .number-input-field input {
+   font-family: Karla;
+   font-size: 15px;
+   background-color: white;
+   border: 1px;
+   border-style: solid;
+   border-color: #BFBFBF;
+   border-radius: 5px;
+   width: 200px;
+   height: 30px;
+   margin-bottom: 15px;
+   margin-left: 10px;
+}
+
 .filter-sidebar ul {
    list-style-type: none; /* currently not working */
    margin: 0px;

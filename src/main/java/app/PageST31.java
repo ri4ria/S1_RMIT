@@ -115,14 +115,15 @@ public class PageST31 implements Handler {
 
         html = html + """
             <fieldset>
-                <legend>Select one ore more</legend>
+                <legend>Select and filter datasets</legend>
                         """;
             
             html = html + """
                 <div class='form-group'> 
+                <label for='age_tick'></lable>
+                        <input type='checkbox' class='largerTick' id='age_tick' name='age_tick' value='age_tick'>
                     <label for='age_drop'>Select the Age Range:</label></br>
                         <select id='age_drop' name='age_drop'>
-                        <option>select</option>
                         """;
                         ArrayList<String> ageNum = jdbc.getAge(); 
     
@@ -131,13 +132,15 @@ public class PageST31 implements Handler {
                         }
     
                         html = html + "      </select>";
+                        
                         html = html + "   </div>";
                     
             html = html + """
                 <div class='form-group'> 
+                <label for='school_tick'></lable>
+                        <input type='checkbox' class='largerTick' id='school_tick' name='school_tick' value='school_tick'>
                     <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
                         <select id='school_drop' name='school_drop'>
-                        <option>select</option>
                         """;
                          ArrayList<String> schoolingYears = jdbc.getSchooling(); 
     
@@ -150,9 +153,10 @@ public class PageST31 implements Handler {
                     
             html = html + """        
                 <div class='form-group'> 
+                <label for='income_tick'></lable>
+                        <input type='checkbox' class='largerTick' id='income_tick' name='income_tick' value='income_tick'>
                     <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
                         <select id='income_drop' name='income_drop'>
-                        <option>select</option>
                         """;
                         ArrayList<String> incomeBrackets = jdbc.getHousehold(); 
     
@@ -165,7 +169,43 @@ public class PageST31 implements Handler {
                         html = html + "   </div>";
             html = html + "</fieldset>";
 
-            
+            html = html + "<fieldset>";
+            html = html + " <legend>Filter LGAs by area (enter digits only)</legend>";
+            html = html + "   <div class='form-group'>";
+            html = html + "      <label for='sqkmMin_textbox'> min (0 km)</label> </br>";
+            html = html + "      <input class='form-control' id='sqkmMin_textbox' name='sqkmMin_textbox' value='0'>";
+            html = html + "   </div>";
+            html = html + "   <div class='form-group'>";
+            html = html + "      <label for='sqkmMax_textbox'> max (1,000,000 km)</label>";
+            html = html + "      <input class='form-control' id='sqkmMax_textbox' name='sqkmMax_textbox' value='1000000'>";
+            html = html + "   </div>";
+            html = html + "</fieldset>";
+
+            html = html + """ 
+                <fieldset>
+                <legend>Sort the dataset</legend>
+                <div class='form-group'> 
+                    <label for='sort_drop'>Per table heading</label></br>
+                        <select id='sort_drop' name='sort_drop'>
+                            <option>sort.code ASC</option>
+                            <option>sort.code DESC</option>
+                            <option>sort.name ASC</option>
+                            <option>sort.name DESC</option>
+                            <option>sort.area ASC</option>
+                            <option>sort.area DESC</option>
+                        </select>
+                </div>
+                </fieldset> 
+                        """;
+
+            html = html + """  
+                <!-- Submit Button-->
+                <button type='submit' class='filter-button'>Compare LGAs</button>
+                </form>
+                </div>
+                """;
+
+    
 
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();

@@ -634,3 +634,8 @@ img.top-image {
 .st32-content {
    margin-right: -50px;
 }
+
+input.largerTick {
+   width: 15px;
+   height: 15px;
+}

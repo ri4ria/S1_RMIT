@@ -60,7 +60,9 @@
 
                         <fieldset>
 
-                            <legend>LGA/State</legend>
+                            <legend>Step 1</legend>
+
+                            <h4>Select LGA or state: <b style = 'color: #CA3732;'>*</b></h4>
 
                             <ul style='list-style-type: none;'>
                                 <!--TODO: find a way to implement this in external CSS stylesheet-->
@@ -73,8 +75,12 @@
                                     <label for='locationType'>State</label>
                                 </li>
                             </ul>
-
                             <br>
+
+                            <h4>Select LGA or State: <b style = 'color: #CA3732;'>*</b></h4>
+
+                            <p class = 'sidebar-information'>If you selected '<b>LGA</b>', please select an LGA code (5-digit number).</p>
+                            <p class = 'sidebar-information'>If you selected '<b>State</b>', please select a state.</p>
 
                             <!-- <datalist id='locationSuggestions'> -->
                             <!--TODO: retrieve options from database-->
@@ -95,7 +101,10 @@
 
                         <fieldset>
 
-                            <legend>Value Type</legend>
+                            <legend>Step 2</legend>
+
+                            <h4>Choose whether results should use proportional or raw values: <b style = 'color: #CA3732;'>*</b></h4>
+                            <br>
 
                             <ul style='list-style-type: none;'>
                                 <!--TODO: find a way to implement this in external CSS stylesheet-->
@@ -117,9 +126,12 @@
 
                         <fieldset>
 
-                            <legend>Other</legend>
+                            <legend>Step 3</legend>
 
-                            <h4>Income Bracket</h4>
+                            <h4>Select data-specific filters:</h4>
+                            <br>
+
+                            <p class = 'dataset-specific-filter-heading'>Income Bracket <b style = 'color: #CA3732;'>*</b></p>
 
                             <select id='incomeBracket' name='incomeBracket'>
                                 <option value=''>Please select...</option>
@@ -130,7 +142,7 @@
 
                             <br>
 
-                            <h4>Household Indigenous Status</h4>
+                            <p class = 'dataset-specific-filter-heading'>Household Indigenous Status <b style = 'color: #CA3732;'>*</b></p>
 
                             <select id='householdStatus' name='householdStatus'>
                                 <option value=''>Please select...</option>

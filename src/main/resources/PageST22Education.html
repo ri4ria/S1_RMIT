@@ -42,7 +42,9 @@
 
                         <fieldset>
 
-                            <legend>LGA/State</legend>
+                            <legend>Step 1</legend>
+
+                            <h4>Select location type: <b style = 'color: #CA3732;'>*</b></h4>
 
                             <ul style='list-style-type: none;'>
                                 <!--TODO: find a way to implement this in external CSS stylesheet-->
@@ -61,6 +63,12 @@
                             <!-- <datalist id='locationSuggestions'> -->
                             <!--TODO: retrieve options from database-->
                             <!-- <select id ='location' name = 'location'> -->
+
+                            <h4>Select LGA or State: <b style = 'color: #CA3732;'>*</b></h4>
+
+                            <p class = 'sidebar-information'>If you selected '<b>LGA</b>', please select an LGA code (5-digit number).</p>
+                            <p class = 'sidebar-information'>If you selected '<b>State</b>', please select a state.</p>
+
                             <select class='form-control' id='location' name='location'>
                                 <option value=''>Please select...</option>
                                 <option th:each='state : ${states}' th:text='${state}' th:value='${state}'></option>
@@ -77,7 +85,10 @@
 
                         <fieldset>
 
-                            <legend>Value Type</legend>
+                            <legend>Step 2</legend>
+
+                            <h4>Choose whether results should use proportional or raw values: <b style = 'color: #CA3732;'>*</b></h4>
+                            <br>
 
                             <ul style='list-style-type: none;'>
                                 <!--TODO: find a way to implement this in external CSS stylesheet-->
@@ -99,9 +110,12 @@
 
                         <fieldset>
 
-                            <legend>Other</legend>
+                            <legend>Step 3</legend>
 
-                            <h4>Indigenous Status</h4>
+                            <h4>Select data-specific filters:</h4>
+                            <br>
+
+                            <p class = 'dataset-specific-filter-heading'>Indigenous Status <b style = 'color: #CA3732;'>*</b></p>
 
                             <ul style='list-style-type: none;'>
                                 <!--TODO: find a way to implement this in external CSS stylesheet-->
@@ -121,7 +135,7 @@
 
                             <br>
 
-                            <h4>Sex</h4>
+                            <p class = 'dataset-specific-filter-heading'>Sex <b style = 'color: #CA3732;'>*</b></p>
 
                             <ul>
                                 <li>
@@ -136,7 +150,7 @@
 
                             <br>
 
-                            <h4>Highest Year of School Completed</h4>
+                            <p class = 'dataset-specific-filter-heading'>Highest Year of School Completed <b style = 'color: #CA3732;'>*</b></p>
 
                             <select id='highestSchoolYearCompleted' name='highestSchoolYearCompleted'>
                                 <option value=''>Please select...</option>

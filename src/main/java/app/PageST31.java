@@ -97,12 +97,12 @@ public class PageST31 implements Handler {
             <h2>Compare the scores for different Local Government Areas over different census years</h2>
             <p>Select a condition, filter by the area, sort the gap scores in ASC (ascending) or DESC (descending) order and or by the average proportional indigenous population.</p>
             <div class='info-L3-wrap'>
-            <h4 class='info-L3'>A '+' gap score indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
-            <h4 class='info-L3'>A '-' gap score indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
-            <h4 class='info-L3'>A '0' gap score indicates: the gap between the communities is small for a given LGA</h4>
-            <h4 class='info-L3'>A '+%' change score indicates: portion of indigenous population increased in 2021 when comparing with 2016.</h4> 
-            <h4 class='info-L3'>A '-%' change score indicates: portion of indigenous population has decreased in 2021 when comparing with 2016.</h4>
-            <h4 class='info-L3'>A '0%' change score indicates: there was no change in the indigenous population in 2021 when comparing with 2016.</h4>
+            <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
+            <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
+            <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
+            <h4 class='info-L3'>A <i class='selectionBlue'>'+%' change score</i> indicates: portion of indigenous population increased in 2021 when comparing with 2016.</h4> 
+            <h4 class='info-L3'>A <i class='selectionBlue'>'-%' change score</i> indicates: portion of indigenous population has decreased in 2021 when comparing with 2016.</h4>
+            <h4 class='info-L3'>A <i class='selectionBlue'>'0%' change score</i> indicates: there was no change in the indigenous population in 2021 when comparing with 2016.</h4>
             </div>
         """;
 

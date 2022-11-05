@@ -92,15 +92,15 @@ public class PageST22Status implements Handler {
             float result2021 = results.getResult2021();
             String result2016F = df.format(result2016);
             String result2021F = df.format(result2021);
-
+        
             if (result2016 < 1.0) {
                 result2016 = result2016 * 100;
                 result2021 = result2021 * 100;
                 result2016F = df.format(result2016) + "%";
                 result2021F = df.format(result2021) + "%";
-            } else if (result2016 < 1.0) {
-                result2016F = String.valueOf(result2016);
-                result2021F = String.valueOf(result2021);
+            } else if (result2016 > 1.0) {
+                result2016F = String.valueOf(Math.round(result2016));
+                result2021F = String.valueOf(Math.round(result2021));
             }
 
             html = html + "<div class = 'results-table'>";

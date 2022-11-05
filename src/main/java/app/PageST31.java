@@ -205,6 +205,21 @@ public class PageST31 implements Handler {
                 </div>
                 """;
 
+                String age_drop = context.formParam("age_drop");
+                String school_drop = context.formParam("school_drop");
+                String income_drop = context.formParam("income_drop");
+    
+                String age_tick = context.formParam("age_tick");
+                String school_tick = context.formParam("school_tick");
+                String income_tick = context.formParam("income_tick");
+
+                String sqkmMin_textbox = context.formParam("sqkmMin_textbox");
+                String sqkmMax_textbox = context.formParam("sqkmMax_textbox");
+
+                String sort_drop = context.formParam("sort_drop");
+
+
+
     
 /* 
         // Next we will ask this *class* for the LGAs

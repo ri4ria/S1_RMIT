@@ -206,7 +206,7 @@ public class PageST31 implements Handler {
                 """;
 
     
-
+/* 
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 
@@ -219,6 +219,7 @@ public class PageST31 implements Handler {
                         + " - " + lga.getYear()
                         + " - " + lga.getName() + "</li>";
         }
+*/
 
         // Finish the List HTML
         html = html + "</ul>";

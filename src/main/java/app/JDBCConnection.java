@@ -580,8 +580,6 @@ public class JDBCConnection {
 
         if (valueType.equalsIgnoreCase("raw")) {
             if (locationType.equalsIgnoreCase("LGA")) {
-                int[] years = { 2016, 2021 };
-
                 try {
                     // Connect to JDBC data base
                     connection = DriverManager.getConnection(DATABASE);
@@ -590,43 +588,13 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement();
                     statement.setQueryTimeout(30);
 
-                    /*
-                    String query = "SELECT * ";
-                    query += "FROM ES2016VS2021 ";
-                    query += "WHERE (`2016 LGA Code` = " + location + " OR `2021 LGA Code` = " + location + ") AND ";
-                    query += "(`2016 Indigenous Status` = '" + indigenousStatus + "' OR `2021 Indigenous Status` = '"
-                            + indigenousStatus + "') AND ";
-                    query += "(`2016 Sex` = '" + sex + "' OR `2021 Sex` = '" + sex + "') AND ";
-                    query += "(`2016 Highest School Year Completed` = '" + highestSchoolYear
-                            + "' OR `2021 Highest School Year Completed` = '" + highestSchoolYear + "');";
-                    */
-
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
                         // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "')) AS 'proportion' ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "' AND ";
-                        query1 += "highest_school_year = '" + highestSchoolYear + "';";
+                        String query1 = "SELECT * ";
+                        query1 += "FROM ESST22Comparison " ;
+                        query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                        query1 += "(status_2016 = '" + indigenousStatus + "' OR status_2021 = '" + indigenousStatus + "') AND ";
+                        query1 += "(sex_2016 = '" + sex + "' OR sex_2021 = '" + sex + "') AND ";
+                        query1 += "(hs_year_completed_2016 = '" + highestSchoolYear + "' OR hs_year_completed_2021 = '" + highestSchoolYear + "');";
 
                         System.out.println(query1);
 
@@ -635,78 +603,20 @@ public class JDBCConnection {
 
                         // Process and store results
                         while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22EducationResults.setLGAName2016(results.getString("lga_name"));
-                                ST22EducationResults.setLGAState2016(results.getString("state"));
-                                ST22EducationResults.setLGAType2016(results.getString("lga_type"));
-                                ST22EducationResults.setResult2016(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22EducationResults.setLGAName2021(results.getString("lga_name"));
-                                ST22EducationResults.setLGAState2021(results.getString("state"));
-                                ST22EducationResults.setLGAType2021(results.getString("lga_type"));
-                                ST22EducationResults.setResult2021(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            }
+                            
+                            ST22EducationResults.setLGAName2016(results.getString("name_2016"));
+                            ST22EducationResults.setLGAState2016(results.getString("state_2016"));
+                            ST22EducationResults.setLGAType2016(results.getString("type_2016"));
+                            ST22EducationResults.setResult2016(results.getInt("result_2016"));
+                            ST22EducationResults.setRank2016(results.getInt("rank_2016"));
+                           
+                            ST22EducationResults.setLGAName2021(results.getString("name_2021"));
+                            ST22EducationResults.setLGAState2021(results.getString("state_2021"));
+                            ST22EducationResults.setLGAType2021(results.getString("type_2021"));
+                            ST22EducationResults.setResult2021(results.getInt("result_2021"));
+                            ST22EducationResults.setRank2021(results.getInt("rank_2021"));
                         }
 
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "')) AS 'proportion' ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "' AND ";
-                            query2 += "highest_school_year = '" + highestSchoolYear + "';";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22EducationResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22EducationResults.setRank2021(i);
-                                }
-                            }
-                        }
-                    }
                     // Close the statement because we are done with it
                     statement.close();
                 } catch (SQLException e) {
@@ -1027,7 +937,6 @@ public class JDBCConnection {
                 }
             }
         } else if (locationType.equalsIgnoreCase("LGA")) {
-            int[] years = { 2016, 2021 };
 
                 try {
                     // Connect to JDBC data base
@@ -1037,43 +946,13 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement();
                     statement.setQueryTimeout(30);
 
-                    /*
-                    String query = "SELECT * ";
-                    query += "FROM ES2016VS2021 ";
-                    query += "WHERE (`2016 LGA Code` = " + location + " OR `2021 LGA Code` = " + location + ") AND ";
-                    query += "(`2016 Indigenous Status` = '" + indigenousStatus + "' OR `2021 Indigenous Status` = '"
-                            + indigenousStatus + "') AND ";
-                    query += "(`2016 Sex` = '" + sex + "' OR `2021 Sex` = '" + sex + "') AND ";
-                    query += "(`2016 Highest School Year Completed` = '" + highestSchoolYear
-                            + "' OR `2021 Highest School Year Completed` = '" + highestSchoolYear + "');";
-                    */
-
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
                         // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "')) AS 'proportion' ";
-                        query1 += "FROM ES" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "' AND ";
-                        query1 += "highest_school_year = '" + highestSchoolYear + "';";
+                        String query1 = "SELECT * ";
+                        query1 += "FROM ESST22Comparison " ;
+                        query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                        query1 += "(status_2016 = '" + indigenousStatus + "' OR status_2021 = '" + indigenousStatus + "') AND ";
+                        query1 += "(sex_2016 = '" + sex + "' OR sex_2021 = '" + sex + "') AND ";
+                        query1 += "(hs_year_completed_2016 = '" + highestSchoolYear + "' OR hs_year_completed_2021 = '" + highestSchoolYear + "');";
 
                         System.out.println(query1);
 
@@ -1082,78 +961,20 @@ public class JDBCConnection {
 
                         // Process and store results
                         while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22EducationResults.setLGAName2016(results.getString("lga_name"));
-                                ST22EducationResults.setLGAState2016(results.getString("state"));
-                                ST22EducationResults.setLGAType2016(results.getString("lga_type"));
-                                ST22EducationResults.setResult2016(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22EducationResults.setLGAName2021(results.getString("lga_name"));
-                                ST22EducationResults.setLGAState2021(results.getString("state"));
-                                ST22EducationResults.setLGAType2021(results.getString("lga_type"));
-                                ST22EducationResults.setResult2021(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
+
+                                ST22EducationResults.setLGAName2016(results.getString("name_2016"));
+                                ST22EducationResults.setLGAState2016(results.getString("state_2016"));
+                                ST22EducationResults.setLGAType2016(results.getString("type_2016"));
+                                ST22EducationResults.setResult2016(results.getFloat("proportion_2016"));
+                                ST22EducationResults.setRank2016(results.getInt("rank_2016"));
+
+                                ST22EducationResults.setLGAName2021(results.getString("name_2021"));
+                                ST22EducationResults.setLGAState2021(results.getString("state_2021"));
+                                ST22EducationResults.setLGAType2021(results.getString("type_2021"));
+                                ST22EducationResults.setResult2021(results.getFloat("proportion_2021"));
+                                ST22EducationResults.setRank2021(results.getInt("rank_2021"));
                             }
-                        }
 
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "')) AS 'proportion' ";
-                            query2 += "FROM ES" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "' AND ";
-                            query2 += "highest_school_year = '" + highestSchoolYear + "';";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22EducationResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22EducationResults.setRank2021(i);
-                                }
-                            }
-                        }
-                    }
                     // Close the statement because we are done with it
                     statement.close();
                 } catch (SQLException e) {
@@ -1197,8 +1018,6 @@ public class JDBCConnection {
 
         if (valueType.equalsIgnoreCase("raw")) {
             if (locationType.equalsIgnoreCase("LGA")) {
-                int[] years = { 2016, 2021 };
-
                 try {
                     // Connect to JDBC data base
                     connection = DriverManager.getConnection(DATABASE);
@@ -1207,32 +1026,13 @@ public class JDBCConnection {
                     Statement statement = connection.createStatement();
                     statement.setQueryTimeout(30);
 
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
                         // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "')) AS 'proportion' ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "' AND ";
-                        query1 += "age = '" + age + "';";
+                        String query1 = "SELECT * ";
+                        query1 += "FROM PSST22Comparison " ;
+                        query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                        query1 += "(status_2016 = '" + indigenousStatus + "' OR status_2021 = '" + indigenousStatus + "') AND ";
+                        query1 += "(sex_2016 = '" + sex + "' OR sex_2021 = '" + sex + "') AND ";
+                        query1 += "(age_2016 = '" + age + "' OR age_2021 = '" + age + "');";
 
                         System.out.println(query1);
 
@@ -1241,78 +1041,20 @@ public class JDBCConnection {
 
                         // Process and store results
                         while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22PopulationResults.setLGAName2016(results.getString("lga_name"));
-                                ST22PopulationResults.setLGAState2016(results.getString("state"));
-                                ST22PopulationResults.setLGAType2016(results.getString("lga_type"));
-                                ST22PopulationResults.setResult2016(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22PopulationResults.setLGAName2021(results.getString("lga_name"));
-                                ST22PopulationResults.setLGAState2021(results.getString("state"));
-                                ST22PopulationResults.setLGAType2021(results.getString("lga_type"));
-                                ST22PopulationResults.setResult2021(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            }
+                            
+                            ST22PopulationResults.setLGAName2016(results.getString("name_2016"));
+                            ST22PopulationResults.setLGAState2016(results.getString("state_2016"));
+                            ST22PopulationResults.setLGAType2016(results.getString("type_2016"));
+                            ST22PopulationResults.setResult2016(results.getInt("result_2016"));
+                            ST22PopulationResults.setRank2016(results.getInt("rank_2016"));
+                           
+                            ST22PopulationResults.setLGAName2021(results.getString("name_2021"));
+                            ST22PopulationResults.setLGAState2021(results.getString("state_2021"));
+                            ST22PopulationResults.setLGAType2021(results.getString("type_2021"));
+                            ST22PopulationResults.setResult2021(results.getInt("result_2021"));
+                            ST22PopulationResults.setRank2021(results.getInt("rank_2021"));
                         }
 
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "')) AS 'proportion' ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "' AND ";
-                            query2 += "age = '" + age + "';";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22PopulationResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22PopulationResults.setRank2021(i);
-                                }
-                            }
-                        }
-                    }
                     // Close the statement because we are done with it
                     statement.close();
                 } catch (SQLException e) {
@@ -1633,138 +1375,59 @@ public class JDBCConnection {
                 }
             }
         } else if (locationType.equalsIgnoreCase("LGA")) {
-            int[] years = { 2016, 2021 };
+            try {
+                // Connect to JDBC data base
+                connection = DriverManager.getConnection(DATABASE);
 
+                // Prepare a new SQL Query & Set a timeout
+                Statement statement = connection.createStatement();
+                statement.setQueryTimeout(30);
+
+                    // Query to find selected LGA results
+                    String query1 = "SELECT * ";
+                    query1 += "FROM PSST22Comparison " ;
+                    query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                    query1 += "(status_2016 = '" + indigenousStatus + "' OR status_2021 = '" + indigenousStatus + "') AND ";
+                    query1 += "(sex_2016 = '" + sex + "' OR sex_2021 = '" + sex + "') AND ";
+                    query1 += "(age_2016 = '" + age + "' OR age_2021 = '" + age + "');";
+
+                    System.out.println(query1);
+
+                    // Get Result
+                    ResultSet results = statement.executeQuery(query1);
+
+                    // Process and store results
+                    while (results.next()) {
+                        
+                        ST22PopulationResults.setLGAName2016(results.getString("name_2016"));
+                        ST22PopulationResults.setLGAState2016(results.getString("state_2016"));
+                        ST22PopulationResults.setLGAType2016(results.getString("type_2016"));
+                        ST22PopulationResults.setResult2016(results.getFloat("proportion_2016"));
+                        ST22PopulationResults.setRank2016(results.getInt("rank_2016"));
+                       
+                        ST22PopulationResults.setLGAName2021(results.getString("name_2021"));
+                        ST22PopulationResults.setLGAState2021(results.getString("state_2021"));
+                        ST22PopulationResults.setLGAType2021(results.getString("type_2021"));
+                        ST22PopulationResults.setResult2021(results.getFloat("proportion_2021"));
+                        ST22PopulationResults.setRank2021(results.getInt("rank_2021"));
+                    }
+
+                // Close the statement because we are done with it
+                statement.close();
+            } catch (SQLException e) {
+                // If there is an error, lets just pring the error
+                System.err.println(e.getMessage());
+            } finally {
+                // Safety code to cleanup
                 try {
-                    // Connect to JDBC data base
-                    connection = DriverManager.getConnection(DATABASE);
-
-                    // Prepare a new SQL Query & Set a timeout
-                    Statement statement = connection.createStatement();
-                    statement.setQueryTimeout(30);
-
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
-                        // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "')) AS 'proportion' ";
-                        query1 += "FROM PS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                        query1 += "sex = '" + sex + "' AND ";
-                        query1 += "age = '" + age + "';";
-
-                        System.out.println(query1);
-
-                        // Get Result
-                        ResultSet results = statement.executeQuery(query1);
-
-                        // Process and store results
-                        while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22PopulationResults.setLGAName2016(results.getString("lga_name"));
-                                ST22PopulationResults.setLGAState2016(results.getString("state"));
-                                ST22PopulationResults.setLGAType2016(results.getString("lga_type"));
-                                ST22PopulationResults.setResult2016(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22PopulationResults.setLGAName2021(results.getString("lga_name"));
-                                ST22PopulationResults.setLGAState2021(results.getString("state"));
-                                ST22PopulationResults.setLGAType2021(results.getString("lga_type"));
-                                ST22PopulationResults.setResult2021(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            }
-                        }
-
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "')) AS 'proportion' ";
-                            query2 += "FROM PS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + indigenousStatus + "' AND ";
-                            query2 += "sex = '" + sex + "' AND ";
-                            query2 += "age = '" + age + "';";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22PopulationResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22PopulationResults.setRank2021(i);
-                                }
-                            }
-                        }
+                    if (connection != null) {
+                        connection.close();
                     }
-                    // Close the statement because we are done with it
-                    statement.close();
                 } catch (SQLException e) {
-                    // If there is an error, lets just pring the error
+                    // connection close failed.
                     System.err.println(e.getMessage());
-                } finally {
-                    // Safety code to cleanup
-                    try {
-                        if (connection != null) {
-                            connection.close();
-                        }
-                    } catch (SQLException e) {
-                        // connection close failed.
-                        System.err.println(e.getMessage());
-                    }
                 }
+            }
         }
     }
 
@@ -1792,116 +1455,42 @@ public class JDBCConnection {
 
         if (valueType.equalsIgnoreCase("raw")) {
             if (locationType.equalsIgnoreCase("LGA")) {
-                int[] years = { 2016, 2021 };
-
                 try {
                     // Connect to JDBC data base
                     connection = DriverManager.getConnection(DATABASE);
-
+    
                     // Prepare a new SQL Query & Set a timeout
                     Statement statement = connection.createStatement();
                     statement.setQueryTimeout(30);
-
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
+    
                         // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "')) AS 'proportion' ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "' AND ";
-                        query1 += "income_bracket = '" + incomeBracket + "'";
-
+                        String query1 = "SELECT * ";
+                        query1 += "FROM HSST22Comparison " ;
+                        query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                        query1 += "(status_2016 = '" + householdIndigenousStatus + "' OR status_2021 = '" + householdIndigenousStatus + "') AND ";
+                        query1 += "(income_2016 = '" + incomeBracket + "' OR income_2021 = '" + incomeBracket + "');";
+    
                         System.out.println(query1);
-
+    
                         // Get Result
                         ResultSet results = statement.executeQuery(query1);
-
+    
                         // Process and store results
                         while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22IncomeResults.setLGAName2016(results.getString("lga_name"));
-                                ST22IncomeResults.setLGAState2016(results.getString("state"));
-                                ST22IncomeResults.setLGAType2016(results.getString("lga_type"));
-                                ST22IncomeResults.setResult2016(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22IncomeResults.setLGAName2021(results.getString("lga_name"));
-                                ST22IncomeResults.setLGAState2021(results.getString("state"));
-                                ST22IncomeResults.setLGAType2021(results.getString("lga_type"));
-                                ST22IncomeResults.setResult2021(results.getInt("count"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            }
+                            
+                            ST22IncomeResults.setLGAName2016(results.getString("name_2016"));
+                            ST22IncomeResults.setLGAState2016(results.getString("state_2016"));
+                            ST22IncomeResults.setLGAType2016(results.getString("type_2016"));
+                            ST22IncomeResults.setResult2016(results.getInt("result_2016"));
+                            ST22IncomeResults.setRank2016(results.getInt("rank_2016"));
+                           
+                            ST22IncomeResults.setLGAName2021(results.getString("name_2021"));
+                            ST22IncomeResults.setLGAState2021(results.getString("state_2021"));
+                            ST22IncomeResults.setLGAType2021(results.getString("type_2021"));
+                            ST22IncomeResults.setResult2021(results.getInt("result_2021"));
+                            ST22IncomeResults.setRank2021(results.getInt("rank_2021"));
                         }
-
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "')) AS 'proportion' ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "' AND ";
-                            query2 += "income_bracket = '" + incomeBracket + "'";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22IncomeResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22IncomeResults.setRank2021(i);
-                                }
-                            }
-                        }
-                    }
+    
                     // Close the statement because we are done with it
                     statement.close();
                 } catch (SQLException e) {
@@ -2217,132 +1806,58 @@ public class JDBCConnection {
                 }
             }
         } else if (locationType.equalsIgnoreCase("LGA")) {
-            int[] years = { 2016, 2021 };
+            try {
+                // Connect to JDBC data base
+                connection = DriverManager.getConnection(DATABASE);
 
+                // Prepare a new SQL Query & Set a timeout
+                Statement statement = connection.createStatement();
+                statement.setQueryTimeout(30);
+
+                    // Query to find selected LGA results
+                    String query1 = "SELECT * ";
+                    query1 += "FROM HSST22Comparison " ;
+                    query1 += "WHERE (code_2016 = " + location + " OR code_2021 = " + location + ") AND ";
+                    query1 += "(status_2016 = '" + householdIndigenousStatus + "' OR status_2021 = '" + householdIndigenousStatus + "') AND ";
+                    query1 += "(income_2016 = '" + incomeBracket + "' OR income_2021 = '" + incomeBracket + "');";
+
+                    System.out.println(query1);
+
+                    // Get Result
+                    ResultSet results = statement.executeQuery(query1);
+
+                    // Process and store results
+                    while (results.next()) {
+                        
+                        ST22IncomeResults.setLGAName2016(results.getString("name_2016"));
+                        ST22IncomeResults.setLGAState2016(results.getString("state_2016"));
+                        ST22IncomeResults.setLGAType2016(results.getString("type_2016"));
+                        ST22IncomeResults.setResult2016(results.getFloat("proportion_2016"));
+                        ST22IncomeResults.setRank2016(results.getInt("rank_2016"));
+                       
+                        ST22IncomeResults.setLGAName2021(results.getString("name_2021"));
+                        ST22IncomeResults.setLGAState2021(results.getString("state_2021"));
+                        ST22IncomeResults.setLGAType2021(results.getString("type_2021"));
+                        ST22IncomeResults.setResult2021(results.getFloat("proportion_2021"));
+                        ST22IncomeResults.setRank2021(results.getInt("rank_2021"));
+                    }
+
+                // Close the statement because we are done with it
+                statement.close();
+            } catch (SQLException e) {
+                // If there is an error, lets just pring the error
+                System.err.println(e.getMessage());
+            } finally {
+                // Safety code to cleanup
                 try {
-                    // Connect to JDBC data base
-                    connection = DriverManager.getConnection(DATABASE);
-
-                    // Prepare a new SQL Query & Set a timeout
-                    Statement statement = connection.createStatement();
-                    statement.setQueryTimeout(30);
-
-                    // Create connection to JDBC class
-                    JDBCConnection jdbc = new JDBCConnection();
-
-                    ArrayList<String> lgaCodes = jdbc.getLGACodes();
-                    float[] lgaProportions = new float[lgaCodes.size()];
-                    float proportionTracker;
-
-                    for (int y = 0; y < years.length; y++) {
-
-                        // Query to find selected LGA results
-                        String query1 = "SELECT *, ";
-                        query1 += "(SELECT SUM(count) ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "') AS 'SUM(count)', ";
-                        query1 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "')) AS 'proportion' ";
-                        query1 += "FROM HS" + years[y] + " ";
-                        query1 += "WHERE lga_code = " + location + " AND ";
-                        query1 += "indigenous_status = '" + householdIndigenousStatus + "' AND ";
-                        query1 += "income_bracket = '" + incomeBracket + "'";
-
-                        System.out.println(query1);
-
-                        // Get Result
-                        ResultSet results = statement.executeQuery(query1);
-
-                        // Process and store results
-                        while (results.next()) {
-                            if (years[y] == 2016) {
-                                ST22IncomeResults.setLGAName2016(results.getString("lga_name"));
-                                ST22IncomeResults.setLGAState2016(results.getString("state"));
-                                ST22IncomeResults.setLGAType2016(results.getString("lga_type"));
-                                ST22IncomeResults.setResult2016(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            } else if (years[y] == 2021) {
-                                ST22IncomeResults.setLGAName2021(results.getString("lga_name"));
-                                ST22IncomeResults.setLGAState2021(results.getString("state"));
-                                ST22IncomeResults.setLGAType2021(results.getString("lga_type"));
-                                ST22IncomeResults.setResult2021(results.getFloat("proportion"));
-                                lgaProportions[0] = results.getFloat("proportion");
-                            }
-                        }
-
-                        proportionTracker = lgaProportions[0];
-
-                        for (int i = 1; i < lgaCodes.size(); i++) {
-                            String query2 = "SELECT *, ";
-                            query2 += "(SELECT SUM(count) ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "') AS 'SUM(count)', ";
-                            query2 += "SUM(1.0 * count / (SELECT SUM(count) ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "')) AS 'proportion' ";
-                            query2 += "FROM HS" + years[y] + " ";
-                            query2 += "WHERE lga_code = " + lgaCodes.get(i) + " AND ";
-                            query2 += "indigenous_status = '" + householdIndigenousStatus + "' AND ";
-                            query2 += "income_bracket = '" + incomeBracket + "'";
-
-                            System.out.println(query2);
-
-                            // Get Result
-                            ResultSet results2 = statement.executeQuery(query2);
-
-                            // Adding proportion result of lgaCode
-                            while (results2.next()) {
-                                lgaProportions[i] = results2.getFloat("proportion");
-                            }
-                        }
-
-                        // Sorting proportion results in descending order
-                        for (int i = 0; i < lgaProportions.length; i++) {
-                            for (int j = i + 1; j < lgaProportions.length; j++) {
-                                float temp = 0;
-                                if (lgaProportions[j] > lgaProportions[i]) {
-                                    temp = lgaProportions[j];
-                                    lgaProportions[j] = lgaProportions[i];
-                                    lgaProportions[i] = temp;
-                                }
-                            }
-                        }
-
-                        if (years[y] == 2016) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22IncomeResults.setRank2016(i);
-                                }
-                            }
-                        } else if (years[y] == 2021) {
-                            for (int i = 0; i < lgaProportions.length; i++) {
-                                if (lgaProportions[i] == proportionTracker) {
-                                    ST22IncomeResults.setRank2021(i);
-                                }
-                            }
-                        }
+                    if (connection != null) {
+                        connection.close();
                     }
-                    // Close the statement because we are done with it
-                    statement.close();
                 } catch (SQLException e) {
-                    // If there is an error, lets just pring the error
+                    // connection close failed.
                     System.err.println(e.getMessage());
-                } finally {
-                    // Safety code to cleanup
-                    try {
-                        if (connection != null) {
-                            connection.close();
-                        }
-                    } catch (SQLException e) {
-                        // connection close failed.
-                        System.err.println(e.getMessage());
-                    }
                 }
+            }
         }
     }
 

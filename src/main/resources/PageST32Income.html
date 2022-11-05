@@ -60,9 +60,9 @@
 
                         <fieldset>
 
-                            <legend>Step 1:</legend>
+                            <legend>Step 1</legend>
 
-                            <h4>Select an LGA:</h4>
+                            <h4>Select an LGA: <b style = 'color: #CA3732;'>*</b></h4>
 
                             <!-- <datalist id='locationSuggestions'> -->
                             <!--TODO: retrieve options from database-->
@@ -82,9 +82,9 @@
 
                         <fieldset class = 'number-input-field'>
 
-                            <legend>Step 2:</legend>
+                            <legend>Step 2</legend>
 
-                            <h4>Enter the number of similar LGAs to find:</h4>
+                            <h4>Enter the number of similar LGAs to find: <b style = 'color: #CA3732;'>*</b></h4>
                             <input type = 'number' min = '1' name = 'limit' id = 'limit'>
 
                         </fieldset>
@@ -95,12 +95,12 @@
 
                         <fieldset>
 
-                            <legend>Step 3:</legend>
+                            <legend>Step 3</legend>
 
                             <h4>Select data-specific filters:</h4>
                             <br>
 
-                            <h4>Income Bracket</h4>
+                            <p class = 'dataset-specific-filter-heading'>Income Bracket <b style = 'color: #CA3732;'>*</b></p>
 
                             <select id='incomeBracket' name='incomeBracket'>
                                 <option value=''>Please select...</option>
@@ -111,7 +111,7 @@
 
                             <br>
 
-                            <h4>Household Indigenous Status</h4>
+                            <p class = 'dataset-specific-filter-heading'>Household Indigenous Status <b style = 'color: #CA3732;'>*</b></p>
 
                             <select id='householdStatus' name='householdStatus'>
                                 <option value=''>Please select...</option>

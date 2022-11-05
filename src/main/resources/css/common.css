@@ -539,7 +539,7 @@ img.top-image {
 
 .st32-dataset {
    background-color: #F0E7D4;
-   border-style: solid;
+   border-style: solid none solid solid;
    border-width: 1px;
    border-color: #BFBFBF;
    border-radius: 20px 0px 0px 20px;
@@ -556,7 +556,7 @@ img.top-image {
    display: flex;
    align-items: flex-start;
    background-color: #F0E7D4;
-   border-style: solid;
+   border-style: solid none solid solid;
    border-width: 1px;
    border-color: #BFBFBF;
    border-radius: 20px 0px 0px 20px;
@@ -591,4 +591,8 @@ img.top-image {
 
 .st32-dataset-listed ul {
    text-align: left;
+}
+
+.st32-content {
+   margin-right: -50px;
 }

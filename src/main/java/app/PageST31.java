@@ -85,7 +85,7 @@ public class PageST31 implements Handler {
         // Add header content block
         html = html + """
             <div class='header'>
-                <h1>Compare Gap Scores Between Indigenous and Non-indigenous over the Census Years</h1>
+                <h1>Compare Gap Scores over the Census Years</h1>
             </div>
         """;
 
@@ -94,8 +94,8 @@ public class PageST31 implements Handler {
 
          // Add instructions on how to use the filters
          html = html + """
-            <h2>Compare the scores for different Local Government Areas over different census years</h2>
-            <p>Select a condition, filter by the area, sort the gap scores in ASC (ascending) or DESC (descending) order and or by the average proportional indigenous population.</p>
+            <h2>Compare indigenous population with non-indigenous population in different Local Government Areas using census results from 2021 and 2016</h2>
+            <p>Select and filter the conditions, then filter LGAs by size, then sort table columns in ASC (ascending) or DESC (descending) order.</p>
             <div class='info-L3-wrap'>
             <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
             <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
@@ -115,7 +115,7 @@ public class PageST31 implements Handler {
 
         html = html + """
             <fieldset>
-                <legend>Select and filter datasets</legend>
+                <legend>Select and filter</legend>
                         """;
             
             html = html + """
@@ -170,7 +170,7 @@ public class PageST31 implements Handler {
             html = html + "</fieldset>";
 
             html = html + "<fieldset>";
-            html = html + " <legend>Filter LGAs by area (enter digits only)</legend>";
+            html = html + " <legend>Filter LGAs by area (digits only)</legend>";
             html = html + "   <div class='form-group'>";
             html = html + "      <label for='sqkmMin_textbox'> min (0 km)</label> </br>";
             html = html + "      <input class='form-control' id='sqkmMin_textbox' name='sqkmMin_textbox' value='0'>";

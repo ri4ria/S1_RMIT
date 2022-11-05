@@ -110,6 +110,63 @@ public class PageST31 implements Handler {
         // First we need to use your JDBCConnection class
         JDBCConnection jdbc = new JDBCConnection();
 
+        html = html + " <div class='filter-sidebar'>";
+        html = html + "<form action='/page3.html' method='post'>";
+
+        html = html + """
+            <fieldset>
+                <legend>Choose one ore more conditions</legend>
+                        """;
+            
+            html = html + """
+                <div class='form-group'> 
+                    <label for='age_drop'>Select the Age Range:</label></br>
+                        <select id='age_drop' name='age_drop'>
+                        <option>select</option>
+                        """;
+                        ArrayList<String> ageNum = jdbc.getAge(); 
+    
+                        for (String anything : ageNum) {
+                            html = html + "<option>" + anything + "</option>";
+                        }
+    
+                        html = html + "      </select>";
+                        html = html + "   </div>";
+                    
+            html = html + """
+                <div class='form-group'> 
+                    <label for='school_drop'>Select the Highest Year of Schooling:</label></br>
+                        <select id='school_drop' name='school_drop'>
+                        <option>select</option>
+                        """;
+                         ArrayList<String> schoolingYears = jdbc.getSchooling(); 
+    
+                        for (String schooled : schoolingYears) {
+                            html = html + "<option>" + schooled + "</option>";
+                        }
+    
+                        html = html + "      </select>";
+                        html = html + "   </div>";
+                    
+            html = html + """        
+                <div class='form-group'> 
+                    <label for='income_drop'>Select the Weekly Household Income Bracket:</label></br>
+                        <select id='income_drop' name='income_drop'>
+                        <option>select</option>
+                        """;
+                        ArrayList<String> incomeBrackets = jdbc.getHousehold(); 
+    
+                        for (String income : incomeBrackets) {
+                            html = html + "<option>" + income + "</option>";
+                        }
+                           
+                            
+                        html = html + "      </select>";
+                        html = html + "   </div>";
+            html = html + "</fieldset>";
+
+            
+
         // Next we will ask this *class* for the LGAs
         ArrayList<LGA> lgas = jdbc.getLGAs();
 

@@ -2,8 +2,8 @@ package app;
 
 import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -30,20 +30,20 @@ public class PageST31 implements Handler {
         // Create a simple HTML webpage in a String
         
         // The model of data to provide to Thymeleaf.
-        Map<String, Object> model = new HashMap<String, Object>();
+       //Map<String, Object> model = new HashMap<String, Object>();
 
         // Add in title for the h1 tag to the model
-        model.put("title", new String("Gap Score Between Indigenous and Non-Indigenous"));
+        //model.put("title", new String("Gap Score Between Indigenous and Non-Indigenous"));
 
          // Look up some information from JDBC
         // First, create new connection to JDBC
-        JDBCConnection jdbc = new JDBCConnection();
+        //JDBCConnection jdbc = new JDBCConnection();
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf
-        context.render(TEMPLATE, model);
+       // context.render(TEMPLATE, model);
         
-        /* 
+         
         String html = "<html>";
 
         // Add some Head information
@@ -85,12 +85,26 @@ public class PageST31 implements Handler {
         // Add header content block
         html = html + """
             <div class='header'>
-                <h1>Subtask 3.1</h1>
+                <h1>Compare Gap Scores Between Indigenous and Non-indigenous over the Census Years</h1>
             </div>
         """;
 
         // Add Div for page Content
         html = html + "<div class='content'>";
+
+         // Add instructions on how to use the filters
+         html = html + """
+            <h2>Compare the scores for different Local Government Areas over different census years</h2>
+            <p>Select a condition, filter by the area, sort the gap scores in ASC (ascending) or DESC (descending) order and or by the average proportional indigenous population.</p>
+            <div class='info-L3-wrap'>
+            <h4 class='info-L3'>A '+' gap score indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
+            <h4 class='info-L3'>A '-' gap score indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
+            <h4 class='info-L3'>A '0' gap score indicates: the gap between the communities is small for a given LGA</h4>
+            <h4 class='info-L3'>A '+%' change score indicates: portion of indigenous population increased in 2021 when comparing with 2016.</h4> 
+            <h4 class='info-L3'>A '-%' change score indicates: portion of indigenous population has decreased in 2021 when comparing with 2016.</h4>
+            <h4 class='info-L3'>A '0%' change score indicates: there was no change in the indigenous population in 2021 when comparing with 2016.</h4>
+            </div>
+        """;
 
         // Look up some information from JDBC
         // First we need to use your JDBCConnection class
@@ -138,7 +152,7 @@ public class PageST31 implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
-        */
+        
     }
 
 }

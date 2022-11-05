@@ -115,7 +115,7 @@ public class PageST31 implements Handler {
 
         html = html + """
             <fieldset>
-                <legend>Choose one ore more conditions</legend>
+                <legend>Select one ore more</legend>
                         """;
             
             html = html + """

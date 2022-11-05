@@ -148,8 +148,6 @@ public class CTGProcessCSV {
          e.printStackTrace();
       }
 
-      /*
-
       // Implementing the householdInc2021.csv file
       // Original CSV file name: lga_total_household_income_weekly_by_indigenous_status_of_household_2021
       
@@ -1237,7 +1235,6 @@ public class CTGProcessCSV {
    } catch (Exception e) {
       e.printStackTrace();
    }
-   */
 
    } //keep second to last
 } //keep last

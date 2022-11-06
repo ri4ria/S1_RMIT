@@ -375,7 +375,6 @@ package app;
                                 html = html + "<th>Income Gap 2021</th>";
                                 html = html + "<th>Income Gap 2016</th>";
                                 html = html + "<th>&#8710 Income</th>";
-
                                 html = html + "<th>Age Gap 2021</th>";
                                 html = html + "<th>Age Gap 2016</th>";
                                 html = html + "<th>&#8710 <br> Age</th>";
@@ -389,7 +388,6 @@ package app;
                                 html = html + "<td>" + table2.getGap_Inc21() + "</td>";
                                 html = html + "<td>" + table2.getGap_Inc16() + "</td>";
                                 html = html + "<td>" + table2.getChange_Inc() + "</td>";
-                             
                                 html = html + "<td>" + table2.getGap_Age21() + "</td>";
                                 html = html + "<td>" + table2.getGap_Age16() + "</td>";
                                 html = html + "<td>" + table2.getChange_Age() + "</td>";
@@ -408,7 +406,6 @@ package app;
                             html = html + "<th>Name </th>";
                             html = html + "<th>Area </th>";
                             html = html + "<th>Average proportional <br> indigenous population</th>";
-
                             html = html + "<th>School Gap 2021</th>";
                             html = html + "<th>School Gap 2016</th>";
                             html = html + "<th>&#8710 School</th>";
@@ -422,7 +419,6 @@ package app;
                             html = html + "<td>" + table2.getName() + "</td>";
                             html = html + "<td>" + table2.getArea() + "</td>";
                             html = html + "<td>" + table2.getPropIndig_SA() + "</td>";
-                         
                             html = html + "<td>" + table2.getGap_Sch21() + "</td>";
                             html = html + "<td>" + table2.getGap_Sch16() + "</td>";
                             html = html + "<td>" + table2.getChange_Sch() + "</td>";
@@ -461,6 +457,66 @@ package app;
                                 html = html + "<td>" + table2.getChange_Inc() + "</td>";
                                 html = html + "</tr>";
                         }
+                                html = html + "</table>";
+                                html = html + "</div>";
+                                return html;
+
+                } else if (incomeTick == null && schoolTick != null && ageTick == null) {
+                                    
+                            // propIndig_S
+                            html = html + "<div class='results-table2'>";
+                                html = html + "<table>";
+                                html = html + "<tr>";
+                                html = html + "<th>Code </th>";
+                                html = html + "<th>Name </th>";
+                                html = html + "<th>Area </th>";
+                                html = html + "<th>Average proportional <br> indigenous population</th>";
+                                html = html + "<th>School Gap 2021</th>";
+                                html = html + "<th>School Gap 2016</th>";
+                                html = html + "<th>&#8710 School</th>";
+                               
+                                html = html + "</tr>";
+                            for (Table2 table2 : Level3) {
+                                html = html + "<tr>";
+                                html = html + "<td>" + table2.getCode() + "</td>";
+                                html = html + "<td>" + table2.getName() + "</td>";
+                                html = html + "<td>" + table2.getArea() + "</td>";
+                                html = html + "<td>" + table2.getPropIndig_S() + "</td>";
+                                html = html + "<td>" + table2.getGap_Sch21() + "</td>";
+                                html = html + "<td>" + table2.getGap_Sch16() + "</td>";
+                                html = html + "<td>" + table2.getChange_Sch() + "</td>";
+                                html = html + "</tr>";
+                            }
+                                html = html + "</table>";
+                                html = html + "</div>";
+                                return html;
+
+
+                } else if (incomeTick == null && schoolTick == null && ageTick != null) {
+
+                                // propIndig_A
+                            html = html + "<div class='results-table2'>";
+                                html = html + "<table>";
+                                html = html + "<tr>";
+                                html = html + "<th>Code </th>";
+                                html = html + "<th>Name </th>";
+                                html = html + "<th>Area </th>";
+                                html = html + "<th>Average proportional <br> indigenous population</th>";
+                                html = html + "<th>Age Gap 2021</th>";
+                                html = html + "<th>Age Gap 2016</th>";
+                                html = html + "<th>&#8710 <br> Age</th>";
+                                html = html + "</tr>";
+                            for (Table2 table2 : Level3) {
+                                html = html + "<tr>";
+                                html = html + "<td>" + table2.getCode() + "</td>";
+                                html = html + "<td>" + table2.getName() + "</td>";
+                                html = html + "<td>" + table2.getArea() + "</td>";
+                                html = html + "<td>" + table2.getPropIndig_A() + "</td>";
+                                html = html + "<td>" + table2.getGap_Age21() + "</td>";
+                                html = html + "<td>" + table2.getGap_Age16() + "</td>";
+                                html = html + "<td>" + table2.getChange_Age() + "</td>";
+                                html = html + "</tr>";
+                            }
                                 html = html + "</table>";
                                 html = html + "</div>";
                                 return html;

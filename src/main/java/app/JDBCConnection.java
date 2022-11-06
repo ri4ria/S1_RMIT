@@ -3413,7 +3413,7 @@ public class JDBCConnection {
     }
 
     // level 3 page 5 JDBC ----------------------------------------------------------------------------------------------------------------------------------
-    public ArrayList<Table2> getData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String sqkmMin, String sqkmMax, String sort2) {
+    public ArrayList<Table2> getData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String sqkmMin, String sqkmMax, String sort2, String order) {
         ArrayList<Table2> data31 = new ArrayList<Table2>();
 
         // Setup the variable for the JDBC connection
@@ -3501,7 +3501,7 @@ public class JDBCConnection {
             query += "Ef2.indigenous_status = 'non_indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tindig FROM PopulationStatistics AS E ";
             query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND Ef2.lga_year = '2016' AND Ef1.age = '" + selectedAge2 + "' AND Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'indig' AND ";
             query += "Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort) AS B ON A.code = B.code) AS B ON A.code = B.code AND A.area >= " + sqkmMin + " AND A.area <= " + sqkmMax + ") AS sort ";
-            query += "ORDER BY " + sort2 + ";";
+            query += "ORDER BY " + sort2 + " " + order + ";";
 
 
 

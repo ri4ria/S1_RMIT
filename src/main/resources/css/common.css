@@ -55,8 +55,11 @@ img.top-image {
 .topnav {
    overflow: hidden;
    background-color: #49231F;
-   vertical-align: center;
    border-radius: 20px 20px 0px 0px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding-right: 20px;
 }
  
 .topnav ul {
@@ -64,6 +67,8 @@ img.top-image {
    margin: 0px;
    text-align: center;
    display: inline-block;
+   margin-top: 5px;
+   margin-left: 20px;
 }
 
 /* Style the topnav links */
@@ -90,7 +95,7 @@ img.top-image {
    margin-left: 30px;
    margin-right: 20px;
    padding-top: 10px;
-   padding-bottom: 8px;
+   /* padding-bottom: 8px; */
    border-radius: 0px;
    vertical-align: center;
 }
@@ -149,7 +154,9 @@ img.top-image {
    display: block;
 }
 
+
 /* https://www.w3schools.com/howto/howto_css_searchbar.asp#gsc.tab=0 */
+/*
 .topnav input[type=text] {
    float: right;
    padding: 6px;
@@ -159,7 +166,7 @@ img.top-image {
    font-family: Karla;
    font-size: 14px;
    border-radius: 10px;
-}
+} */
  
 /* Style the content */
 .content {

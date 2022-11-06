@@ -108,11 +108,6 @@ public class PageST21 implements Handler {
         html = html + """
                 <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
                 <p>Select a dataset and then sort the column of your choice in ascending or descending order using the dropdowns below</p>
-                <div class='info-L3-wrap'>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
-                </div>
 
         """;
         // Look up some information from JDBC
@@ -339,6 +334,15 @@ public class PageST21 implements Handler {
         </form>
     </div>
                 """;
+
+                html = html + """
+                <div class='info-L3-wrap'>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
+                </div>
+
+        """;
 
         /* 
         // Next we will ask this *class* for the LGAs
@@ -575,9 +579,6 @@ public class PageST21 implements Handler {
         html = html + "<h2><i class='selectionBlue'>Outcome 5: Highest year of shcooling</i></h2>";
         html = html + "<h3> Population of people with highest schooling being: <i class='selectionBlue'>" + selectedSchool + "</i></h3>";
         html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
-        html = html + "<h5>A '+' gap score indicates: portion of indigenous population is greater than the portion of nonindigenous population with the highest schooling being: " + selectedSchool + " for a given LGA</h5>";
-        html = html + "<h5>A '-' gap score indicates: portion of indigenous population is less than the portion of nonindigenous population with the highest schooling being: " + selectedSchool + " for a given LGA</h5>";
-        html = html + "<h5>A '0' gap score indicates the gap between the communities with highest schooling being: " + selectedSchool + " is small for a given LGA</h5>";
 
 
         // Look up movies from JDBC
@@ -655,9 +656,6 @@ public class PageST21 implements Handler {
         html = html + "<h2><i class='selectionBlue'>Outcome 8: Weekely household income</i></h2>";
         html = html + "<h3>Population of households with a weekly household income of: <i class='selectionBlue'>$" + selectedIncome + "</i></h3>";
         html = html + "<h3> Sort type used: <i class='selectionBlue'>" + sort + "</i></h3>";
-        html = html + "<h5>A '+' gap score indicates: portion of indigenous population >  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
-        html = html + "<h5>A '-' gap score indicates: portion of indigenous population <  portion of nonindigenous population that earn weekly household income of $" + selectedIncome + " for a given LGA</h5>";
-        html = html + "<h5>A '0' gap score indicates the gap between the communities earning weekly household income of $" + selectedIncome + " is small for a given LGA</h5>";
 
 
         // Look up movies from JDBC

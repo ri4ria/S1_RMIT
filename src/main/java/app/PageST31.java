@@ -191,16 +191,29 @@ package app;
                     <div class='form-group'> 
                         <label for='sort_drop2'>Per table heading</label></br>
                             <select id='sort_drop2' name='sort_drop2'>
-                                <option>sort.code ASC</option>
-                                <option>sort.code DESC</option>
-                                <option>sort.name ASC</option>
-                                <option>sort.name DESC</option>
-                                <option>sort.area ASC</option>
-                                <option>sort.area DESC</option>
+                                <option>sort.code </option>
+                                <option>sort.name </option>
+                                <option>sort.area </option>
                             </select>
                     </div>
                     </fieldset> 
                             """;
+
+                html = html + """
+                    <fieldset>
+                    <legend>Select the order</legend>
+                    <div class='form-group'> 
+                        
+                        <input type='radio' id='order_radio' name='order_radio' value='ASC'>
+                        <label for='order_radio'>Ascending</label></br>
+                        
+                        <input type='radio' id='order_radio' name='order_radio' value='DESC'>
+                        <label for='order_radio'>Descending</label>
+
+                        </div>
+                        </fieldset>
+                        """;
+
     
                 html = html + """  
                     <!-- Submit Button-->
@@ -221,11 +234,13 @@ package app;
                     String sqkmMax_textbox = context.formParam("sqkmMax_textbox");
     
                     String sort_drop2 = context.formParam("sort_drop2");
+
+                    String order_radio = context.formParam("order_radio");
     
                     if (income_tick == null && school_tick == null && age_tick == null) {
                         html = html + "<h3><i class='selectionBrown'>No selection made</i></h3>";
                         } else {
-                            html = html + outputData31(income_drop2, school_drop2, age_drop2, income_tick, school_tick, age_tick, sqkmMin_textbox, sqkmMax_textbox, sort_drop2);
+                            html = html + outputData31(income_drop2, school_drop2, age_drop2, income_tick, school_tick, age_tick, sqkmMin_textbox, sqkmMax_textbox, sort_drop2, order_radio);
                         }
     
                         html = html + " </div>";
@@ -280,11 +295,11 @@ package app;
         }
     
         //get data 
-        public String outputData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String incomeTick, String schoolTick, String ageTick, String sqkmMin, String sqkmMax, String sort) {
+        public String outputData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String incomeTick, String schoolTick, String ageTick, String sqkmMin, String sqkmMax, String sort, String order) {
             String html = "";
     
                 JDBCConnection jdbc = new JDBCConnection();
-                ArrayList<Table2> Level3 = jdbc.getData31(selectedIncome2, selectedSchool2, selectedAge2, sqkmMin, sqkmMax, sort);
+                ArrayList<Table2> Level3 = jdbc.getData31(selectedIncome2, selectedSchool2, selectedAge2, sqkmMin, sqkmMax, sort, order);
     
             if (incomeTick != null && schoolTick != null && ageTick != null) {
     

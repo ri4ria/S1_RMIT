@@ -255,7 +255,7 @@ public class PageST21 implements Handler {
                         <legend>Select the order</legend>
                         <div class='form-group'> 
                             
-                            <input type='radio' id='order_radio' name='order_radio' value='ASC'>
+                            <input type='radio' id='order_radio' name='order_radio' value='ASC' checked>
                             <label for='order_radio'>Ascending</label></br>
                             
                             <input type='radio' id='order_radio' name='order_radio' value='DESC'>

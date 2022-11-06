@@ -439,16 +439,16 @@ img.top-image {
    margin: 15px;
 }
 
-.listed-dataset h4 {
+.listed-dataset h3 {
    margin-top: 5px;
-   margin-bottom: 5px;
+   margin-bottom: 20px;
 }
 
 .listed-dataset p {
    margin-top: 10px;
-   margin-left: 0px;
-   margin-right: 0px;
-   font-size: 16px;
+   margin-left: 10px;
+   margin-right: 10px;
+   font-size: 18px;
 }
 
 /* https://www.w3schools.com/css/css3_buttons.asp */

@@ -100,14 +100,6 @@ package app;
              html = html + """
                 <h2>Compare indigenous population with non-indigenous population in different Local Government Areas using census results from 2021 and 2016</h2>
                 <p>Select and filter the conditions, then filter LGAs by size, then sort table columns in ascending or descending order.</p>
-                <div class='info-L3-wrap'>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'+%' change score</i> indicates: portion of indigenous population increased in 2021 when comparing with 2016.</h4> 
-                <h4 class='info-L3'>A <i class='selectionBlue'>'-%' change score</i> indicates: portion of indigenous population has decreased in 2021 when comparing with 2016.</h4>
-                <h4 class='info-L3'>A <i class='selectionBlue'>'0%' change score</i> indicates: there was no change in the indigenous population in 2021 when comparing with 2016.</h4>
-                </div>
             """;
     
             // Look up some information from JDBC
@@ -194,6 +186,12 @@ package app;
                                 <option>sort.code </option>
                                 <option>sort.name </option>
                                 <option>sort.area </option>
+                                <option>sort.gap_inc21 </option>
+                                <option>sort.gap_inc16 </option>
+                                <option>sort.gap_sch21 </option>
+                                <option>sort.gap_sch16 </option>
+                                <option>sort.gap_age21 </option>
+                                <option>sort.gap_age16 </option>
                             </select>
                     </div>
                     </fieldset> 
@@ -220,6 +218,17 @@ package app;
                     <button type='submit' class='filter-button'>Compare LGAs</button>
                     </form>
                     </div>
+                    """;
+
+                    html = html + """
+                        <div class='info-L3-wrap'>
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'+%' change score</i> indicates: portion of indigenous population increased in 2021 when comparing with 2016.</h4> 
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'-%' change score</i> indicates: portion of indigenous population has decreased in 2021 when comparing with 2016.</h4>
+                        <h4 class='info-L3'>A <i class='selectionBlue'>'0%' change score</i> indicates: there was no change in the indigenous population in 2021 when comparing with 2016.</h4>
+                        </div>
                     """;
     
                     String age_drop2 = context.formParam("age_drop2");

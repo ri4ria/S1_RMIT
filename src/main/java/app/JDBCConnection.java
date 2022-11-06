@@ -2079,7 +2079,7 @@ public class JDBCConnection {
         return similarLGAs;
     }
 
-    public ArrayList<ST32Results> getST32PopulationResults (String code, String status, String sex, String age, String limit) {
+    public ArrayList<ST32Results> getST32PopulationResults (String code, String status, String sex, String minAge, String maxAge, String limit) {
 
         // Creating an ArrayList to store results
         ArrayList<ST32Results> similarLGAs = new ArrayList<ST32Results>();
@@ -2099,12 +2099,13 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // Query to find results from specified LGA
-            String query1 = "SELECT * ";
+            String query1 = "SELECT *, SUM(count), SUM(population_count), SUM(proportion) ";
             query1 += "FROM PSST32 p JOIN LGA_State ls ON p.lga_code = ls.lga_code AND p.lga_year = ls.lga_year ";
             query1 += "WHERE p.lga_code = " + code + " AND ";
             query1 += "p.indigenous_status = '" + status + "' AND ";
             query1 += "p.sex = '" + sex + "' AND ";
-            query1 += "p.age = '" + age + "';";
+            query1 += "p.min_age >= " + minAge + " AND ";
+            query1 += "p.max_age <= " + maxAge + ";";
 
             // Printing out the query
             System.out.println(query1);
@@ -2120,11 +2121,13 @@ public class JDBCConnection {
 
                 specifiedLGA.setLGACode(Integer.parseInt(code));
                 specifiedLGA.setLGAName(results1.getString("lga_name"));
-                specifiedLGA.setResult(results1.getInt("count"));
+                specifiedLGA.setResult(results1.getInt("SUM(count)"));
 
                 // Processing proportional value
-                float lgaProportion = results1.getFloat("proportion");
-                specifiedLGAProportion.add(String.valueOf(results1.getFloat("proportion")));
+                int numerator = results1.getInt("SUM(count)");
+                int denominator = results1.getInt("SUM(population_count)");
+                float lgaProportion = ((float)numerator / denominator) * 100;
+                specifiedLGAProportion.add(String.valueOf(results1.getFloat("SUM(proportion)")));
                 DecimalFormat df = new DecimalFormat("#.###");
                 String lgaProportionString = String.valueOf(lgaProportion);
                 lgaProportionString = df.format(lgaProportion) + "%";
@@ -2136,14 +2139,15 @@ public class JDBCConnection {
 
             // Query to find the other LGAs
             if (specifiedLGAProportion.size() > 0) {
-                String query2 = "SELECT p.lga_code, ls.lga_name, p.indigenous_status, p.sex, p.age, ";
-                query2 += "p.count, p.population_count, p.proportion ";
+                String query2 = "SELECT *, p.lga_code, SUM(count), SUM(population_count), SUM(proportion) ";
                 query2 += "FROM PSST32 p JOIN LGA_State ls ON p.lga_code = ls.lga_code AND p.lga_year = ls.lga_year ";
                 query2 += "WHERE p.indigenous_status = '" + status + "' AND ";
                 query2 += "p.sex = '" + sex + "' AND ";
-                query2 += "p.age = '" + age + "' AND ";
-                query2 += "p.proportion <= " + specifiedLGAProportion.get(0) + " ";
-                query2 += "ORDER BY p.proportion DESC ";
+                query2 += "p.min_age >= " + minAge + " AND ";
+                query2 += "p.max_age <= " + maxAge + " ";
+                query2 += "GROUP BY p.lga_code ";
+                query2 += "HAVING SUM(proportion) < " + specifiedLGAProportion.get(0) + " ";
+                query2 += "ORDER BY SUM(proportion) DESC ";
                 query2 += "LIMIT " + limit + ";";
                 // Printing out the query
             System.out.println(query2);
@@ -2156,8 +2160,11 @@ public class JDBCConnection {
 
                 int lgaCode = results2.getInt("lga_code");
                 String lgaName = results2.getString("lga_name");
-                int lgaResult = results2.getInt("count");
-                float lgaProportion = results2.getFloat("proportion");
+                int lgaResult = results2.getInt("SUM(count)");
+
+                int numerator = results2.getInt("SUM(count)");
+                int denominator = results2.getInt("SUM(population_count)");
+                float lgaProportion = ((float)numerator / denominator) * 100;
 
                 if (lgaCode == Integer.parseInt(code)) {
                     continue;
@@ -2207,7 +2214,7 @@ public class JDBCConnection {
         return similarLGAs;
     }
 
-    public ArrayList<ST32Results> getST32IncomeResults (String code, String status, String incomeBracket, String limit) {
+    public ArrayList<ST32Results> getST32IncomeResults (String code, String status, String minIncome, String maxIncome, String limit) {
 
         // Creating an ArrayList to store results
         ArrayList<ST32Results> similarLGAs = new ArrayList<ST32Results>();
@@ -2227,11 +2234,12 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // Query to find results from specified LGA
-            String query1 = "SELECT * ";
+            String query1 = "SELECT *, SUM(count), SUM(population_count), SUM(proportion) ";
             query1 += "FROM HSST32 h JOIN LGA_State ls ON h.lga_code = ls.lga_code AND h.lga_year = ls.lga_year ";
             query1 += "WHERE h.lga_code = " + code + " AND ";
             query1 += "h.indigenous_status = '" + status + "' AND ";
-            query1 += "h.income_bracket = '" + incomeBracket + "';";
+            query1 += "h.min_income >= " + minIncome + " AND ";
+            query1 += "h.max_income <= " + maxIncome + ";";
 
             // Printing out the query
             System.out.println(query1);
@@ -2247,11 +2255,13 @@ public class JDBCConnection {
 
                 specifiedLGA.setLGACode(Integer.parseInt(code));
                 specifiedLGA.setLGAName(results1.getString("lga_name"));
-                specifiedLGA.setResult(results1.getInt("count"));
+                specifiedLGA.setResult(results1.getInt("SUM(count)"));
 
                 // Processing proportional value
-                float lgaProportion = results1.getFloat("proportion");
-                specifiedLGAProportion.add(String.valueOf(results1.getFloat("proportion")));
+                int numerator = results1.getInt("SUM(count)");
+                int denominator = results1.getInt("SUM(population_count)");
+                float lgaProportion = ((float)numerator / denominator) * 100;
+                specifiedLGAProportion.add(String.valueOf(results1.getFloat("SUM(proportion)")));
                 DecimalFormat df = new DecimalFormat("#.###");
                 String lgaProportionString = String.valueOf(lgaProportion);
                 lgaProportionString = df.format(lgaProportion) + "%";
@@ -2263,13 +2273,14 @@ public class JDBCConnection {
 
             // Query to find the other LGAs
             if (specifiedLGAProportion.size() > 0) {
-                String query2 = "SELECT h.lga_code, ls.lga_name, h.indigenous_status, h.income_bracket, ";
-                query2 += "h.count, h.population_count, h.proportion ";
+                String query2 = "SELECT *, SUM(count), SUM(population_count), SUM(proportion) ";
                 query2 += "FROM HSST32 h JOIN LGA_State ls ON h.lga_code = ls.lga_code AND h.lga_year = ls.lga_year ";
                 query2 += "WHERE h.indigenous_status = '" + status + "' AND ";
-                query2 += "h.income_bracket = '" + incomeBracket + "' AND ";
-                query2 += "h.proportion <= " + specifiedLGAProportion.get(0) + " ";
-                query2 += "ORDER BY h.proportion DESC ";
+                query2 += "h.min_income >= " + minIncome + " AND ";
+                query2 += "h.max_income <= " + maxIncome + " ";
+                query2 += "GROUP BY h.lga_code ";
+                query2 += "HAVING SUM(proportion) < " + specifiedLGAProportion.get(0) + " ";
+                query2 += "ORDER BY SUM(proportion) DESC ";
                 query2 += "LIMIT " + limit + ";";
                 // Printing out the query
             System.out.println(query2);
@@ -2282,8 +2293,11 @@ public class JDBCConnection {
 
                 int lgaCode = results2.getInt("lga_code");
                 String lgaName = results2.getString("lga_name");
-                int lgaResult = results2.getInt("count");
-                float lgaProportion = results2.getFloat("proportion");
+                int lgaResult = results2.getInt("SUM(count)");
+
+                int numerator = results2.getInt("SUM(count)");
+                int denominator = results2.getInt("SUM(population_count)");
+                float lgaProportion = ((float)numerator / denominator) * 100;
 
                 if (lgaCode == Integer.parseInt(code)) {
                     continue;
@@ -2331,6 +2345,198 @@ public class JDBCConnection {
 
         // Returning ArrayList of results
         return similarLGAs;
+    }
+
+    public ArrayList<String> getMinimumIncomes () {
+        ArrayList<String> minimums = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT min_income FROM IncomeBracket";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                minimums.add(results.getString("min_income"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return minimums;
+    }
+
+    public ArrayList<String> getMaximumIncomes () {
+        ArrayList<String> maximums = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT(max_income), IFNULL(max_income, 99999) FROM IncomeBracket ORDER BY IFNULL(max_income, 99999) ASC";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                maximums.add(results.getString("IFNULL(max_income, 99999)"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return maximums;
+    }
+
+    public ArrayList<String> getMinimumAges () {
+        ArrayList<String> minimums = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT(min_age) FROM AgeBracket;";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                minimums.add(results.getString("min_age"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return minimums;
+    }
+
+    public ArrayList<String> getMaximumAges () {
+        ArrayList<String> maximums = new ArrayList<String>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT(max_age), IFNULL(max_age, 99999) FROM AgeBracket ORDER BY IFNULL(max_age, 99999) ASC";
+
+            // Printing out the query
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                maximums.add(results.getString("IFNULL(max_age, 99999)"));
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return maximums;
     }
 
     public ArrayList<String> get2021LGAs() {

@@ -107,9 +107,11 @@
 
         <div class='outcome'></div>
             <h1>17 Target Outcomes</h1>
+            <div class='target-outcomeList-wrap'>
             <ul class='bulletspacing'>
-                <li th:each= "target : ${outcome}" th:text="${target}"></li>
+                <li class='target-outcomeList' th:each= "target : ${outcome}" th:text="${target}"></li>
             </ul>
+        </div>
         </div>
 
     <div class='footer'>

@@ -69,7 +69,10 @@ public class PageST21 implements Handler {
         // This uses a Java v15+ Text Block
         html = html + """
             <div class='topnav'>
-                    <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
+                <div class='topnav-logo-wrapper'>
+                    <img class='topnav-logo' src='whitelogo-cropped.png' alt='logo'>
+                </div>
+                <div class = 'topnav-tabs'>
                     <ul>
                         <a href='/'>Home</a>
                         <a href='mission.html'>Mission Statement</a>
@@ -85,8 +88,9 @@ public class PageST21 implements Handler {
                             </div>
                         </div>
                         <a href='page7.html'>Resources</a>
+                        <a href='page8.html'>References</a>
                     </ul>
-                    <input type='text' placeholder='Search...'>
+                </div>
             </div>
         """;
 

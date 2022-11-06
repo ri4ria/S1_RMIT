@@ -2736,7 +2736,7 @@ public class JDBCConnection {
 
     // Aim to show the raw values, proportional values and difference
     // healthconditions
-    public ArrayList<Table> getDataByHealthCondition(String selectedCondition, String sort) {
+    public ArrayList<Table> getDataByHealthCondition(String selectedCondition, String sort, String order) {
         ArrayList<Table> healthCondData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
@@ -2943,7 +2943,7 @@ public class JDBCConnection {
     }
 
     // healthconditions
-    public ArrayList<Table> getDataByAge(String selectedAge, String sort) {
+    public ArrayList<Table> getDataByAge(String selectedAge, String sort, String order) {
         ArrayList<Table> selectedAgeData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
@@ -2989,7 +2989,7 @@ public class JDBCConnection {
             query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge
                     + "' AND Ef2.age = '" + selectedAge + "' ";
             query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
-            query += "ORDER BY " + sort + ";";
+            query += "ORDER BY " + sort + " " + order +  ";";
 
             System.out.println(query);
 
@@ -3099,7 +3099,7 @@ public class JDBCConnection {
     }
 
     // healthconditions
-    public ArrayList<Table> getDataBySchool(String selectedSchool, String sort) {
+    public ArrayList<Table> getDataBySchool(String selectedSchool, String sort, String order) {
         ArrayList<Table> schoolData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
@@ -3178,7 +3178,7 @@ public class JDBCConnection {
                 query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code =  EF1.lga_code ";
                 query += "WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.highest_school_year = '" + selectedSchool + "' AND Ef2.highest_school_year = '" + selectedSchool +"' ";
                 query += "AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort ";
-                query += "ORDER BY " + sort + ";";
+                query += "ORDER BY " + sort + " " + order +  ";";
 
             System.out.println(query);
 
@@ -3294,7 +3294,7 @@ public class JDBCConnection {
     }
 
     // healthconditions
-    public ArrayList<Table> getDataByHouse(String selectedIncome, String sort) {
+    public ArrayList<Table> getDataByHouse(String selectedIncome, String sort, String order) {
         ArrayList<Table> incomeData = new ArrayList<Table>();
 
         // Setup the variable for the JDBC connection
@@ -3353,7 +3353,7 @@ public class JDBCConnection {
             query += "LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '"
                     + selectedIncome + "' AND ";
             query += "H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%indig%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) AS sort ";
-            query += "ORDER BY " + sort + ";";
+            query += "ORDER BY " + sort + " " + order +  ";";
 
             System.out.println(query);
 

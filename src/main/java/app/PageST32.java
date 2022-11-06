@@ -1,5 +1,6 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,30 @@ public class PageST32 implements Handler {
 
         // Add in title for the h1 tag to the model
         model.put("title", new String("Compare LGAs with Similar Characteristics"));
+
+        // Look up some information from JDBC
+        // First, create new connection to JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+
+        // Ask JDBC class for target outcomes
+        ArrayList<Outcome> outcome1 = jdbc.getSpecificOutcome(1);
+        ArrayList<Outcome> outcome5 = jdbc.getSpecificOutcome(5);
+        ArrayList<Outcome> outcome8 = jdbc.getSpecificOutcome(8);
+
+        String outcome1description;
+        String outcome5description;
+        String outcome8description;
+
+        // Put target outcomes into the model
+        for (Outcome outcome : outcome1) {
+            model.put("outcome1description", outcome1description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome5) {
+            model.put("outcome5description", outcome5description = outcome.getDescription());
+        }
+        for (Outcome outcome : outcome8) {
+            model.put("outcome8description", outcome8description = outcome.getDescription());
+        }
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage using Thymeleaf

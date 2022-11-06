@@ -218,7 +218,13 @@ public class PageST31 implements Handler {
 
                 String sort_drop = context.formParam("sort_drop");
 
+                if (income_tick == null && school_tick == null && age_tick == null) {
+                    html = html + "<h3><i class='selectionBrown'>No selection made</i></h3>";
+                    } else {
+                        html = html + outputDataL3(income_drop, school_drop, age_drop, income_tick, school_tick, age_tick, sqkmMin_textbox, sqkmMax_textbox, sort_drop);
+                    }
 
+                    html = html + " </div>";
 
     
 /* 
@@ -234,10 +240,11 @@ public class PageST31 implements Handler {
                         + " - " + lga.getYear()
                         + " - " + lga.getName() + "</li>";
         }
-*/
+
 
         // Finish the List HTML
         html = html + "</ul>";
+    */
 
         // Close Content div
         html = html + "</div>";

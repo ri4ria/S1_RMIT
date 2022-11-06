@@ -3207,7 +3207,7 @@ public class JDBCConnection {
     }
 
     // level 3 page 5 JDBC ----------------------------------------------------------------------------------------------------------------------------------
-    public ArrayList<Table2> getData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String sqkmMax, String sqkmMin, String sort2) {
+    public ArrayList<Table2> getData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String sqkmMin, String sqkmMax, String sort2) {
         ArrayList<Table2> data31 = new ArrayList<Table2>();
 
         // Setup the variable for the JDBC connection
@@ -3231,7 +3231,7 @@ public class JDBCConnection {
             query += "FROM (Select A.code AS code, A.name AS name, A.area AS area, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21 + B.propIndig_age21)/3) AS propIndig_ISA, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21)/2) AS propIndig_IS, ";
             query += "printf('%.2f%', (A.propIndig_inc21 + B.propIndig_age21)/2) AS propIndig_IA, printf('%.2f%', (A.propIndig_sch21 + B.propIndig_age21)/2) AS propIndig_SA, printf('%.2f%', (A.propIndig_inc21)) AS propIndig_I, ";
             query += "printf('%.2f%', (A.propIndig_sch21)) AS propIndig_S, printf('%.2f%', (B.propIndig_age21)) AS propIndig_A, ";
-            query += "A.gap_inc21 AS gap_inc21, A.gap_inc16 AS gap_inc16, A.change_inc, A.gap_sch21, A.gap_sch16, A.change_sch, B.gap_age21, B.gap_age16, printf('%d%%',B.change_age) AS change_age ";
+            query += "A.gap_inc21 AS gap_inc21, A.gap_inc16 AS gap_inc16, A.change_inc, A.gap_sch21, A.gap_sch16, A.change_sch, B.gap_age21, B.gap_age16, B.change_age AS change_age ";
             query += "FROM (SELECT A.code, A.name, A.area, A.propIndig_inc21, A.propNon_inc21, A.gap_inc21, A.propIndig_inc16, A.propNon_inc16, A.gap_inc16, A.change_inc, B.propIndig_sch21, B.propNon_sch21, B.gap_sch21, B.propIndig_sch16, B.propNon_sch16, B.gap_sch16, B.change_sch ";
             query += "FROM (Select A.code_inc21 AS code, A.name_inc21 AS name, A.area_inc21 AS area, A.propIndig_inc21, A.propNon_inc21, A.gap_inc21, B.propIndig_inc16, B.propNon_inc16, B.gap_inc16, ((A.gap_Inc21 - B.gap_Inc16)/B.gap_Inc16 *100) AS change_inc ";
             query += "FROM (SELECT sort.code AS code_inc21, sort.name AS name_inc21, sort.area AS area_inc21, sort.indig AS indig_inc21, sort.nonindig AS nonindig_inc21, sort.total AS total_inc21, sort.propIndig AS propIndig_inc21, sort.propNonindig AS propNon_inc21, ";

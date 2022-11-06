@@ -31,8 +31,11 @@ public class PageST32Income implements Handler {
         model.put("lgaCodes", lgaCodes);
 
         // Retrieving income brackets for dropdown list
-        ArrayList<String> brackets = jdbc.getIncomeBrackets();
-        model.put("incomeBrackets", brackets);
+        ArrayList<String> minimums = jdbc.getMinimumIncomes();
+        model.put("minimumIncomes", minimums);
+
+        ArrayList<String> maximums = jdbc.getMaximumIncomes();
+        model.put("maximumIncomes", maximums);
 
         // Retrieving household indigenous statuses for dropdown list
         ArrayList<String> householdStatuses = jdbc.getHouseholdIndigenousStatuses();
@@ -40,12 +43,13 @@ public class PageST32Income implements Handler {
 
         // Retrieving user's filter selections
         String location = context.formParam("location"); // location filter
-        String incomeBracket = context.formParam("incomeBracket");
+        String minIncome = context.formParam("minIncome");
+        String maxIncome = context.formParam("maxIncome");
         String householdStatus = context.formParam("householdStatus");
         String limit = context.formParam("limit");
 
         // Inserting HTML
-        if (location == null && householdStatus == null && incomeBracket == null && limit == null) {
+        if (location == null && householdStatus == null && minIncome == null && maxIncome == null && limit == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Total Weekly Household Income Data</h1>";
@@ -57,9 +61,9 @@ public class PageST32Income implements Handler {
 
             model.put("htmlToInject", html);
 
-        } else if (location == null || householdStatus == null || incomeBracket == null || limit == null || 
+        } else if (location == null || householdStatus == null || minIncome == null || maxIncome == null || limit == null || 
                    location.equalsIgnoreCase("") || householdStatus.equalsIgnoreCase("") || 
-                   incomeBracket.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
+                   minIncome.equalsIgnoreCase("") || maxIncome.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Total Weekly Household Income Data</h1>";
@@ -71,7 +75,7 @@ public class PageST32Income implements Handler {
 
             model.put("htmlToInject", html);
 
-        } else if (location != null && householdStatus != null && incomeBracket != null && limit != null) {
+        } else if (location != null && householdStatus != null && minIncome != null && maxIncome != null && limit != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + "</h1>";
             html = html + "<h3>Filter Option Selections</h3>";
@@ -80,11 +84,12 @@ public class PageST32Income implements Handler {
             html = html + "<p><b>Location</b><br><i>" + location + "</i></p>";
             html = html + "<p><b>Number of Results</b><br><i>" + limit + "</i></p>";
             html = html + "<p><b>Household Indigenous Status</b><br><i>" + householdStatus + "</i></p>";
-            html = html + "<p><b>Income Bracket</b><br><i>" + incomeBracket + "</i></p>";
+            html = html + "<p><b>Minimum Income</b><br><i>$" + minIncome + "</i></p>";
+            html = html + "<p><b>Maximum Income</b><br><i>$" + maxIncome + "</i></p>";
             html = html + "</div>"; // 'filter-selection' closing tag
             html = html + "</div>"; // 'filter-selection-wrapper' closing tag
 
-            ArrayList<ST32Results> results = jdbc.getST32IncomeResults(location, householdStatus, incomeBracket, String.valueOf(limit));
+            ArrayList<ST32Results> results = jdbc.getST32IncomeResults(location, householdStatus, minIncome, maxIncome, String.valueOf(limit));
 
             html = html + "<div class = 'results-table'>";
             html = html + "<table>";

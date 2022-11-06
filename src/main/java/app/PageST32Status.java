@@ -30,19 +30,16 @@ public class PageST32Status implements Handler {
         ArrayList<String> lgaCodes = jdbc.get2021LGAs();
         model.put("lgaCodes", lgaCodes);
 
-        // Retrieving highest school year brackets for dropdown list
-        ArrayList<String> ages = jdbc.getAge();
-        model.put("ageGroups", ages);
-
         // Retrieving user's filter selections
         String location = context.formParam("location"); // location filter
         String indigenousStatus = context.formParam("indigenousStatus");
         String sex = context.formParam("sex");
-        String age = context.formParam("age");
+        String minAge = context.formParam("minAge");
+        String maxAge = context.formParam("maxAge");
         String limit = context.formParam("limit");
 
         // Inserting HTML 
-       if (location == null && indigenousStatus == null && sex == null && age == null && limit == null) {
+       if (location == null && indigenousStatus == null && sex == null && minAge == null && maxAge == null && limit == null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Indigenous Status Data</h1>";
@@ -53,9 +50,9 @@ public class PageST32Status implements Handler {
 
             model.put("htmlToInject", html);
 
-       } else if (location == null || indigenousStatus == null || sex == null || age == null || limit == null || 
+       } else if (location == null || indigenousStatus == null || sex == null || minAge == null || maxAge == null|| limit == null || 
                   location.equalsIgnoreCase("") || indigenousStatus.equalsIgnoreCase("") || sex.equalsIgnoreCase("") || 
-                  age.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
+                  minAge.equalsIgnoreCase("") || maxAge.equalsIgnoreCase("") || limit.equalsIgnoreCase("")) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<div class = 'results-section'>";
             html = html + "<h1>No Results for Indigenous Status Data</h1>";
@@ -66,7 +63,7 @@ public class PageST32Status implements Handler {
 
             model.put("htmlToInject", html);
 
-       } else if (location != null && indigenousStatus != null && sex != null && age != null && limit != null) {
+       } else if (location != null && indigenousStatus != null && sex != null && minAge != null && maxAge != null && limit != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + "</h1>";
             html = html + "<h3>Filter Option Selections</h3>";
@@ -76,11 +73,12 @@ public class PageST32Status implements Handler {
             html = html + "<p><b>Number of Results</b><br><i>"+ limit +"</i></p>";
             html = html + "<p><b>Indigenous Status</b><br><i>"+ indigenousStatus +"</i></p>";
             html = html + "<p><b>Sex</b><br><i>"+ sex +"</i></p>";
-            html = html + "<p><b>Age Group</b><br><i>"+ age +"</i></p>";
+            html = html + "<p><b>Minimum Age</b><br><i>"+ minAge +"</i></p>";
+            html = html + "<p><b>Maximum Age</b><br><i>"+ maxAge +"</i></p>";
             html = html + "</div>"; // 'filter-selection' closing tag
             html = html + "</div>"; // 'filter-selection-wrapper' closing tag
 
-            ArrayList<ST32Results> results = jdbc.getST32PopulationResults(location, indigenousStatus, sex, age, String.valueOf(limit));
+            ArrayList<ST32Results> results = jdbc.getST32PopulationResults(location, indigenousStatus, sex, minAge, maxAge, String.valueOf(limit));
 
             html = html + "<div class = 'results-table'>";
             html = html + "<table>";

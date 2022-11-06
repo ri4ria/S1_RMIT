@@ -124,14 +124,17 @@
 
                             <p class = 'dataset-specific-filter-heading'>Age Group <b style = 'color: #CA3732;'>*</b></p>
 
-                            <!-- <datalist id='ageSuggestions'> -->
-                            <!--TODO: retrieve options from database-->
-                            <select id='age' name='age'>
-                                <option value=''>Please select...</option>
-                                <option th:each='group : ${ageGroups}' th:text='${group}' th:value='${group}'></option>
-                            </select>
-                            <!-- </datalist> -->
-                            <!-- <input autoComplete='on' list='ageSuggestions'> -->
+                            <div class = 'number-input-field'>
+                                <!-- <datalist id='ageSuggestions'> -->
+                                <!--TODO: retrieve options from database-->
+                                <p>Minimum Age</p>
+                                <input type = 'number' min = '1' name = 'minAge' id = 'minAge'>
+
+                                <p>Maximum Age</p>
+                                <input type = 'number' min = '1' name = 'maxAge' id = 'maxAge'>
+                                <!-- </datalist> -->
+                                <!-- <input autoComplete='on' list='ageSuggestions'> -->
+                            </div>
 
                         </fieldset>
 

@@ -98,7 +98,7 @@
 
                     <div class='form-group'>
 
-                        <fieldset>
+                        <fieldset class = 'number-input-field'>
 
                             <legend>Step 3</legend>
 
@@ -107,12 +107,31 @@
 
                             <p class = 'dataset-specific-filter-heading'>Income Bracket <b style = 'color: #CA3732;'>*</b></p>
 
-                            <select id='incomeBracket' name='incomeBracket'>
+                            <p>Minimum Income</p>
+                            <input type = 'number' min = '1' name = 'minIncome' id = 'minIncome'>
+
+                            <p>Maximum Income</p>
+                            <input type = 'number' min = '1' name = 'maxIncome' id = 'maxIncome'>
+
+                            <!--
+                            <p>Minimum Income</p>
+
+                            <select id='minIncome' name='minIncome'>
                                 <option value=''>Please select...</option>
-                                <option th:each='bracket : ${incomeBrackets}' th:text='${bracket}'
-                                    th:value='${bracket}'>
+                                <option th:each='minimum : ${minimumIncomes}' th:text='${minimum}'
+                                    th:value='${minimum}'>
                                 </option>
                             </select>
+
+                            <p>Maximum Income</p>
+                            <select id='maxIncome' name='maxIncome'>
+                                <option value=''>Please select...</option>
+                                <option th:each='maximum : ${maximumIncomes}' th:text='${maximum}'
+                                    th:value='${maximum}'>
+                                </option>
+                            </select>
+
+                            -->
 
                             <br>
 

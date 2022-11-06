@@ -86,7 +86,7 @@ public class PageST22Education implements Handler {
                 && sex != null && highestSchoolYearCompleted != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
             html = html + "<h1>2016 vs 2021 Data for Highest Year of School Completed Data</h1>";
-            html = html + "<p>Ranks are based on proportional values. For example, an LGA with the highest proportion of 65 year old indigenous males will be ranked 1.</p>";
+            html = html + "<p>Ranks are based on proportional values. For example, an LGA with the highest proportion of Indigenous females who have not attended secondary school will be ranked 1.</p>";
             html = html + "<h3>Filter Option Selections</h3>";
             html = html + "<div class = 'filter-selections-wrapper'>";
             html = html + "<div class = 'filter-selections'>";

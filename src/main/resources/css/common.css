@@ -687,6 +687,10 @@ input.largerTick {
    padding: 50px;
 }
 
+.ms-target-outcome img {
+   width: 150px;
+}
+
 .target-outcomes-grid {
    display: flex;
    align-items: center;

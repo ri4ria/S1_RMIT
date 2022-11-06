@@ -78,7 +78,7 @@ public class PageST32Education implements Handler {
 
        } else if (location != null && indigenousStatus != null && sex != null && schoolYear != null && limit != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
-            html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + "</h1>";
+            html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + " in Highest School Year Completed Dataset</h1>";
             html = html + "<h3>Filter Option Selections</h3>";
             html = html + "<div class = 'filter-selections-wrapper'>";
             html = html + "<div class = 'filter-selections'>";

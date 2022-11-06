@@ -77,7 +77,7 @@ public class PageST32Income implements Handler {
 
         } else if (location != null && householdStatus != null && minIncome != null && maxIncome != null && limit != null) {
             String html = "<div class = 'introduction-results-wrapper'>";
-            html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + "</h1>";
+            html = html + "<h1>Top " + limit + " Most Similar LGAs to " + location + " in Total Weekly Household Income Dataset</h1>";
             html = html + "<h3>Filter Option Selections</h3>";
             html = html + "<div class = 'filter-selections-wrapper'>";
             html = html + "<div class = 'filter-selections'>";

@@ -23,7 +23,7 @@ package app;
         public static final String URL = "/page5.html";
     
         // Name of the Thymeleaf HTML template page in the resources folder
-        private static final String TEMPLATE = ("PageST31.html");
+        //private static final String TEMPLATE = ("PageST31.html");
     
         @Override
         public void handle(Context context) throws Exception {
@@ -60,27 +60,31 @@ package app;
             // Add the topnav
             // This uses a Java v15+ Text Block
             html = html + """
-                <div class='topnav'>
-                        <img class='topnav-logo' src='newlogo white.png' alt='logo' height='50'>
-                        <ul>
-                            <a href='/'>Home</a>
-                            <a href='mission.html'>Mission Statement</a>
-                            <div class ='dropdown'>
-                                <button class='dropbtn'>Data Analyses
-                                    <i class='fa fa-caret-down'></i>
-                                </button>
-                                <div class='dropdown-content'>
-                                    <a href='page3.html'>2021 Census Results</a>
-                                    <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
-                                    <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
-                                    <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
-                                </div>
-                            </div>
-                            <a href='page7.html'>Resources</a>
-                        </ul>
-                        <input type='text' placeholder='Search...'>
+            <div class='topnav'>
+                <div class='topnav-logo-wrapper'>
+                    <img class='topnav-logo' src='whitelogo-cropped.png' alt='logo'>
                 </div>
-            """;
+                <div class = 'topnav-tabs'>
+                    <ul>
+                        <a href='/'>Home</a>
+                        <a href='mission.html'>Mission Statement</a>
+                        <div class ='dropdown'>
+                            <button class='dropbtn'>Data Analyses
+                                <i class='fa fa-caret-down'></i>
+                            </button>
+                            <div class='dropdown-content'>
+                                <a href='page3.html'>2021 Census Results</a>
+                                <a href='page4.html'>Changes between 2016 and 2021 Censuses</a>
+                                <a href='page5.html'>Gap Score between Indigenous and Non-Indigenous</a>
+                                <a href='page6.html'>Compare LGAs with Similar Characteristics</a>
+                            </div>
+                        </div>
+                        <a href='page7.html'>Resources</a>
+                        <a href='page8.html'>References</a>
+                    </ul>
+                </div>
+            </div>
+        """;
     
             // Add header content block
             html = html + """

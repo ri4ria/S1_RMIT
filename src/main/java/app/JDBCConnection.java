@@ -3226,8 +3226,8 @@ public class JDBCConnection {
             String query = 
             "SELECT sort.code AS 'code', sort.name AS 'name', printf('%,d km', sort.area) AS 'area', sort.propIndig_ISA AS 'propIndig_ISA', sort.propIndig_IS AS 'propIndig_IS', ";
             query += "sort.propIndig_IA AS 'propIndig_IA', sort.propIndig_SA AS 'propIndig_SA', sort.propIndig_I AS 'propIndig_I', sort.propIndig_S AS 'propIndig_S', sort.propIndig_A AS 'propIndig_A', ";
-            query += "sort.gap_inc21 AS 'gap_inc21', sort.gap_inc16 AS 'gap_inc16', sort.change_inc AS 'change_inc', sort.gap_sch21 AS 'gap_sch21', sort.gap_sch16 AS 'gap_sch16', ";
-            query += "sort.change_sch AS 'change_sch', sort.gap_age21 AS 'gap_age21', sort.gap_age16 AS 'gap_age16', sort.change_age AS 'change_age' ";
+            query += "sort.gap_inc21 AS 'gap_inc21', sort.gap_inc16 AS 'gap_inc16', printf('%d%%', sort.change_inc) AS 'change_inc', sort.gap_sch21 AS 'gap_sch21', sort.gap_sch16 AS 'gap_sch16', ";
+            query += "printf('%d%%', sort.change_sch) AS 'change_sch', sort.gap_age21 AS 'gap_age21', sort.gap_age16 AS 'gap_age16', printf('%d%%', sort.change_age) AS 'change_age' ";
             query += "FROM (Select A.code AS code, A.name AS name, A.area AS area, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21 + B.propIndig_age21)/3) AS propIndig_ISA, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21)/2) AS propIndig_IS, ";
             query += "printf('%.2f%', (A.propIndig_inc21 + B.propIndig_age21)/2) AS propIndig_IA, printf('%.2f%', (A.propIndig_sch21 + B.propIndig_age21)/2) AS propIndig_SA, printf('%.2f%', (A.propIndig_inc21)) AS propIndig_I, ";
             query += "printf('%.2f%', (A.propIndig_sch21)) AS propIndig_S, printf('%.2f%', (B.propIndig_age21)) AS propIndig_A, ";

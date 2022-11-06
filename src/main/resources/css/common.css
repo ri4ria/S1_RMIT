@@ -341,7 +341,7 @@ img.top-image {
    border-color: #BFBFBF;
    border-radius: 5px;
    width: 255px;
-   height: 30px;
+   height: 35px;
    margin-bottom: 15px;
    margin-left: 10px;
 }
@@ -354,8 +354,8 @@ img.top-image {
    border-style: solid;
    border-color: #BFBFBF;
    border-radius: 5px;
-   width: 200px;
-   height: 30px;
+   width: 255px;
+   height: 35px;
    margin-bottom: 15px;
    margin-left: 10px;
 }

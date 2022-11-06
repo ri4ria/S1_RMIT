@@ -107,7 +107,12 @@ public class PageST21 implements Handler {
         // Add instructions on how to use the filters
         html = html + """
                 <h2>Compare Local Government Area performance using the latest results from the 2021 census</h2>
-                <p>Select a dataset and then sort the column of your choice in ASC (ascending) or DESC (descending) order using the dropdowns below</p>
+                <p>Select a dataset and then sort the column of your choice in ascending or descending order using the dropdowns below</p>
+                <div class='info-L3-wrap'>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>
+                <h4 class='info-L3'>A <i class='selectionBlue'>'0' gap score </i> indicates: the gap between the communities is small for a given LGA</h4>
+                </div>
 
         """;
         // Look up some information from JDBC

@@ -755,3 +755,21 @@ input.largerTick {
 .reference-information {
    margin-left: 50px;
 }
+
+.target-outcomeList-wrap {
+   display: flex;
+   align-items: center;
+}
+
+.target-outcomeList {
+   display: inline-flex;
+   text-align: center;
+   background-color: #F0E7D4;
+   border-radius: 15px;
+   border: 1px #BFBFBF;
+   border-style: solid;
+   height: 250px;
+   width: 250px;
+   padding-top: 15px; padding-left: 20px; padding-right: 20px; padding-bottom: 20px;
+   margin: 15px;
+}

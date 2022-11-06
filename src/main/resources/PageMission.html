@@ -30,39 +30,46 @@
         <h1 th:text="${title}"></h1>
     </div>
     <div class='content'>
-        <div class='section'>
-            <h1>Addressing 'Closing the Gap'</h1>
-            <p>
-                Our approach to addressing this social challenge includes raising awareness
-                of all 17 target outcomes, however we will be particularly focusing on three:
-            </p>
-            <div class='target-outcome-wrap'>
-                <div class='target-outcome'>
-                    <img src='outcomeA.png'>
-                    <h4>Outcome 1</h4>
-                    <p th:text='${outcome1description}'></p>
-                </div>
-                <div class='target-outcome'>
-                    <img src='outcomeB.png'>
-                    <h4>Outcome 5</h4>
-                    <p th:text='${outcome5description}'></p>
-                </div>
-                <div class='target-outcome'>
-                    <img src='outcomeC.png'>
-                    <h4>Outcome 8</h4>
-                    <p th:text='${outcome8description}'></p>
-                </div>
-            </div>
-            <p>
-                This website provides data on these three target outcomes, which you can use to
-                compare between two years - 2016 and 2021.
-            </p>
-            <p>
-                We're also going to provide additional resources, but also insights on how progress
-                is tracking on the targets of the 'Closing the Gap' campaign.
-            </p>
-        </div>
-        <div class='section'>
+        <div class='mission-statement-section'>
+            <div class = 'mission-statement-section-info-1'>
+                <h1>Addressing 'Closing the Gap'</h1>
+                <p>
+                    Our approach to addressing this social challenge includes raiding awareness of all 
+                    17 target outcomes, however we will be particularly focusing on three: outcomes 1, 
+                    5, and 8.
+                </p>
+                <p>
+                    TThis website provides data on these outcomes, which you can use to compare between 
+                    two years: 2016 and 2021.
+                </p>
+                <p>
+                    We have also provided additional resources and additional insights on how progress is 
+                    tracking on the targets of the 'Closing the Gap' campaign.
+
+                </p>
+            </div> <!-- mission-statement-section-info closing tag -->
+            <div class = 'target-outcomes-grid'>
+                <div class='target-outcome-wrap'>
+                    <div class='ms-target-outcome'>
+                        <img src='outcomeA.png'>
+                        <h4>Outcome 1</h4>
+                        <p th:text='${outcome1description}'></p>
+                    </div>
+                    <div class='ms-target-outcome'>
+                        <img src='outcomeB.png'>
+                        <h4>Outcome 5</h4>
+                        <p th:text='${outcome5description}'></p>
+                    </div>
+                    <div class='ms-target-outcome'>
+                        <img src='outcomeC.png'>
+                        <h4>Outcome 8</h4>
+                        <p th:text='${outcome8description}'></p>
+                    </div>
+                </div> 
+            </div> <!-- mission-statement-section-info closing tag -->
+            
+        </div> <!-- mission-statement-section closing tag -->
+        <div class='mission-statement-section'>
             <h1>
                 How to Use Our Website
             </h1>
@@ -76,7 +83,7 @@
             <p>
                 More detailed instructions appear on each 'Data Analyses' page.
             </p>
-        </div>
+        </div> <!-- mission-statement-section closing tag -->
         <div class='section'>
             <h1>
                 Personas

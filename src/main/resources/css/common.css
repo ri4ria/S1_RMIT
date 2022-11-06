@@ -16,10 +16,6 @@ body {
    font-size: 20px;
 }
 
-.content h1 {
-   text-align: center;
-}
-
 /* Round the edges of the image https://www.w3schools.com/howto/howto_css_rounded_images.asp */
 img {
    border-radius: 50%;
@@ -661,3 +657,33 @@ input.largerTick {
 .listed-resource-info {
    margin-left: 40px;
 }
+
+.mission-statement-section {
+   display: flex;
+   align-items: center;
+   margin-top: 75px;
+}
+
+.ms-target-outcome {
+   width: 33%;
+   text-align: center;
+   padding: 50px;
+}
+
+.target-outcomes-grid {
+   display: flex;
+   align-items: center;
+   background-color: #F0E7D4;
+   border-style: solid none solid solid;
+   border-radius: 15px 0px 0px 15px;
+   border-width: 1px;
+   border-color: #BFBFBF;
+   margin-right: -50px;
+   margin-left: 50px;
+}
+
+.mission-statement-section-info-1 {
+   text-align: right;
+   padding-left: 50px;
+}
+

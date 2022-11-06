@@ -237,26 +237,34 @@ public class PageST21 implements Handler {
             <div class='form-group'> 
                 <label for='sort_drop'>Per table heading:</label></br>
                     <select id='sort_drop' name='sort_drop'>
-                        <option>sort.code ASC</option>
-                        <option>sort.code DESC</option>
-                        <option>sort.name ASC</option>
-                        <option>sort.name DESC</option>
-                        <option>sort.indig ASC</option>
-                        <option>sort.indig DESC</option>
-                        <option>sort.nonindig ASC</option>
-                        <option>sort.nonindig DESC</option>
-                        <option>sort.total ASC</option>
-                        <option>sort.total DESC</option>
-                        <option>sort.propIndig ASC</option>
-                        <option>sort.propIndig DESC</option>
-                        <option>sort.propNon ASC</option>
-                        <option>sort.propNon DESC</option>
-                        <option>sort.gap ASC</option>
-                        <option>sort.gap DESC</option>
+                        <option>sort.code </option>
+                        <option>sort.name </option>
+                        <option>sort.indig </option>
+                        <option>sort.nonindig </option>
+                        <option>sort.total </option>
+                        <option>sort.propIndig </option>
+                        <option>sort.propNon </option>
+                        <option>sort.gap </option>
                     </select>
             </div>
             </fieldset> 
                     """;
+
+                    html = html + """
+                        <fieldset>
+                        <legend>Select the order</legend>
+                        <div class='form-group'> 
+                            
+                            <input type='radio' id='order_radio' name='order_radio' value='ASC'>
+                            <label for='order_radio'>Ascending</label></br>
+                            
+                            <input type='radio' id='order_radio' name='order_radio' value='DESC'>
+                            <label for='order_radio'>Descending</label>
+    
+                            </div>
+                            </fieldset>
+                            """;
+
 
         html = html + """  
         <script>
@@ -357,27 +365,28 @@ public class PageST21 implements Handler {
                     String income_drop = context.formParam("income_drop");
 
                     String sort_drop = context.formParam("sort_drop");
+                    String order_radio = context.formParam("order_radio");
 
                     if (condition_drop != null && !condition_drop.equalsIgnoreCase("select")) {
-                        html = html + outputDataByHealthCond(condition_drop, sort_drop);
+                        html = html + outputDataByHealthCond(condition_drop, sort_drop, order_radio);
                         } else {
                         html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 1: Health conditions</i></h3>";
                         }
 
                         if (age_drop != null && !age_drop.equalsIgnoreCase("select")) {
-                            html = html + outputDataByAge(age_drop, sort_drop);
+                            html = html + outputDataByAge(age_drop, sort_drop, order_radio);
                             } else {
                             html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 1: Population by age</i></h3>";
                             }
 
                             if (school_drop != null && !school_drop.equalsIgnoreCase("select")) {
-                                html = html + outputDataBySchool(school_drop, sort_drop);
+                                html = html + outputDataBySchool(school_drop, sort_drop, order_radio);
                                 } else {
                                 html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 5: Highest year of shcooling</i></h3>";
                                 }
 
                                 if (income_drop != null && !income_drop.equalsIgnoreCase("select")) {
-                                    html = html + outputDataByIncome(income_drop, sort_drop) ;
+                                    html = html + outputDataByIncome(income_drop, sort_drop, order_radio) ;
                                     } else {
                                     html = html + "<h3><i class='selectionBrown'>No results to show for Outcome 8: Weekely household income</i></h3>";
                                     }
@@ -460,7 +469,7 @@ public class PageST21 implements Handler {
 
     
     //get data for first query
-    public String outputDataByHealthCond(String selectedCondition, String sort) {
+    public String outputDataByHealthCond(String selectedCondition, String sort, String order) {
         String html = "";
         if (selectedCondition == null) {
             html = html + "<h2><i>Please select from dropbox</i></h2>";
@@ -472,7 +481,7 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<Table> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition, sort);
+        ArrayList<Table> healthConditions21 = jdbc.getDataByHealthCondition(selectedCondition, sort, order);
         
         // Add HTML for the health conditions list
         html = html + "<div class='results-table2'>";
@@ -506,7 +515,7 @@ public class PageST21 implements Handler {
     }
 
     //get data for first query
-    public String outputDataByAge(String selectedAge, String sort) {
+    public String outputDataByAge(String selectedAge, String sort, String order) {
         String html = "";
         html = html + "<h2><i class='selectionBlue'>Outcome 1: Population by age</i></h2>";
         html = html + "<h3> Population of people that are <i class='selectionBlue'>" + selectedAge + "</i> years old</h3>";
@@ -514,7 +523,7 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<Table> age21 = jdbc.getDataByAge(selectedAge, sort);
+        ArrayList<Table> age21 = jdbc.getDataByAge(selectedAge, sort, order);
         
         // Add HTML for the health conditions list
         /* 
@@ -556,7 +565,7 @@ public class PageST21 implements Handler {
     }
 
      //get data for first query
-     public String outputDataBySchool(String selectedSchool, String sort) {
+     public String outputDataBySchool(String selectedSchool, String sort, String order) {
         String html = "";
         html = html + "<h2><i class='selectionBlue'>Outcome 5: Highest year of shcooling</i></h2>";
         html = html + "<h3> Population of people with highest schooling being: <i class='selectionBlue'>" + selectedSchool + "</i></h3>";
@@ -568,7 +577,7 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<Table> school21 = jdbc.getDataBySchool(selectedSchool, sort);
+        ArrayList<Table> school21 = jdbc.getDataBySchool(selectedSchool, sort, order);
         
         /*
         // Add HTML for the health conditions list
@@ -636,7 +645,7 @@ public class PageST21 implements Handler {
     }
 
     //get data for first query
-    public String outputDataByIncome(String selectedIncome, String sort) {
+    public String outputDataByIncome(String selectedIncome, String sort, String order) {
         String html = "";
         html = html + "<h2><i class='selectionBlue'>Outcome 8: Weekely household income</i></h2>";
         html = html + "<h3>Population of households with a weekly household income of: <i class='selectionBlue'>$" + selectedIncome + "</i></h3>";
@@ -648,7 +657,7 @@ public class PageST21 implements Handler {
 
         // Look up movies from JDBC
         JDBCConnection jdbc = new JDBCConnection();
-        ArrayList<Table> income21 = jdbc.getDataByHouse(selectedIncome, sort);
+        ArrayList<Table> income21 = jdbc.getDataByHouse(selectedIncome, sort, order);
         html = html + "<div class='results-table2'>";
         html = html + "<table>";
             html = html + "<tr>";

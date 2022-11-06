@@ -738,3 +738,20 @@ input.largerTick {
    text-align: center;
    margin-bottom: 50px;
 }
+
+#deodoma img {
+   width: 500px;
+   border-radius: 0px;
+   border-style: solid;
+   border-width: 1px;
+   border-color: #BFBFBF;
+}
+
+.reference-section {
+   display: flex;
+   align-items: flex-start;
+}
+
+.reference-information {
+   margin-left: 50px;
+}

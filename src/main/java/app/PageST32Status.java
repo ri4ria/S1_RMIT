@@ -31,7 +31,7 @@ public class PageST32Status implements Handler {
         model.put("lgaCodes", lgaCodes);
 
         // Retrieving highest school year brackets for dropdown list
-        ArrayList<String> ages = jdbc.getAgeGroups();
+        ArrayList<String> ages = jdbc.getAge();
         model.put("ageGroups", ages);
 
         // Retrieving user's filter selections

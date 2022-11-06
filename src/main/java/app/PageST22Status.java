@@ -36,7 +36,7 @@ public class PageST22Status implements Handler {
         model.put("states", states);
 
         // Retrieving age groups for dropdown list
-        ArrayList<String> ageGroups = jdbc.getAgeGroups();
+        ArrayList<String> ageGroups = jdbc.getAge();
         model.put("ageGroups", ageGroups);
 
         // Retrieving user's filter selections

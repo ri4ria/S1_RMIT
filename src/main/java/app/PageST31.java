@@ -99,7 +99,7 @@ package app;
              // Add instructions on how to use the filters
              html = html + """
                 <h2>Compare indigenous population with non-indigenous population in different Local Government Areas using census results from 2021 and 2016</h2>
-                <p>Select and filter the conditions, then filter LGAs by size, then sort table columns in ASC (ascending) or DESC (descending) order.</p>
+                <p>Select and filter the conditions, then filter LGAs by size, then sort table columns in ascending or descending order.</p>
                 <div class='info-L3-wrap'>
                 <h4 class='info-L3'>A <i class='selectionBlue'>'+' gap score </i>indicates: portion of indigenous population is greater than the portion of nonindigenous population for a given LGA </h4>
                 <h4 class='info-L3'>A <i class='selectionBlue'>'-' gap score </i>indicates: portion of indigenous population is less than the portion of nonindigenous population for a given LGA</h4>

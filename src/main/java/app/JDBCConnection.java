@@ -3206,4 +3206,157 @@ public class JDBCConnection {
         return incomeData;
     }
 
+    // level 3 page 5 JDBC ----------------------------------------------------------------------------------------------------------------------------------
+    public ArrayList<Table2> getData31(String selectedIncome2, String selectedSchool2, String selectedAge2, String sqkmMax, String sqkmMin, String sort2) {
+        ArrayList<Table2> data31 = new ArrayList<Table2>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            
+            String query = 
+            "SELECT sort.code AS 'code', sort.name AS 'name', printf('%,d km', sort.area) AS 'area', sort.propIndig_ISA AS 'propIndig_ISA', sort.propIndig_IS AS 'propIndig_IS', ";
+            query += "sort.propIndig_IA AS 'propIndig_IA', sort.propIndig_SA AS 'propIndig_SA', sort.propIndig_I AS 'propIndig_I', sort.propIndig_S AS 'propIndig_S', sort.propIndig_A AS 'propIndig_A', ";
+            query += "sort.gap_inc21 AS 'gap_inc21', sort.gap_inc16 AS 'gap_inc16', sort.change_inc AS 'change_inc', sort.gap_sch21 AS 'gap_sch21', sort.gap_sch16 AS 'gap_sch16', ";
+            query += "sort.change_sch AS 'change_sch', sort.gap_age21 AS 'gap_age21', sort.gap_age16 AS 'gap_age16', sort.change_age AS 'change_age' ";
+            query += "FROM (Select A.code AS code, A.name AS name, A.area AS area, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21 + B.propIndig_age21)/3) AS propIndig_ISA, printf('%.2f%', (A.propIndig_inc21 + A.propIndig_sch21)/2) AS propIndig_IS, ";
+            query += "printf('%.2f%', (A.propIndig_inc21 + B.propIndig_age21)/2) AS propIndig_IA, printf('%.2f%', (A.propIndig_sch21 + B.propIndig_age21)/2) AS propIndig_SA, printf('%.2f%', (A.propIndig_inc21)) AS propIndig_I, ";
+            query += "printf('%.2f%', (A.propIndig_sch21)) AS propIndig_S, printf('%.2f%', (B.propIndig_age21)) AS propIndig_A, ";
+            query += "A.gap_inc21 AS gap_inc21, A.gap_inc16 AS gap_inc16, A.change_inc, A.gap_sch21, A.gap_sch16, A.change_sch, B.gap_age21, B.gap_age16, printf('%d%%',B.change_age) AS change_age ";
+            query += "FROM (SELECT A.code, A.name, A.area, A.propIndig_inc21, A.propNon_inc21, A.gap_inc21, A.propIndig_inc16, A.propNon_inc16, A.gap_inc16, A.change_inc, B.propIndig_sch21, B.propNon_sch21, B.gap_sch21, B.propIndig_sch16, B.propNon_sch16, B.gap_sch16, B.change_sch ";
+            query += "FROM (Select A.code_inc21 AS code, A.name_inc21 AS name, A.area_inc21 AS area, A.propIndig_inc21, A.propNon_inc21, A.gap_inc21, B.propIndig_inc16, B.propNon_inc16, B.gap_inc16, ((A.gap_Inc21 - B.gap_Inc16)/B.gap_Inc16 *100) AS change_inc ";
+            query += "FROM (SELECT sort.code AS code_inc21, sort.name AS name_inc21, sort.area AS area_inc21, sort.indig AS indig_inc21, sort.nonindig AS nonindig_inc21, sort.total AS total_inc21, sort.propIndig AS propIndig_inc21, sort.propNonindig AS propNon_inc21, ";
+            query += "((printf('%.0f', sort.gap)) *100) AS gap_inc21 FROM (SELECT H1.lga_code AS code, L.name AS name, L.area AS area, H1.count AS indig, ho.unstatedTotal AS total, hh.nonindig AS nonindig, SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, ((H1.count * 1.0 / SUM(H2.count))*100) AS propIndig, ";
+            query += "hh.proNon AS propNonindig, ((H1.count * 1.0 / SUM(H2.count)*100) - hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name, LGA.area_sqkm AS area FROM LGA WHERE LGA.lga_year = '2021') ";
+            query += "AS L ON L.lga_code = H1.lga_code JOIN (SELECT H1.lga_code AS code, H1.count AS unstatedTotal, SUM(H2.count) AS tunstatedLGA, (H1.count * 100 / H2.count) AS proUn FROM HouseholdStatistics H1 LEFT OUTER JOIN ";
+            query += "HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%total%' AND H2.indigenous_status LIKE '%total%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) ";
+            query += "AS ho ON ho.code = H1.lga_code JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, ((H1.count * 1.0 / SUM(H2.count))*100) AS proNon FROM HouseholdStatistics H1 LEFT OUTER JOIN HouseholdStatistics H2 ";
+            query += "WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%other%' AND H2.indigenous_status LIKE '%other%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) ";
+            query += "AS hh ON hh.lga_code = H1.lga_code LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2021' AND H2.LGA_year = '2021' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%indig%' AND H1.lga_code = H2.lga_code ";
+            query += "GROUP BY H1.lga_Code) AS sort) AS A JOIN (SELECT sort.code AS code_inc16, sort.name AS name_inc16, sort.area AS area_inc16, sort.indig AS indig_inc16, sort.nonindig AS nonindig_inc16, sort.total AS total_inc16, sort.propIndig AS propIndig_inc16, sort.propNonindig AS propNon_inc16, ";
+            query += "(printf('%.0f', sort.gap) *100) AS gap_inc16 FROM (SELECT H1.lga_code AS code, L.name AS name, L.area AS area, H1.count AS indig, ho.unstatedTotal AS total, hh.nonindig AS nonindig, SUM(H2.count) AS tindig, hh.tnonLGA AS tnon, ((H1.count * 1.0 / SUM(H2.count))*100) AS propIndig, ";
+            query += "hh.proNon AS propNonindig, ( (H1.count * 1.0 / SUM(H2.count)*100) - hh.proNon) AS gap FROM HouseholdStatistics H1 JOIN (SELECT LGA.lga_code, LGA.lga_name AS name, LGA.area_sqkm AS area FROM LGA WHERE LGA.lga_year = '2016') ";
+            query += "AS L ON L.lga_code = H1.lga_code JOIN (SELECT H1.lga_code AS code, H1.count AS unstatedTotal, SUM(H2.count) AS tunstatedLGA, (H1.count * 100 / H2.count) AS proUn FROM HouseholdStatistics H1 LEFT OUTER JOIN HouseholdStatistics H2 ";
+            query += "WHERE H1.LGA_year = '2016' AND H2.LGA_year = '2016' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%total%' AND H2.indigenous_status LIKE '%total%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) ";
+            query += "AS ho ON ho.code = H1.lga_code JOIN (SELECT H1.lga_code, H1.count AS nonindig, SUM(H2.count) AS tnonLGA, ((H1.count * 1.0 / SUM(H2.count))*100) AS proNon FROM HouseholdStatistics H1 LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2016' AND ";
+            query += "H2.LGA_year = '2016' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%other%' AND H2.indigenous_status LIKE '%other%' AND H1.lga_code = H2.lga_code GROUP BY H1.lga_Code) ";
+            query += "AS hh ON hh.lga_code = H1.lga_code LEFT OUTER JOIN HouseholdStatistics H2 WHERE H1.LGA_year = '2016' AND H2.LGA_year = '2016' AND H1.income_bracket = '" + selectedIncome2 + "' AND H1.indigenous_status LIKE '%indig%' AND H2.indigenous_status LIKE '%indig%' AND H1.lga_code = H2.lga_code ";
+            query += "GROUP BY H1.lga_Code) AS sort) AS B ON B.code_inc16 = A.code_inc21) AS A JOIN (SELECT A.code, A.name, A.area, A.propIndig_sch21, A.propNon_sch21, A.gap_sch21, B.propIndig_sch16, B.propNon_sch16, B.gap_sch16, ";
+            query += "printf('%.0f', ((A.gap_sch21 - B.gap_sch16)*1.0/B.gap_sch16)*100) AS change_sch FROM (SELECT sort.code AS code, sort.name AS name, sort.area AS area, sort.indig AS indig_sch21, sort.nonindig AS nonindig_sch21, sort.total AS total_sch21, sort.propIndig AS propIndig_sch21, ";
+            query += "sort.propNon AS propNon_sch21, (printf('%.0f', sort.gap) *100) AS gap_sch21 FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, L.area_sqkm AS area, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, s.nonindig AS nonindig, ";
+            query += "s.tnon AS tnon, ss.notstated AS nonstated, (Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, ( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100 AS propIndig, ((s.nonindig * 1.0 / s.tnon)*100) AS propNon, ( ( ( (Ef1.count + Ef2.count) * 100) / ed.tindig) - (s.nonindig * 100 / s.tnon) ) AS gap ";
+            query += "FROM EducationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name, LGA.area_sqkm FROM LGA WHERE LGA.lga_year = '2021') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated FROM EducationStatistics AS Ef1 ";
+            query += "LEFT OUTER JOIN EducationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnotstated FROM EducationStatistics AS E WHERE E.indigenous_status = 'indig_stat_notstated' AND E.lga_year = '2021' GROUP BY E.lga_code) ";
+            query += "AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' AND Ef1.sex = 'f' AND ";
+            query += "Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code LEFT OUTER JOIN EducationStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon FROM EducationStatistics AS Ef1 LEFT OUTER JOIN EducationStatistics AS Ef2 ";
+            query += "JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnon FROM EducationStatistics AS E WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND ";
+            query += "Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code JOIN (SELECT E.lga_code AS code, ";
+            query += "SUM(E.count) AS tindig FROM EducationStatistics AS E WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND ";
+            query += "Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort) AS A JOIN (SELECT sort.code AS code, sort.name AS name, sort.area AS area, ";
+            query += "sort.indig AS indig_sch16, sort.nonindig AS nonindig_sch16, sort.total AS total_sch16, sort.propIndig AS propIndig_sch16, sort.propNon AS propNon_sch16, ((printf('%.0f', sort.gap) *100)) AS gap_sch16 FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, L.area_sqkm AS area, (Ef1.count + Ef2.count) AS indig, ";
+            query += "ed.tindig AS tindig, s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, (Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, ( (( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) AS propIndig, ((s.nonindig *1.0/ s.tnon)*100) AS propNon, ";
+            query += "(( ( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) - ((s.nonindig * 1.0 / s.tnon)*100 )) AS gap FROM EducationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name, LGA.area_sqkm FROM LGA WHERE LGA.lga_year = '2016') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ";
+            query += "ed.tnotstated FROM EducationStatistics AS Ef1 LEFT OUTER JOIN EducationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnotstated FROM EducationStatistics AS E WHERE E.indigenous_status = 'indig_stat_notstated' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code ";
+            query += "WHERE Ef1.lga_year = '2016' AND Ef2.lga_year = '2016' AND Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND Ef1.indigenous_status = 'indig_stat_notstated' AND Ef2.indigenous_status = 'indig_stat_notstated' AND ";
+            query += "Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code LEFT OUTER JOIN EducationStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon FROM EducationStatistics AS Ef1 LEFT OUTER JOIN ";
+            query += "EducationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnon FROM EducationStatistics AS E WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND ";
+            query += "Ef2.lga_year = '2016' AND Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND Ef1.indigenous_status = 'non_indig' AND Ef2.indigenous_status = 'non_indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code ";
+            query += "GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tindig FROM EducationStatistics AS E WHERE E.indigenous_status = 'indig' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND ";
+            query += "Ef2.lga_year = '2016' AND Ef1.highest_school_year = '" + selectedSchool2 + "' AND Ef2.highest_school_year = '" + selectedSchool2 + "' AND Ef1.indigenous_status = 'indig' AND Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) ";
+            query += "AS sort) AS B ON B.code = A.code) AS B ON A.code = B.code) AS A JOIN (SELECT A.code, A.name, A.area, A.propIndig_age21, A.propNon_age21, A.gap_age21, B.propIndig_age16, B.propNon_age16, B.gap_age16, (printf('%.0f',(((A.gap_age21 - B.gap_age16 * 1.0)/B.gap_age16)*100))) AS change_age ";
+            query += "FROM (SELECT sort.code AS code, sort.name AS name, sort.area AS area, sort.indig AS indig_Age21, sort.nonindig AS nonindig_Age21, sort.total AS total_Age21, sort.propIndig AS propIndig_Age21, sort.propNon AS propNon_Age21, (printf('%.0f', sort.gap)*100) AS gap_Age21 ";
+            query += "FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, L.area_sqkm AS area, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, (Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, (( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) AS propIndig, ";
+            query += "((s.nonindig * 1.0 / s.tnon)*100) AS propNon, ( (( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) - (s.nonindig * 100 / s.tnon) ) AS gap FROM PopulationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name, LGA.area_sqkm ";
+            query += "FROM LGA WHERE LGA.lga_year = '2021') AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated FROM PopulationStatistics AS Ef1 LEFT OUTER JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnotstated ";
+            query += "FROM PopulationStatistics AS E WHERE E.indigenous_status = 'indig_ns' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge2 + "' AND ";
+            query += "Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'indig_ns' AND Ef2.indigenous_status = 'indig_ns' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code LEFT OUTER JOIN ";
+            query += "PopulationStatistics AS Ef2 JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon FROM PopulationStatistics AS Ef1 LEFT OUTER JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnon FROM PopulationStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge2 + "' AND Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'non_indig' AND ";
+            query += "Ef2.indigenous_status = 'non_indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tindig FROM PopulationStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2021' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2021' AND Ef2.lga_year = '2021' AND Ef1.age = '" + selectedAge2 + "' AND Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'indig' AND ";
+            query += "Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort) AS A JOIN (SELECT sort.code AS code, sort.name AS name, sort.area AS area, sort.indig AS indig_Age16, sort.nonindig AS nonindig_Age16, ";
+            query += "sort.total AS total_Age16, sort.propIndig AS propIndig_Age16, sort.propNon AS propNon_Age16, (printf('%.0f', sort.gap)*100) AS gap_Age16 FROM (SELECT Ef1.lga_code AS code, L.lga_name AS name, L.area_sqkm AS area, (Ef1.count + Ef2.count) AS indig, ed.tindig AS tindig, ";
+            query += "s.nonindig AS nonindig, s.tnon AS tnon, ss.notstated AS nonstated, (Ef1.count + Ef2.count + s.nonindig + ss.notstated) AS total, (( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) AS propIndig, ((s.nonindig * 1.0 / s.tnon)*100) AS propNon, ";
+            query += "( (( ( (Ef1.count + Ef2.count) * 1.0) / ed.tindig)*100) - (s.nonindig * 100 / s.tnon) ) AS gap FROM PopulationStatistics AS Ef1 JOIN (SELECT LGA.lga_code, LGA.lga_name, LGA.area_sqkm FROM LGA WHERE LGA.lga_year = '2016') ";
+            query += "AS L ON L.lga_code = Ef1.lga_code JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS notstated, ed.tnotstated FROM PopulationStatistics AS Ef1 LEFT OUTER JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, ";
+            query += "SUM(E.count) AS tnotstated FROM PopulationStatistics AS E WHERE E.indigenous_status = 'indig_ns' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND Ef2.lga_year = '2016' AND Ef1.age = '" + selectedAge2 + "' AND ";
+            query += "Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'indig_ns' AND Ef2.indigenous_status = 'indig_ns' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS ss ON ss.code = Ef1.lga_code LEFT OUTER JOIN PopulationStatistics AS Ef2 ";
+            query += "JOIN (SELECT Ef1.lga_code AS code, (Ef1.count + Ef2.count) AS nonindig, ed.tnon AS tnon FROM PopulationStatistics AS Ef1 LEFT OUTER JOIN PopulationStatistics AS Ef2 JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tnon FROM PopulationStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'non_indig' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND Ef2.lga_year = '2016' AND Ef1.age = '" + selectedAge2 + "' AND Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'non_indig' AND ";
+            query += "Ef2.indigenous_status = 'non_indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS s ON s.code = Ef1.lga_code JOIN (SELECT E.lga_code AS code, SUM(E.count) AS tindig FROM PopulationStatistics AS E ";
+            query += "WHERE E.indigenous_status = 'indig' AND E.lga_year = '2016' GROUP BY E.lga_code) AS ed ON ed.code = EF1.lga_code WHERE Ef1.lga_year = '2016' AND Ef2.lga_year = '2016' AND Ef1.age = '" + selectedAge2 + "' AND Ef2.age = '" + selectedAge2 + "' AND Ef1.indigenous_status = 'indig' AND ";
+            query += "Ef2.indigenous_status = 'indig' AND Ef1.sex = 'f' AND Ef2.sex = 'm' AND Ef1.lga_code = Ef2.lga_code GROUP BY Ef1.lga_code) AS sort) AS B ON A.code = B.code) AS B ON A.code = B.code AND A.area >= " + sqkmMin + " AND A.area <= " + sqkmMax + ") AS sort ";
+            query += "ORDER BY " + sort2 + ";";
+
+
+
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                String code = String.valueOf(results.getString("code"));
+                String name = results.getString("name");
+                String area = results.getString("area");
+                String propIndig_ISA = results.getString("propIndig_ISA");
+
+                String propIndig_IS = results.getString("propIndig_IS");
+                String propIndig_IA = results.getString("propIndig_IA");
+                String propIndig_SA = results.getString("propIndig_SA");
+
+                String propIndig_I = results.getString("propIndig_I");
+                String propIndig_S = results.getString("propIndig_S");
+                String propIndig_A = results.getString("propIndig_A");
+
+                String gap_inc21 = results.getString("gap_inc21");
+                String gap_inc16 = results.getString("gap_inc16");
+                String change_inc = results.getString("change_inc");
+
+                String gap_sch21 = results.getString("gap_sch21");
+                String gap_sch16 = results.getString("gap_sch16");
+                String change_sch = results.getString("change_sch");
+
+                String gap_age21 = results.getString("gap_age21");
+                String gap_age16 = results.getString("gap_age16");
+                String change_age = results.getString("change_age");
+
+                // create object for table class
+                Table2 table31 = new Table2(code, name, area, propIndig_ISA, propIndig_IS, propIndig_IA, propIndig_SA, propIndig_I, propIndig_S, propIndig_A, gap_inc21, gap_inc16, change_inc, gap_sch21, gap_sch16, change_sch, gap_age21, gap_age16, change_age);
+
+                data31.add(table31);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return data31;
+    }
+
+
 } // Keep as last bracket

@@ -395,47 +395,6 @@ public class JDBCConnection {
         return totalPopulation;
     }
 
-    public ArrayList<String> getAgeGroups() {
-        ArrayList<String> ageGroups = new ArrayList<String>();
-
-        Connection connection = null;
-
-        try {
-            connection = DriverManager.getConnection(DATABASE);
-
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-
-            String query = "SELECT age FROM PopulationStatistics GROUP BY age";
-
-            System.out.println(query);
-
-            ResultSet results = statement.executeQuery(query);
-
-            while (results.next()) {
-                String result = new String();
-
-                result = results.getString("age");
-
-                ageGroups.add(result);
-            }
-            statement.close();
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
-        }
-        return ageGroups;
-    }
-
     public ArrayList<String> getHighSchoolYears() {
         ArrayList<String> years = new ArrayList<String>();
 
@@ -488,7 +447,7 @@ public class JDBCConnection {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 
-            String query = "SELECT DISTINCT(income_bracket) FROM HouseholdStatistics;";
+            String query = "SELECT DISTINCT (income_bracket) FROM IncomeBracket ORDER BY min_income;";
 
             System.out.println(query);
 

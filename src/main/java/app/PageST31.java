@@ -304,6 +304,9 @@ package app;
             if (incomeTick != null && schoolTick != null && ageTick != null) {
     
                             // propIndig_ISA
+                            html = html + "<h3>Now viewing: Income Bracket: <i class='selectionBlue'>$" + selectedIncome2 + "</i>, Highest Schooling: <i class='selectionBlue'> " + selectedSchool2 + "</i>, Age range: <i class='selectionBlue'> " + selectedAge2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";
@@ -345,6 +348,9 @@ package app;
                 } else if (incomeTick != null && schoolTick != null && ageTick == null) {
     
                             // propIndig_IS
+                            html = html + "<h3>Now viewing: Income Bracket: <i class='selectionBlue'>$" + selectedIncome2 + "</i>, Highest Schooling: <i class='selectionBlue'> " + selectedSchool2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";
@@ -380,6 +386,9 @@ package app;
                 } else if (incomeTick != null && schoolTick == null && ageTick != null) {
 
                             // propIndig_IA
+                            html = html + "<h3>Now viewing: Income Bracket: <i class='selectionBlue'>$" + selectedIncome2 + "</i>, Age range: <i class='selectionBlue'> " + selectedAge2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";
@@ -414,7 +423,11 @@ package app;
 
                 } else if (incomeTick != null && schoolTick == null && ageTick != null)  {
                             //propIndig_SA
-                            html = html + "<div class='results-table2'>";
+
+                            html = html + "<h3>Now viewing: Highest Schooling: <i class='selectionBlue'> " + selectedSchool2 + "</i>, Age range: <i class='selectionBlue'> " + selectedAge2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
+                        html = html + "<div class='results-table2'>";
                             html = html + "<table>";
                             html = html + "<tr>";
                             html = html + "<th>Code </th>";
@@ -450,6 +463,9 @@ package app;
                 } else if (incomeTick != null && schoolTick == null && ageTick == null) {
                     
                             // propIndig_I
+                            html = html + "<h3>Now viewing: Income Bracket: <i class='selectionBlue'>$" + selectedIncome2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";
@@ -479,6 +495,9 @@ package app;
                 } else if (incomeTick == null && schoolTick != null && ageTick == null) {
                                     
                             // propIndig_S
+                            html = html + "<h3>Now viewing: Highest Schooling: <i class='selectionBlue'> " + selectedSchool2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";
@@ -510,6 +529,9 @@ package app;
                 } else if (incomeTick == null && schoolTick == null && ageTick != null) {
 
                                 // propIndig_A
+                                html = html + "<h3>Now viewing: Age range: <i class='selectionBlue'> " + selectedAge2 + "</i></h3>";
+                            html = html + "<h3>LGA area size between: <i class='selectionBlue'>" + sqkmMin + "</i> and <i class='selectionBlue'>" + sqkmMax + " sqkm</i></h3>";
+                            html = html + "<h3>Ordered by: <i class='selectionBlue'>" + sort + " " + order + "</i></h3>";
                             html = html + "<div class='results-table2'>";
                                 html = html + "<table>";
                                 html = html + "<tr>";

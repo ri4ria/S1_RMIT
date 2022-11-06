@@ -52,6 +52,7 @@ public class App {
         app.get(PageST32Income.URL, new PageST32Income());
         app.get(PageST32Status.URL, new PageST32Status());
         app.get(PageResources.URL, new PageResources());
+        app.get(PageReferences.URL, new PageReferences());
 
         // Add / uncomment POST commands for any pages that need web form POSTS
         // app.post(PageIndex.URL, new PageIndex());
